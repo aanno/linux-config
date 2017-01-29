@@ -1,0 +1,8 @@
+[jgillich-brackets]
+name=Copr repo for brackets owned by jgillich
+baseurl=https://copr-be.cloud.fedoraproject.org/results/jgillich/brackets/fedora-$releasever-$basearch/
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://copr-be.cloud.fedoraproject.org/results/jgillich/brackets/pubkey.gpg
+enabled=1
+enabled_metadata=1

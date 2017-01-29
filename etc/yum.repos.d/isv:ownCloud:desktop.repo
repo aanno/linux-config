@@ -1,0 +1,7 @@
+[isv_ownCloud_desktop]
+name=The ownCloud Desktop Client (Fedora_24)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Fedora_25/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Fedora_25/repodata/repomd.xml.key
+enabled=1
