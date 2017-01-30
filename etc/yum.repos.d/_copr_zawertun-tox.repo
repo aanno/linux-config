@@ -1,0 +1,8 @@
+[zawertun-tox]
+name=Copr repo for tox owned by zawertun
+baseurl=https://copr-be.cloud.fedoraproject.org/results/zawertun/tox/fedora-$releasever-$basearch/
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://copr-be.cloud.fedoraproject.org/results/zawertun/tox/pubkey.gpg
+enabled=1
+enabled_metadata=1
