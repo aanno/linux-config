@@ -1,0 +1,8 @@
+[iridium]
+name=Fedora $releasever - $basearch - iridium
+# baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch
+baseurl=https://than.fedorapeople.org/$releasever/iridium/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=0
+#gpgkey=https://www.virtualbox.org/download/oracle_vbox.asc

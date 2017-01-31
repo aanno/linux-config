@@ -1,0 +1,6 @@
+[docker-main-repo]
+name=Docker main Repository
+baseurl=https://yum.dockerproject.org/repo/main/fedora/25
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
