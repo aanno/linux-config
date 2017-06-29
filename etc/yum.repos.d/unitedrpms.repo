@@ -1,7 +1,7 @@
 [unitedrpms]
 name=unitedrpms
 mirrorlist=https://raw.githubusercontent.com/UnitedRPMs/unitedrpms.github.io/master/mirrorlist_F$releasever_x86_64.txt
-enabled=1
+enabled=0
 metadata_expire=1d
 skip_if_unavailable=1
 gpgkey=file:///etc/pki/rpm-gpg/URPMS-GPG-PUBLICKEY-Fedora-$releasever
