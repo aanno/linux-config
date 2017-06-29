@@ -19,4 +19,4 @@ if ARGV.first
   end
 end
 
-load Gem.activate_bin_path('safe_yaml', 'safe_yaml', version)
+load Gem.bin_path('safe_yaml', 'safe_yaml', version)

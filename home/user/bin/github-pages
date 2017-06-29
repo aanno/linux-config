@@ -19,4 +19,4 @@ if ARGV.first
   end
 end
 
-load Gem.activate_bin_path('github-pages', 'github-pages', version)
+load Gem.bin_path('github-pages', 'github-pages', version)

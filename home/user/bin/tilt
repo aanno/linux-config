@@ -19,4 +19,5 @@ if ARGV.first
   end
 end
 
-load Gem.activate_bin_path('tilt', 'tilt', version)
+gem 'tilt', version
+load Gem.bin_path('tilt', 'tilt', version)

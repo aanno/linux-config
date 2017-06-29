@@ -19,4 +19,5 @@ if ARGV.first
   end
 end
 
-load Gem.activate_bin_path('github-markup', 'github-markup', version)
+gem 'github-markup', version
+load Gem.bin_path('github-markup', 'github-markup', version)

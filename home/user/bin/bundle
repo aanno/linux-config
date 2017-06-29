@@ -19,4 +19,4 @@ if ARGV.first
   end
 end
 
-load Gem.activate_bin_path('bundler', 'bundle', version)
+load Gem.bin_path('bundler', 'bundle', version)

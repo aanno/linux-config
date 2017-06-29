@@ -2,14 +2,15 @@
 name=Node.js Packages for Fedora Core 25 - $basearch
 baseurl=https://rpm.nodesource.com/pub_6.x/fc/25/$basearch
 failovermethod=priority
-enabled=1
-gpgcheck=0
+enabled=0
+gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL
 
 [nodesource-source]
 name=Node.js for Fedora Core 25 - $basearch - Source
 baseurl=https://rpm.nodesource.com/pub_6.x/fc/25/SRPMS
 failovermethod=priority
-enabled=0
+enabled=1
 gpgkey=file:///etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL
-gpgcheck=1
+# tp: gpgcheck has failed - unable to import right key
+gpgcheck=0
