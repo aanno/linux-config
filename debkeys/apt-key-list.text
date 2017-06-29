@@ -1,0 +1,212 @@
+/etc/apt/trusted.gpg
+--------------------
+pub   dsa1024 2007-03-08 [SC]
+      4CCA 1EAF 950C EE4A B839  76DC A040 830F 7FAC 5991
+uid        [ unbekannt ] Google, Inc. Linux Package Signing Key <linux-packages-keymaster@google.com>
+sub   elg2048 2007-03-08 [E]
+
+pub   rsa1024 2009-01-22 [SC]
+      E1DD 2702 88B4 E603 0699  E45F A171 5D88 E1DF 1F24
+uid        [ unbekannt ] Launchpad PPA for Ubuntu Git Maintainers
+
+pub   rsa1024 2013-03-22 [SC]
+      1F8E 6217 F8D1 4E27 6823  7984 807A E9E3 6729 21BB
+uid        [ unbekannt ] Launchpad PPA for Nightingale
+
+pub   rsa1024 2010-09-16 [SC]
+      A8CB B258 4D70 68E2 62A0  EEFF 4B6D CB22 5804 3CFF
+uid        [ unbekannt ] Launchpad PPA for Graeme Gott
+
+pub   rsa1024 2009-01-22 [SC]
+      1800 2889 824B 24A6 F47F  CF9C 40C1 8E9E C07E E05F
+uid        [ unbekannt ] Launchpad PPA for Pascal de Bruijn
+
+pub   rsa4096 2012-06-23 [SC] [verfallen: 2017-06-22]
+      6540 097A 529F 2485 6DAD  40AB 4055 4B8F A5FE 6F6A
+uid        [ verfallen ] Jiří Janoušek <janousek.jiri@gmail.com>
+uid        [ verfallen ] Jiří Janoušek <jiri.janousek@uochb.cas.cz>
+
+pub   rsa4096 2015-05-28 [SC] [verfällt: 2017-11-22]
+      BBEB DCB3 18AD 50EC 6865  0906 13B0 0F1F D2C1 9886
+uid        [ unbekannt ] Spotify Public Repository Signing Key <operations@spotify.com>
+
+/etc/apt/trusted.gpg.d/anonbeat_ubuntu_guayadeque.gpg
+-----------------------------------------------------
+pub   rsa1024 2010-02-17 [SC]
+      71C0 04D5 C1F0 137A DBD5  1861 95FA BEFB 4499 973B
+uid        [ unbekannt ] Launchpad Guayadeque Music Player
+
+/etc/apt/trusted.gpg.d/banshee-team-ppa.gpg
+-------------------------------------------
+pub   rsa1024 2009-01-20 [SC]
+      9D2C 2E0A 3C88 DD80 7EC7  87D7 4874 D368 6E80 C6B7
+uid        [ unbekannt ] Launchpad PPA for Banshee Team
+
+/etc/apt/trusted.gpg.d/bubbleguuum_ubuntu_bubbleupnpserver.gpg
+--------------------------------------------------------------
+pub   rsa1024 2012-09-10 [SC]
+      0555 473C 1337 0C96 D481  6894 4B5F E5DA 1C4E 3F4D
+uid        [ unbekannt ] Launchpad PPA for Michael Pujos
+
+/etc/apt/trusted.gpg.d/debian-archive-jessie-automatic.gpg
+----------------------------------------------------------
+pub   rsa4096 2014-11-21 [SC] [verfällt: 2022-11-19]
+      126C 0D24 BD8A 2942 CC7D  F8AC 7638 D044 2B90 D010
+uid        [ unbekannt ] Debian Archive Automatic Signing Key (8/jessie) <ftpmaster@debian.org>
+
+/etc/apt/trusted.gpg.d/debian-archive-jessie-security-automatic.gpg
+-------------------------------------------------------------------
+pub   rsa4096 2014-11-21 [SC] [verfällt: 2022-11-19]
+      D211 6914 1CEC D440 F2EB  8DDA 9D6D 8F6B C857 C906
+uid        [ unbekannt ] Debian Security Archive Automatic Signing Key (8/jessie) <ftpmaster@debian.org>
+
+/etc/apt/trusted.gpg.d/debian-archive-jessie-stable.gpg
+-------------------------------------------------------
+pub   rsa4096 2013-08-17 [SC] [verfällt: 2021-08-15]
+      75DD C3C4 A499 F1A1 8CB5  F3C8 CBF8 D6FD 518E 17E1
+uid        [ unbekannt ] Jessie Stable Release Key <debian-release@lists.debian.org>
+
+/etc/apt/trusted.gpg.d/debian-archive-squeeze-automatic.gpg
+-----------------------------------------------------------
+pub   rsa4096 2010-08-27 [SC] [verfällt: 2018-03-05]
+      9FED 2BCB DCD2 9CDF 7626  78CB AED4 B06F 4730 41FA
+uid        [ unbekannt ] Debian Archive Automatic Signing Key (6.0/squeeze) <ftpmaster@debian.org>
+
+/etc/apt/trusted.gpg.d/debian-archive-squeeze-stable.gpg
+--------------------------------------------------------
+pub   rsa4096 2010-08-07 [SC] [verfällt: 2017-08-05]
+      0E4E DE2C 7F3E 1FC0 D033  800E 6448 1591 B983 21F9
+uid        [ unbekannt ] Squeeze Stable Release Key <debian-release@lists.debian.org>
+
+/etc/apt/trusted.gpg.d/debian-archive-wheezy-automatic.gpg
+----------------------------------------------------------
+pub   rsa4096 2012-04-27 [SC] [verfällt: 2020-04-25]
+      A1BD 8E9D 78F7 FE5C 3E65  D8AF 8B48 AD62 4692 5553
+uid        [ unbekannt ] Debian Archive Automatic Signing Key (7.0/wheezy) <ftpmaster@debian.org>
+
+/etc/apt/trusted.gpg.d/debian-archive-wheezy-stable.gpg
+-------------------------------------------------------
+pub   rsa4096 2012-05-08 [SC] [verfällt: 2019-05-07]
+      ED6D 6527 1AAC F0FF 15D1  2303 6FB2 A1C2 65FF B764
+uid        [ unbekannt ] Wheezy Stable Release Key <debian-release@lists.debian.org>
+
+/etc/apt/trusted.gpg.d/fossfreedom-rhythmbox.gpg
+------------------------------------------------
+pub   rsa1024 2012-01-05 [SC]
+      0D87 EE08 4E8D B990 ADD3  899C 82EB 5823 F4FE 239D
+uid        [ unbekannt ] Launchpad PPA for fossfreedom
+
+/etc/apt/trusted.gpg.d/gnumdk_ubuntu_lollypop.gpg
+-------------------------------------------------
+pub   rsa1024 2009-04-17 [SC]
+      8FAD 14A0 4A8E 87F2 3FB5  653B DBA5 0117 7AA8 4500
+uid        [ unbekannt ] Launchpad PPA for Bellegarde Cedric
+
+/etc/apt/trusted.gpg.d/haecker-felix_ubuntu_gradio-daily.gpg
+------------------------------------------------------------
+pub   rsa4096 2014-06-14 [SC]
+      6C71 92F4 03D0 C42D 5CCB  ED5A B899 7802 9F7D C26C
+uid        [ unbekannt ] Launchpad PPA for Felix Häcker
+
+/etc/apt/trusted.gpg.d/heyarje_ubuntu_makemkv-beta.gpg
+------------------------------------------------------
+pub   rsa4096 2014-05-12 [SC]
+      94B5 6C64 CA72 78EC FC34  E880 8540 3560 19F7 E55B
+uid        [ unbekannt ] Launchpad PPA for hjmooses
+
+/etc/apt/trusted.gpg.d/jonathonf_ubuntu_ffmpeg-3.gpg
+----------------------------------------------------
+pub   rsa4096 2015-01-07 [SC]
+      4AB0 F789 CBA3 1744 CC7D  A76A 8CF6 3AD3 F06F C659
+uid        [ unbekannt ] Launchpad PPA for J Fernyhough
+
+/etc/apt/trusted.gpg.d/langdalepl-gvfs-mtp.gpg
+----------------------------------------------
+pub   rsa1024 2012-12-02 [SC]
+      28FB ACF1 5055 C223 7E51  0D43 B998 019E C07B BEC4
+uid        [ unbekannt ] Launchpad PPA for Philip Langdale
+
+/etc/apt/trusted.gpg.d/lazka-ppa.gpg
+------------------------------------
+pub   rsa1024 2009-08-11 [SC]
+      99CE 53C5 FC32 EA38 F6E4  5E49 0263 8200 5806 C7C4
+uid        [ unbekannt ] Launchpad stable
+
+/etc/apt/trusted.gpg.d/lucioc_ubuntu_sayonara.gpg
+-------------------------------------------------
+pub   rsa1024 2012-10-15 [SC]
+      9642 68F7 3210 A59B 1EA8  2AE4 04BC B46C 99A0 1C59
+uid        [ unbekannt ] Launchpad PPA for Lucio Carreras
+
+/etc/apt/trusted.gpg.d/me-davidsansome_ubuntu_clementine.gpg
+------------------------------------------------------------
+pub   rsa1024 2010-07-24 [SC]
+      7A46 7ADC BEE1 FFC8 CD8B  784B 4F17 2854 044A 3B98
+uid        [ unbekannt ] Launchpad Clementine Stable
+
+/etc/apt/trusted.gpg.d/musicbrainz-developers_ubuntu_stable.gpg
+---------------------------------------------------------------
+pub   rsa1024 2011-09-05 [SC]
+      DD34 DEEB 1F7B 0EA4 87A0  1B27 0CC3 AFF5 CEDF 0F40
+uid        [ unbekannt ] Launchpad PPA for MusicBrainz Developers
+
+/etc/apt/trusted.gpg.d/noobslab_ubuntu_apps.gpg
+-----------------------------------------------
+pub   rsa1024 2012-04-01 [SC]
+      4FA4 4A47 8284 A18C 1BA4  A9CA D530 E028 F59E AE4D
+uid        [ unbekannt ] Launchpad PPA for NoobsLab
+
+/etc/apt/trusted.gpg.d/pcf_ubuntu_miro-releases.gpg
+---------------------------------------------------
+pub   rsa1024 2010-04-12 [SC]
+      DB6F 4249 F501 C2D3 1923  CF8C E38F DEE7 2D75 E850
+uid        [ unbekannt ] Launchpad Miro releases
+
+/etc/apt/trusted.gpg.d/spotify-2015-05-28-D2C19886.gpg
+------------------------------------------------------
+pub   rsa4096 2015-05-28 [SC] [verfällt: 2017-11-22]
+      BBEB DCB3 18AD 50EC 6865  0906 13B0 0F1F D2C1 9886
+uid        [ unbekannt ] Spotify Public Repository Signing Key <operations@spotify.com>
+
+/etc/apt/trusted.gpg.d/stefansundin-truecrypt.gpg
+-------------------------------------------------
+pub   rsa1024 2013-06-24 [SC]
+      56E0 9F98 278D 83F6 3047  5E16 FFE1 FFFF AFEC 55BB
+uid        [ unbekannt ] Launchpad PPA for Stefan Sundin
+
+/etc/apt/trusted.gpg.d/team-xbmc_ubuntu_ppa.gpg
+-----------------------------------------------
+pub   rsa1024 2009-01-20 [SC]
+      1897 01DA 570C 56B9 488E  F60A 6D97 5C47 91E7 EE5E
+uid        [ unbekannt ] Launchpad PPA for XBMC for Linux
+
+/etc/apt/trusted.gpg.d/tomahawk_ubuntu_ppa.gpg
+----------------------------------------------
+pub   rsa1024 2011-10-12 [SC]
+      7651 3726 E5A0 E29B FFA1  49A8 566B CB5E F661 FE79
+uid        [ unbekannt ] Launchpad PPA for Tomahawk Friends
+
+/etc/apt/trusted.gpg.d/ubuntuhandbook1_ubuntu_pragha.gpg
+--------------------------------------------------------
+pub   rsa1024 2013-12-03 [SC]
+      A006 2203 196C A448 2DDB  859E 4C1C BE14 8525 41CB
+uid        [ unbekannt ] Launchpad PPA for Panda Jim
+
+/etc/apt/trusted.gpg.d/ubuntu-keyring-2012-archive.gpg
+------------------------------------------------------
+pub   rsa4096 2012-05-11 [SC]
+      790B C727 7767 219C 42C8  6F93 3B4F E6AC C0B2 1F32
+uid        [ unbekannt ] Ubuntu Archive Automatic Signing Key (2012) <ftpmaster@ubuntu.com>
+
+/etc/apt/trusted.gpg.d/ubuntu-keyring-2012-cdimage.gpg
+------------------------------------------------------
+pub   rsa4096 2012-05-11 [SC]
+      8439 38DF 228D 22F7 B374  2BC0 D94A A3F0 EFE2 1092
+uid        [ unbekannt ] Ubuntu CD Image Automatic Signing Key (2012) <cdimage@ubuntu.com>
+
+/etc/apt/trusted.gpg.d/webupd8team-java.gpg
+-------------------------------------------
+pub   rsa1024 2010-05-04 [SC]
+      7B2C 3B08 89BF 5709 A105  D03A C251 8248 EEA1 4886
+uid        [ unbekannt ] Launchpad VLC
+
