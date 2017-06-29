@@ -1,2 +1,2 @@
-# deb http://ppa.launchpad.net/fossfreedom/rhythmbox/ubuntu vivid main
-# deb-src http://ppa.launchpad.net/fossfreedom/rhythmbox/ubuntu vivid main
+deb http://ppa.launchpad.net/fossfreedom/rhythmbox/ubuntu xenial main
+# deb-src http://ppa.launchpad.net/fossfreedom/rhythmbox/ubuntu xenial main

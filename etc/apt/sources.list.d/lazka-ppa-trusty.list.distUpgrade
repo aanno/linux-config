@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/lazka/ppa/ubuntu xenial main
+deb http://ppa.launchpad.net/lazka/ppa/ubuntu yakkety main
 # deb-src http://ppa.launchpad.net/lazka/ppa/ubuntu vivid main

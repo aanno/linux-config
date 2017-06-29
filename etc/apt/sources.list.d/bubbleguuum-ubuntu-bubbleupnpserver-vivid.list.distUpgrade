@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/bubbleguuum/bubbleupnpserver/ubuntu vivid main
-# deb-src http://ppa.launchpad.net/bubbleguuum/bubbleupnpserver/ubuntu vivid main
+deb http://ppa.launchpad.net/bubbleguuum/bubbleupnpserver/ubuntu xenial main
+# deb-src http://ppa.launchpad.net/bubbleguuum/bubbleupnpserver/ubuntu xenial main

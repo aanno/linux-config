@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/lucioc/sayonara/ubuntu xenial main
-# deb-src http://ppa.launchpad.net/lucioc/sayonara/ubuntu xenial main
+deb http://ppa.launchpad.net/lucioc/sayonara/ubuntu yakkety main
+# deb-src http://ppa.launchpad.net/lucioc/sayonara/ubuntu yakkety main
