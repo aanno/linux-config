@@ -1,0 +1,5 @@
+#!/bin/bash
+BIN=`dirname $0`
+
+sudo "$BIN/lvmcache-stats" "vg_hdd/home"
+sudo lvs -a "vg_hdd"
