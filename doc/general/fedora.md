@@ -220,3 +220,15 @@ Interessante zusätzliche Programme
 * Stand von KDE Plasma auf Fedora: 
   [1](https://community.kde.org/Plasma/Packages), 
   [2](https://apps.fedoraproject.org/packages/plasma-workspace) 
+
+## firewallD
+
+* https://www.linode.com/docs/security/firewalls/introduction-to-firewalld-on-centos
+* https://www.certdepot.net/rhel7-get-started-firewalld/
+* https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_firewalls#sec-Introduction_to_firewalld
+* https://fedoraproject.org/wiki/Firewalld?rd=FirewallD
+* http://www.firewalld.org/
+
+### iptables
+
+* http://www.thegeekstuff.com/2011/01/iptables-fundamentals/
