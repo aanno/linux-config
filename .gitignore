@@ -3,3 +3,8 @@
 *.tmp
 /.gtm/
 /.idea/workspace.xml
+/docker-compose/nextcloud/proxy/certs/
+/docker-compose/nextcloud/proxy/conf.d/
+/docker-compose/nextcloud/proxy/html/
+/docker-compose/nextcloud/proxy/vhost.d/
+
