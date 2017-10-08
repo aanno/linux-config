@@ -11,6 +11,12 @@
 
 * https://crycode.de/fail2ban-mit-ipv6
 
+## Configuration
+
+### Own rules
+
+* https://forum.netcup.de/administration-eines-server-vserver/vserver-server-kvm-server/9236-komische-aktivit%C3%A4ten-in-den-mail-logs/
+
 ## Alternative software
 
 * https://ossec.github.io/

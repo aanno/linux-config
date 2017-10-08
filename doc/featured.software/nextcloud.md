@@ -12,6 +12,22 @@
 * https://docs.nextcloud.com/server/11/admin_manual/maintenance/restore.html
 * https://docs.nextcloud.com/server/11/admin_manual/issues/general_troubleshooting.html
 
+## Nextcloud 12
+
+* https://docs.nextcloud.com/server/12/admin_manual/configuration_server/config_sample_php_parameters.html
+* https://docs.nextcloud.com/server/12/admin_manual/installation/nginx.html
+* https://docs.nextcloud.com/server/12/admin_manual/configuration_server/reverse_proxy_configuration.html
+
+### Installation manuals
+
+* https://kopfkrieg.org/2017/06/15/nextcloud-docker-nginx/
+* https://bayton.org/docs/nextcloud/installing-nextcloud-on-ubuntu-16-04-lts-with-redis-apcu-ssl-apache/
+
+## Additional software
+
+* https://nextcloud.com/collaboraonline/ <br/>
+  **online office** for nextcloud
+
 ## Unresolved issues
 
 ### First start: DB setup leads to 'SQLSTATE[HY000] [2002] No such file or directory'
