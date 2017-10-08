@@ -49,13 +49,14 @@ services:
 #    restart: always
 
   app:
-    image: nextcloud:${VERSION}-apache
+    image: aanno/nextcloud:${VERSION}-apache
     container_name: nextcloud_apache
     volumes:
       - ${BASE}/apps:${TARGET}/custom_apps
       - ${BASE}/config:${TARGET}/config
       - ${BASE}/data:${TARGET}/data
     environment:
+      - BASE_PATH=/nextcloud
       - VIRTUAL_HOST=${DOMAIN}
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PORT=80
