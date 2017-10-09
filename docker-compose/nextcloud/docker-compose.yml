@@ -1,7 +1,10 @@
-version: '2'
+version: '3.3'
 services:
   proxy:
     image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    labels: 
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
     container_name: proxy-2
     ports:
       - 80:80
@@ -18,7 +21,20 @@ services:
       - proxy-tier
     restart: always
 
-#  letsencrypt-companion:
+  letsencrypt-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt-companion
+    depends_on: 
+      - proxy
+    volumes:
+      - ./proxy/conf.d:/etc/nginx/conf.d
+      - ./proxy/vhost.d:/etc/nginx/vhost.d
+      - ./proxy/html:/usr/share/nginx/html
+      - ./proxy/certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
+
+#  letsencrypt-companion-old:
 #    image: alastaircoote/docker-letsencrypt-nginx-proxy-companion
 #    container_name: letsencrypt-companion
 #    volumes_from:
@@ -51,6 +67,11 @@ services:
   app:
     image: aanno/nextcloud:${VERSION}-apache
     container_name: nextcloud_apache
+    depends_on: 
+      - letsencrypt-companion
+      - proxy
+      - redis
+      - collabora
     volumes:
       - ${BASE}/apps:${TARGET}/custom_apps
       - ${BASE}/config:${TARGET}/config
