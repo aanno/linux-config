@@ -21,3 +21,4 @@ shift
 pushd $DIR
   docker-compose "$COMMAND" $*
 popd
+

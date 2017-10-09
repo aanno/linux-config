@@ -15,6 +15,7 @@ services:
       - ./proxy/html:/usr/share/nginx/html
       - ./proxy/certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./proxy/proxy.conf:/etc/nginx/proxy.conf
     environment:
       - ENABLE_IPV6=true
     networks:
