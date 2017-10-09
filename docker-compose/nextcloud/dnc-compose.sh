@@ -2,7 +2,8 @@
 # https://github.com/nextcloud/docker
 
 
-export BASE="/home/dockeruser/nctest"
+export BASE="/home/dockeruser/nextcloud"
+export PROXY="/home/dockeruser/proxy"
 export BASE_PATH="/nextcloud"
 export TARGET="/var/www/html${BASE_PATH}"
 export VERSION="11.0.5"

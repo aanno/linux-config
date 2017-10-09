@@ -10,12 +10,12 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./proxy/conf.d:/etc/nginx/conf.d
-      - ./proxy/vhost.d:/etc/nginx/vhost.d
-      - ./proxy/html:/usr/share/nginx/html
-      - ./proxy/certs:/etc/nginx/certs:ro
+      - ${PROXY}/conf.d:/etc/nginx/conf.d
+      - ${PROXY}/vhost.d:/etc/nginx/vhost.d
+      - ${PROXY}/html:/usr/share/nginx/html
+      - ${PROXY}/certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./proxy/proxy.conf:/etc/nginx/proxy.conf
+      - ${PROXY}/proxy.conf:/etc/nginx/proxy.conf
     environment:
       - ENABLE_IPV6=true
     networks:
@@ -28,10 +28,10 @@ services:
     depends_on: 
       - proxy
     volumes:
-      - ./proxy/conf.d:/etc/nginx/conf.d
-      - ./proxy/vhost.d:/etc/nginx/vhost.d
-      - ./proxy/html:/usr/share/nginx/html
-      - ./proxy/certs:/etc/nginx/certs:rw
+      - ${PROXY}/conf.d:/etc/nginx/conf.d
+      - ${PROXY}/vhost.d:/etc/nginx/vhost.d
+      - ${PROXY}/html:/usr/share/nginx/html
+      - ${PROXY}/certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: always
 
