@@ -3,7 +3,8 @@
 
 
 export BASE="/home/dockeruser/nctest"
-export TARGET="/var/www/html"
+export BASE_PATH="/nextcloud"
+export TARGET="/var/www/html${BASE_PATH}"
 export VERSION="11.0.5"
 export DOMAIN="breitbandig.de,www.breitbandig.de,mail.breitbandig.de,netzgeneration.com,www.netzgeneration.com,mail.netzgeneration.com,v22017092131153710.goodsrv.de"
 export EMAIL="aannoaanno@gmail.com"

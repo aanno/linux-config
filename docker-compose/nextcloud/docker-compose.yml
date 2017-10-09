@@ -77,7 +77,7 @@ services:
       - ${BASE}/config:${TARGET}/config
       - ${BASE}/data:${TARGET}/data
     environment:
-      - BASE_PATH=/nextcloud
+      - BASE_PATH=${BASE_PATH}
       - VIRTUAL_HOST=${DOMAIN}
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PORT=80
