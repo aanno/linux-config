@@ -28,7 +28,8 @@
 
 ## Zusätzliche Repositories
 
-* [Copr Personal Repositories](http://copr.fedorainfracloud.org/) 
+* [Copr Personal Repositories](http://copr.fedorainfracloud.org/)
+* http://fedoraproject.org/wiki/EPEL
 
 ### United RPMs
 

@@ -17,6 +17,7 @@
 * https://docs.nextcloud.com/server/12/admin_manual/configuration_server/config_sample_php_parameters.html
 * https://docs.nextcloud.com/server/12/admin_manual/installation/nginx.html
 * https://docs.nextcloud.com/server/12/admin_manual/configuration_server/reverse_proxy_configuration.html
+* https://docs.nextcloud.com/server/12/admin_manual/configuration_server/caching_configuration.html
 
 ### Installation manuals
 
@@ -27,6 +28,7 @@
 
 * https://nextcloud.com/collaboraonline/ <br/>
   **online office** for nextcloud
+  + https://help.nextcloud.com/t/start-to-finish-nextcloud-collabora-step-by-step-guide/10602
 
 ## Unresolved issues
 

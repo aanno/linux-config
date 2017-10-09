@@ -20,6 +20,7 @@
 ### `docker-compose`
 
 * https://docs.docker.com/compose/gettingstarted/
+* `docker-compose.yml` https://docs.docker.com/compose/compose-file/#labels-3
 
 ## Additional software
 
@@ -29,7 +30,9 @@
 * (https://github.com/jwilder/nginx-proxy) <br/>
   **nginx reverse proxy** for mapping virtual hosts to (other) container and TLS 
   unpacking (let's encrypt)
-  + https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/
+  + https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/ 
+    (https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion) <br />
+    let's encrypt for nginx proxy
   + https://blog.florianlopes.io/host-multiple-websites-on-single-host-docker/
 * https://hub.docker.com/_/nextcloud/ (https://github.com/nextcloud/docker) <br/>
   **nextcloud** as docker container
