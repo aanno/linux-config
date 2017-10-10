@@ -21,6 +21,7 @@
 
 * https://docs.docker.com/compose/gettingstarted/
 * `docker-compose.yml` https://docs.docker.com/compose/compose-file/#labels-3
+* `docker-compose up` https://docs.docker.com/compose/reference/up/
 
 ## Additional software
 

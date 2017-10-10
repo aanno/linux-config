@@ -5,6 +5,11 @@
 * On fedora 
   + https://fedoraproject.org/wiki/Nginx
   + https://certbot.eff.org/#fedora24-nginx
+  
+## Common problems
+
+* https://serverfault.com/questions/511789/nginx-client-request-body-is-buffered-to-a-temporary-file
+* https://serverfault.com/questions/93098/apache-nginx-html-file-size-limit
 
 ## Reverse proxy
 
