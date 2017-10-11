@@ -59,3 +59,21 @@ requires having the following lines in `config.php`:
     ),
   ),
 ```
+
+## Status and known problem
+
+* `nextcloud-docker.yml` is using some environment variables. Use 
+  `dnc-compose.sh` instead of using `docker-compose` directly.
+* No docker container for the database. I use this compose with an external 
+  (mysql) db.
+* A collabora container but it is _not_ (yet) used. Hence, comment it out!
+* Redis container for file locking
+* Solr container for nextant full text search.
+* Uses the _stable_ version of nextcloud (currently 11.0.5).
+
+### Known problems
+
+* nginx-proxy 
+  + is proxying a nextcloud-apache (no fpm)
+  + can use HTTP 2, but nextcloud-apache is only HTTP 1.1
+  + is unwrapping TLS (with let's encrypt support)
