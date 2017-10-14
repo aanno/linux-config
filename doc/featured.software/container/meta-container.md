@@ -27,3 +27,18 @@
 # Big players and big open source cloud projects
 
 * By HashiCorp: https://www.hashicorp.com/open-source-tools/
+* Project Atomic by Redhat: http://www.projectatomic.io/ (https://github.com/projectatomic)
+  + http://www.projectatomic.io/docs/introduction/
+    - https://www.projectatomic.io/docs/quickstart/
+    - http://www.projectatomic.io/docs/gettingstarted/
+  + atomic binary: https://github.com/projectatomic/atomic
+    - http://www.projectatomic.io/docs/os-updates/
+    - https://getfedora.org/atomic/download/
+      * https://fedoraproject.org/wiki/Changes/Layered_Docker_Image_Build_Service
+      * https://fedoraproject.org/wiki/Atomic/FLIBS_Catalog
+  + atomicapp binary: https://github.com/projectatomic/atomicapp
+    - a compose standard: nulecule https://github.com/projectatomic/nulecule
+  + conversion from docker-compose to kubernetes: http://kompose.io/
+  + image builder buildah: https://github.com/projectatomic/buildah
+    - http://www.projectatomic.io/blog/2017/06/introducing-buildah/
+  + image info tool skopeo: https://github.com/projectatomic/skopeo

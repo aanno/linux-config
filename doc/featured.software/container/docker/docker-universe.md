@@ -28,6 +28,7 @@
   + https://www.infoq.com/news/2016/05/gitlab-docker-registry
   + https://sloppy.io/gitlab-container-registry-alternative-docker-hub/
 * http://port.us.org/ portus
+* http://docs.projectatomic.io/registry/ Atomic registry
 
 #### Not a registry, but related to images
 
