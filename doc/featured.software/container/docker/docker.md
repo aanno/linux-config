@@ -1,5 +1,9 @@
 # Docker
 
+## Books
+
+* https://dockerbook.com/
+
 ## Commands
 
 ### `docker network create`
@@ -50,3 +54,23 @@
 * `dnsmasq` for DNS lookup speedup
   + https://opsech.io/posts/2017/May/23/docker-dns-with-firewalld-on-fedora.html
   + https://opsech.io/posts/2016/Feb/14/quick-tip-enable-easy-networkmanager-local-dns-caching.html
+
+## Docker on Windows
+
+* https://docs.microsoft.com/de-de/virtualization/windowscontainers/quick-start/quick-start-windows-10
+
+## Docker-in-Docker
+
+* https://github.com/moby/moby/wiki/Docker-in-Docker
+
+### Contra
+
+* https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
+* https://www.develves.net/blogs/asd/2016-05-27-alternative-to-docker-in-docker/
+
+## Docker Swarm
+
+* https://docs.docker.com/engine/swarm/
+  + https://docs.docker.com/engine/swarm/swarm-tutorial/
+  + https://github.com/docker/swarmkit
+  + https://github.com/docker/swarm
