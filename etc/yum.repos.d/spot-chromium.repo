@@ -1,8 +1,0 @@
-[spot-chromium]
-name=Copr repo for chromium owned by spot
-baseurl=https://copr-be.cloud.fedoraproject.org/results/spot/chromium/fedora-$releasever-$basearch/
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://copr-be.cloud.fedoraproject.org/results/spot/chromium/pubkey.gpg
-enabled=1
-enabled_metadata=1

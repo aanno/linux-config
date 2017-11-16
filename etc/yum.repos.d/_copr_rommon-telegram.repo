@@ -1,8 +1,0 @@
-[rommon-telegram]
-name=Copr repo for telegram owned by rommon
-baseurl=https://copr-be.cloud.fedoraproject.org/results/rommon/telegram/fedora-$releasever-$basearch/
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://copr-be.cloud.fedoraproject.org/results/rommon/telegram/pubkey.gpg
-enabled=1
-enabled_metadata=1

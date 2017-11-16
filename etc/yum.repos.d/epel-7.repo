@@ -1,0 +1,7 @@
+[epel-7]
+name=epel-7
+baseurl=http://mirror.de.leaseweb.net/epel/7
+enabled=1
+gpgcheck=1
+repo_gpgcheck=0
+gpgkey=https://www.virtualbox.org/download/oracle_vbox.asc
