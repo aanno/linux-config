@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/noobslab/apps/ubuntu zesty main
-# deb-src http://ppa.launchpad.net/noobslab/apps/ubuntu zesty main
+deb http://ppa.launchpad.net/noobslab/apps/ubuntu artful main
+# deb-src http://ppa.launchpad.net/noobslab/apps/ubuntu artful main

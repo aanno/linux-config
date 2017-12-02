@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/webupd8team/brackets/ubuntu yakkety main
-# deb-src http://ppa.launchpad.net/webupd8team/brackets/ubuntu yakkety main
+deb http://ppa.launchpad.net/webupd8team/brackets/ubuntu zesty main
+# deb-src http://ppa.launchpad.net/webupd8team/brackets/ubuntu zesty main

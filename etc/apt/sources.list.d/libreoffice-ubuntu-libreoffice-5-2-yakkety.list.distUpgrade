@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu yakkety main
-# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu yakkety main
+deb http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu zesty main
+# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-2/ubuntu zesty main

@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu xenial main
-# deb-src http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu xenial main
+deb http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu artful main
+# deb-src http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu artful main

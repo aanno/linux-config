@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/anonbeat/guayadeque/ubuntu zesty main
-# deb-src http://ppa.launchpad.net/anonbeat/guayadeque/ubuntu zesty main
+deb http://ppa.launchpad.net/anonbeat/guayadeque/ubuntu artful main
+# deb-src http://ppa.launchpad.net/anonbeat/guayadeque/ubuntu artful main

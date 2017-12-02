@@ -1,2 +1,2 @@
-deb http://ppa.launchpad.net/nextcloud-devs/client/ubuntu zesty main
-# deb-src http://ppa.launchpad.net/nextcloud-devs/client/ubuntu zesty main
+deb http://ppa.launchpad.net/nextcloud-devs/client/ubuntu artful main
+# deb-src http://ppa.launchpad.net/nextcloud-devs/client/ubuntu artful main
