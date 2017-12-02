@@ -1,0 +1,13 @@
+[ring]
+name=Ring $releasever - $basearch - ring
+baseurl=https://dl.ring.cx/ring-nightly/fedora_$releasever
+gpgcheck=1
+gpgkey=https://dl.ring.cx/ring.pub.key
+enabled=1
+
+[ring26]
+name=Ring $releasever - $basearch - ring
+baseurl=https://dl.ring.cx/ring-nightly/fedora_26
+gpgcheck=1
+gpgkey=https://dl.ring.cx/ring.pub.key
+enabled=1
