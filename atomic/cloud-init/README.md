@@ -15,6 +15,7 @@ Quickstart with atomic (raw image on libvirt):
 mkisofs -output init.iso -volid cidata -joliet -rock user-data meta-data
 ```
 
+Image format could be 'raw' or 'qcow2':
 ```
 virt-install --name atomic01 \
 --description 'Fedora Atomic Host 01' \
@@ -77,3 +78,7 @@ ZONE=trusted
 
 Known Problems:
 * keymap & keyboard layout
+
+Kubernetes and Docker
+* http://www.projectatomic.io/docs/gettingstarted/
+* http://www.projectatomic.io/docs/atomic-host-networking/
