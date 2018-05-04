@@ -73,7 +73,22 @@ requires having the following lines in `config.php`:
 
 ### Known problems
 
+#### nginx-proxy
+
 * nginx-proxy 
   + is proxying a nextcloud-apache (no fpm)
   + can use HTTP 2, but nextcloud-apache is only HTTP 1.1
   + is unwrapping TLS (with let's encrypt support)
+
+#### Full text search
+
+Full text search has changed (but I have not tackled this so far):
+
+* https://github.com/nextcloud/fulltextsearch/wiki
+* https://github.com/nextcloud/fulltextsearch/wiki/Basic-Installation
+
+#### Cron
+
+Some extension (like the news app) needs full cron support:
+
+* https://docs.nextcloud.com/server/13/admin_manual/configuration_server/background_jobs_configuration.html#cron
