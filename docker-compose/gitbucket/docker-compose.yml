@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+  gitbucket_container:
+    image: f99aq8ove/gitbucket
+    container_name: gitbucket-2
+    # depends_on: 
+    #  - letsencrypt-companion
+    #  - proxy
+    ports:
+      - 8080:8080
+    volumes:
+      - ${BASE}/gitbucket-data:/gitbucket
+    environment:
+      - GITBUCKET_OPTS=--prefix=${BASE_PATH}
+      - JAVA_OPTS=-Xmx512m
+    networks:
+      - proxy-tier
+    restart: always
+
+networks:
+  proxy-tier:
+    external:
+      name: nginx-proxy
+
