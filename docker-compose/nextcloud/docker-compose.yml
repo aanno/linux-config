@@ -65,7 +65,7 @@ services:
 #      - proxy-tier
 #    restart: always
 
-  app:
+  nextcloud_container:
     image: aanno/nextcloud:${VERSION}-apache
     container_name: nextcloud_apache
     depends_on: 
