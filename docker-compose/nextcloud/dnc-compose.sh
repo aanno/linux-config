@@ -6,7 +6,7 @@ export BASE="/home/dockeruser/nextcloud"
 export PROXY="/home/dockeruser/proxy"
 export BASE_PATH="/nextcloud"
 export TARGET="/var/www/html${BASE_PATH}"
-export VERSION="11.0.5"
+export VERSION="13.0.2"
 export DOMAIN="breitbandig.de,www.breitbandig.de,mail.breitbandig.de,netzgeneration.com,www.netzgeneration.com,mail.netzgeneration.com,v22017092131153710.goodsrv.de"
 export EMAIL="aannoaanno@gmail.com"
 
