@@ -80,6 +80,20 @@ requires having the following lines in `config.php`:
   + can use HTTP 2, but nextcloud-apache is only HTTP 1.1
   + is unwrapping TLS (with let's encrypt support)
 
+##### nginx-proxy and multiple services
+
+nginx-proxy is currently unable to serve multiple subpaths. The issue is tracked by
+
+* PR https://github.com/jwilder/nginx-proxy/pull/1083
+* https://github.com/jwilder/nginx-proxy/pull/254
+
+I only see one solution to work-around this: Make the apache of nextcloud 
+serve multiple subpaths.
+
+Further reading:
+
+* https://stackoverflow.com/questions/39067295/docker-compose-external-container
+
 #### Full text search
 
 Full text search has changed (but I have not tackled this so far):
@@ -92,3 +106,12 @@ Full text search has changed (but I have not tackled this so far):
 Some extension (like the news app) needs full cron support:
 
 * https://docs.nextcloud.com/server/13/admin_manual/configuration_server/background_jobs_configuration.html#cron
+
+### References
+
+#### Nginx config
+
+* https://gist.github.com/soheilhy/8b94347ff8336d971ad0
+* https://www.keycdn.com/support/nginx-location-directive/
+* http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass
+* http://nginx.org/en/docs/http/ngx_http_upstream_conf_module.html
