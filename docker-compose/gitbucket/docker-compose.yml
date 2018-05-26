@@ -6,8 +6,8 @@ services:
     # depends_on: 
     #  - letsencrypt-companion
     #  - proxy
-    ports:
-      - 8080:8080
+    # ports:
+    #   - 8080:8080
     volumes:
       - ${BASE}/gitbucket-data:/gitbucket
     environment:
