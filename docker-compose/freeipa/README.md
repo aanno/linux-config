@@ -26,7 +26,8 @@ The LDAP component of freeIPA uses the RFC 2307bis scheme.
 ### LDAP Connection
 
 * Hostname: ipa.redsnapper.fritz.box
-* Port: 389
+* Port: 389 (STARTTLS is possible but not required)
+* Port: 636 (ldaps, aka TLS)
 * Base DN: dc=fritz,dc=box
 * Authentication (optional):
   + Bind DN: uid=admin,cn=users,cn=accounts,dc=fritz,dc=box
@@ -58,5 +59,6 @@ org.apache.directory.api.ldap.model.exception.LdapInvalidAttributeValueException
 ### LDAP Authentication
 
 * Owncloud/Nextcloud: https://www.freeipa.org/page/Owncloud_Authentication_against_FreeIPA
+* Nextcloud: https://docs.nextcloud.com/server/13/admin_manual/configuration_user/user_auth_ldap.html
 * Foreman: https://www.freeipa.org/page/Creating_a_binddn_for_Foreman
 
