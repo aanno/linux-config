@@ -11,6 +11,32 @@ FreeIPA is a open source identity management solution from red hat. It includes:
 
 I use it because it sets up an standard LDAP and allows its easy administration.
 
+## Install
+
+```
+Setup complete
+
+Next steps:
+        1. You must make sure these network ports are open:
+                TCP Ports:
+                  * 80, 443: HTTP/HTTPS
+                  * 389, 636: LDAP/LDAPS
+                  * 88, 464: kerberos
+                UDP Ports:
+                  * 88, 464: kerberos
+                  * 123: ntp
+
+        2. You can now obtain a kerberos ticket using the command: 'kinit admin'
+           This ticket will allow you to use the IPA tools (e.g., ipa user-add)
+           and the web user interface.
+        3. Kerberos requires time synchronization between clients
+           and servers for correct operation. You should consider enabling ntpd.
+
+Be sure to back up the CA certificates stored in /root/cacert.p12
+These files are required to create replicas. The password for these
+files is the Directory Manager password
+```
+
 ## FreeIPA Ports
 
 The Ports used could NOT be changed. This is the main reason to use the docker 
@@ -55,6 +81,11 @@ org.apache.directory.api.ldap.model.exception.LdapInvalidAttributeValueException
 	at org.apache.directory.api.ldap.schema.manager.impl.DefaultSchemaManager.loadWithDeps(DefaultSchemaManager.java:1215)
 	at org.apache.directory.api.ldap.schema.manager.impl.DefaultSchemaManager.loadAllEnabled(DefaultSchemaManager.java:1096)
 ```
+
+### Other LDAP Browsers
+
+* https://www.ldap-account-manager.org/lamcms/
+  + https://www.ldap-account-manager.org/static/doc/manual/ch04s03.html
 
 ### LDAP Authentication
 
