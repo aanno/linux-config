@@ -6,8 +6,8 @@ services:
     # depends_on: 
     #  - letsencrypt-companion
     #  - proxy
-    ports:
-      - 8080:8080
+    # ports:
+    #  - 8080:8080
     #volumes:
     #  - ${BASE}/gitbucket-data:/gitbucket
     environment:
@@ -16,7 +16,9 @@ services:
       # -server -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m 
       # -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true
       #- JAVA_OPTS=-Xmx512m
-      - DB_VENDOR=h2
+      - DB_VENDOR=mariadb
+      - DB_ADDR=172.18.0.1
+      - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin1234
     networks:
