@@ -2,7 +2,9 @@ FROM opensuse/leap:15.0
 
 RUN zypper update -y && \
     # this is ansible based on python2 which we don't want (tp) \
-    zypper install -y ansible && \
+    zypper install -y ansible \
+        bash tar zip unzip gzip less tree file p7zip \
+        lsb-release && \
     zypper remove -y ansible && \
     zypper install -y python3-pip && \
     pip3 install --upgrade pip && \
