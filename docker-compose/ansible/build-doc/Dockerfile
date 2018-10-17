@@ -1,4 +1,5 @@
-FROM opensuse/leap:15.0
+FROM opensuse/py3-ansible
+# FROM opensuse/leap:15.0
 
 RUN zypper update && \
     zypper install -y python3-pip && \
@@ -18,4 +19,6 @@ RUN zypper update && \
         python3-packaging \
         python3-sphinx_rtd_theme \
         python3-alabaster && \
-    pip3 install typing 
+    pip3 install typing sphinx-autobuild && \
+    zypper clean -a && \
+    rm -rf /root/.cache/pip/*
