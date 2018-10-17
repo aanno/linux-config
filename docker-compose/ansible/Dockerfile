@@ -25,8 +25,10 @@ RUN zypper update -y && \
         python3-paramiko \
         python3-Jinja2 \
         nano \
-        git && \
-    zypper install -y gitk geany && \
+        git-core && \
+    # tp: even after x11 working in container, 
+    # there have been no fonts in geany and gitk crashes
+    # zypper install -y gitk geany && \
     pip3 install ansible && \
     # pip3 install ansible-container \
     pip3 install ansible-generator \

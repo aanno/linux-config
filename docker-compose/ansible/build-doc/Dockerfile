@@ -6,7 +6,7 @@ RUN zypper update -y && \
     pip3 install --upgrade pip && \
     zypper install -y \
         # not strictly needed - but now you can checkout doc build stuff
-        git \
+        git-core \
         make \
         python3-Sphinx \
         python3-sphinxcontrib-websupport \
