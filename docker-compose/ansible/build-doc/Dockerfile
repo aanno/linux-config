@@ -1,7 +1,7 @@
 FROM opensuse/py3-ansible
 # FROM opensuse/leap:15.0
 
-RUN zypper update && \
+RUN zypper update -y && \
     zypper install -y python3-pip && \
     pip3 install --upgrade pip && \
     zypper install -y \
