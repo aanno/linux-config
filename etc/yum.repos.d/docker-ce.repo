@@ -5,6 +5,13 @@ enabled=1
 gpgcheck=1
 gpgkey=https://download.docker.com/linux/fedora/gpg
 
+[docker-ce-stable28]
+name=Docker CE Stable 28 static - $basearch
+baseurl=https://download.docker.com/linux/fedora/28/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/fedora/gpg
+
 [docker-ce-stable-debuginfo]
 name=Docker CE Stable - Debuginfo $basearch
 baseurl=https://download.docker.com/linux/fedora/$releasever/debug-$basearch/stable
@@ -22,7 +29,7 @@ gpgkey=https://download.docker.com/linux/fedora/gpg
 [docker-ce-edge]
 name=Docker CE Edge - $basearch
 baseurl=https://download.docker.com/linux/fedora/$releasever/$basearch/edge
-enabled=1
+enabled=0
 gpgcheck=1
 gpgkey=https://download.docker.com/linux/fedora/gpg
 
@@ -57,6 +64,27 @@ gpgkey=https://download.docker.com/linux/fedora/gpg
 [docker-ce-test-source]
 name=Docker CE Test - Sources
 baseurl=https://download.docker.com/linux/fedora/$releasever/source/test
+enabled=0
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/fedora/gpg
+
+[docker-ce-nightly]
+name=Docker CE Nightly - $basearch
+baseurl=https://download.docker.com/linux/fedora/$releasever/$basearch/nightly
+enabled=0
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/fedora/gpg
+
+[docker-ce-nightly-debuginfo]
+name=Docker CE Nightly - Debuginfo $basearch
+baseurl=https://download.docker.com/linux/fedora/$releasever/debug-$basearch/nightly
+enabled=0
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/fedora/gpg
+
+[docker-ce-nightly-source]
+name=Docker CE Nightly - Sources
+baseurl=https://download.docker.com/linux/fedora/$releasever/source/nightly
 enabled=0
 gpgcheck=1
 gpgkey=https://download.docker.com/linux/fedora/gpg

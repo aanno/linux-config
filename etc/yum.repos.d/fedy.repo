@@ -1,0 +1,13 @@
+[fedy]
+name=Fedy Repository
+baseurl=https://dl.folkswithhats.org/fedora/$releasever/
+enabled=1
+metadata_expire=1d
+gpgcheck=0
+
+[fedy28]
+name=Fedy Repository 28 static
+baseurl=https://dl.folkswithhats.org/fedora/28/
+enabled=1
+metadata_expire=1d
+gpgcheck=0

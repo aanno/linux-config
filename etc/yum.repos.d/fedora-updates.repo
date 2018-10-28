@@ -1,7 +1,7 @@
 [updates]
 name=Fedora $releasever - $basearch - Updates
 failovermethod=priority
-#baseurl=http://download.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/
+#baseurl=http://download.fedoraproject.org/pub/fedora/linux/updates/$releasever/Everything/$basearch/
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch
 enabled=1
 repo_gpgcheck=0
@@ -14,7 +14,7 @@ skip_if_unavailable=False
 [updates-debuginfo]
 name=Fedora $releasever - $basearch - Updates - Debug
 failovermethod=priority
-#baseurl=http://download.fedoraproject.org/pub/fedora/linux/updates/$releasever/$basearch/debug/
+#baseurl=http://download.fedoraproject.org/pub/fedora/linux/updates/$releasever/Everything/$basearch/debug/
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-debug-f$releasever&arch=$basearch
 enabled=0
 repo_gpgcheck=0
@@ -27,7 +27,7 @@ skip_if_unavailable=False
 [updates-source]
 name=Fedora $releasever - Updates Source
 failovermethod=priority
-#baseurl=http://download.fedoraproject.org/pub/fedora/linux/updates/$releasever/SRPMS/
+#baseurl=http://download.fedoraproject.org/pub/fedora/linux/updates/$releasever/Everything/SRPMS/
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-source-f$releasever&arch=$basearch
 enabled=0
 repo_gpgcheck=0

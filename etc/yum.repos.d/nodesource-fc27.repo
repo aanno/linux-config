@@ -1,4 +1,4 @@
-[nodesource]
+[nodesource27]
 name=Node.js Packages for Fedora Linux 27 - $basearch
 baseurl=https://rpm.nodesource.com/pub_8.x/fc/27/$basearch
 failovermethod=priority
@@ -6,7 +6,7 @@ enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL
 
-[nodesource-source]
+[nodesource-source27]
 name=Node.js for Fedora Linux 27 - $basearch - Source
 baseurl=https://rpm.nodesource.com/pub_8.x/fc/27/SRPMS
 failovermethod=priority
