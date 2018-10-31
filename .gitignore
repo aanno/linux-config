@@ -1,6 +1,7 @@
 *~
 *.bak
 *.tmp
+*.log
 /.gtm/
 /.idea/workspace.xml
 /docker-compose/nextcloud/proxy/certs/
