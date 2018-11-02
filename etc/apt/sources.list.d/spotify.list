@@ -1,1 +1,2 @@
-deb http://repository.spotify.com stable non-free
+deb http://repository.spotify.com/ stable non-free
+

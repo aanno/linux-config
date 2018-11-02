@@ -2,61 +2,62 @@
 
 # See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
 # newer versions of the distribution.
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful main restricted
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful main restricted
+deb http://ftp.fau.de/ubuntu/ cosmic main
+deb-src http://ftp.fau.de/ubuntu/ cosmic main
 
 ## Major bug fix updates produced after the final release of the
 ## distribution.
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-updates main restricted
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-updates main restricted
+deb http://ftp.fau.de/ubuntu/ cosmic-updates main
+deb-src http://ftp.fau.de/ubuntu/ cosmic-updates main
 
 ## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
 ## team. Also, please note that software in universe WILL NOT receive any
 ## review or updates from the Ubuntu security team.
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful universe
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful universe
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-updates universe
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-updates universe
+deb http://ftp.fau.de/ubuntu/ cosmic universe
+deb-src http://ftp.fau.de/ubuntu/ cosmic universe
+deb http://ftp.fau.de/ubuntu/ cosmic-updates universe
+deb-src http://ftp.fau.de/ubuntu/ cosmic-updates universe
 
 ## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu 
 ## team, and may not be under a free licence. Please satisfy yourself as to 
 ## your rights to use the software. Also, please note that software in 
 ## multiverse WILL NOT receive any review or updates from the Ubuntu
 ## security team.
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful multiverse
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful multiverse
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-updates multiverse
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-updates multiverse
+deb http://ftp.fau.de/ubuntu/ cosmic multiverse
+deb-src http://ftp.fau.de/ubuntu/ cosmic multiverse
+deb http://ftp.fau.de/ubuntu/ cosmic-updates multiverse
+deb-src http://ftp.fau.de/ubuntu/ cosmic-updates multiverse
 
 ## N.B. software from this repository may not have been tested as
 ## extensively as that contained in the main release, although it includes
 ## newer versions of some applications which may provide useful features.
 ## Also, please note that software in backports WILL NOT receive any review
 ## or updates from the Ubuntu security team.
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-backports main restricted universe multiverse
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-backports main restricted universe multiverse
+deb http://ftp.fau.de/ubuntu/ cosmic-backports main universe multiverse
+deb-src http://ftp.fau.de/ubuntu/ cosmic-backports main universe multiverse
 
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-security main restricted
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-security main restricted
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-security universe
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-security universe
-deb http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-security multiverse
-deb-src http://vesta.informatik.rwth-aachen.de/ftp/pub/Linux/ubuntu/ubuntu/ artful-security multiverse
+deb http://ftp.fau.de/ubuntu/ cosmic-security main
+deb-src http://ftp.fau.de/ubuntu/ cosmic-security main
+deb http://ftp.fau.de/ubuntu/ cosmic-security universe
+deb-src http://ftp.fau.de/ubuntu/ cosmic-security universe
+deb http://ftp.fau.de/ubuntu/ cosmic-security multiverse
+deb-src http://ftp.fau.de/ubuntu/ cosmic-security multiverse
 
 ## Uncomment the following two lines to add software from Canonical's
 ## 'partner' repository.
 ## This software is not part of Ubuntu, but is offered by Canonical and the
 ## respective vendors as a service to Ubuntu users.
-deb http://archive.canonical.com/ubuntu artful partner
-# deb-src http://archive.canonical.com/ubuntu zesty partner
-deb http://download.virtualbox.org/virtualbox/debian artful contrib
-# deb-src http://download.virtualbox.org/virtualbox/debian artful contrib
+deb http://archive.canonical.com/ubuntu/ cosmic partner
+# deb-src http://archive.canonical.com/ubuntu/ cosmic partner
+
+deb [ arch=amd64 ] http://download.virtualbox.org/virtualbox/debian/ bionic contrib
+# [ arch=amd64 ] deb-src http://download.virtualbox.org/virtualbox/debian/ cosmic contrib
+
 deb http://www.bchemnet.com/suldr/ debian extra
 # deb-src http://www.bchemnet.com/suldr/ debian extra
-deb [arch=amd64] https://download.docker.com/linux/ubuntu artful stable
-# deb-src [arch=amd64] https://download.docker.com/linux/ubuntu artful stable
-deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest xenial main
-# deb-src http://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest xenial main
-# deb-src [arch=amd64] https://download.docker.com/linux/ubuntu artful stable
-deb [arch=amd64] https://download.docker.com/linux/ubuntu zesty stable
-# deb-src [arch=amd64] https://download.docker.com/linux/ubuntu zesty stable
+
+deb [ arch=amd64 ] https://download.docker.com/linux/ubuntu/ bionic stable
+# deb-src [ arch=amd64 ] https://download.docker.com/linux/ubuntu cosmic stable
+
+# deb http://repo.saltstack.com/apt/ubuntu/18.04/amd64/2018.3/dists/ bionic main #no release file
+# deb-src http://repo.saltstack.com/apt/ubuntu/18.04/amd64/2018.3/dists/ bionic main

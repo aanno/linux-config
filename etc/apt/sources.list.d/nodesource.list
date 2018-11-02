@@ -1,2 +1,2 @@
-deb https://deb.nodesource.com/node_8.x artful main
-# deb-src https://deb.nodesource.com/node_8.x artful main
+deb https://deb.nodesource.com/node_10.x cosmic main
+# deb-src https://deb.nodesource.com/node_10.x cosmic main

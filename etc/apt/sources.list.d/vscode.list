@@ -1,1 +1,2 @@
-deb https://packages.microsoft.com/repos/vscode stable main
+deb [ arch=amd64 ] https://packages.microsoft.com/repos/vscode/ stable main
+
