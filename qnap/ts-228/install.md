@@ -57,4 +57,3 @@ Installation is described at https://github.com/Optware/Optware-ng#getting-start
   + Gitea (Go) https://docs.gitea.io/en-us/
   + Gitbucket (Scala) https://github.com/gitbucket/gitbucket
   
-  

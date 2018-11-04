@@ -61,6 +61,7 @@ dnf upgrade
   [1](http://www.tecmint.com/things-to-do-after-fedora-23-installation/), 
   [2](http://www.binarytides.com/better-fedora-23/), 
   [3](https://www.linux.com/learn/11-things-do-after-installing-fedora-22) 
+* [modularity](https://docs.fedoraproject.org/en-US/modularity/)
 
 ### User zum Admin machen (sudo Rechte)
 

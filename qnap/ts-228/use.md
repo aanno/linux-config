@@ -91,3 +91,17 @@ rsync Musik/ -avhcSe ssh admin@192.168.10.58:/Download
 * For this usage, you need to use an NAS user with administrator privileges
   (admin in this example).
 * You need to type in the password OR setup certificate ssh login.
+
+## Lazy mounting
+
+`/etc/fstab`:
+```
+//192.168.10.58/Web     /home/tpasch/mnt/web    cifs    noauto,x-systemd.automount,x-systemd.device-timeout=30,x-systemd.idle-timeout=60,_netdev,user,vers=3.0,uid=1000,gid=100,forceuid,forcegid,cred=/home/tpasch/.cifscred        0       0
+```
+
+* https://wiki.archlinux.org/index.php/fstab
+* https://www.freedesktop.org/software/systemd/man/systemd.mount.html
+* https://pjs-web.de/post/autofs/
+  + https://superuser.com/questions/1232248/how-to-properly-mount-smb-drive-on-demand-in-linux
+* https://michlstechblog.info/blog/systemd-mount-examples-for-cifs-shares/
+  + https://wiki.manjaro.org/index.php?title=Fstab_-_Use_SystemD_automount_(de)
