@@ -4,6 +4,7 @@ baseurl=https://dl.ring.cx/ring-nightly/fedora_$releasever
 gpgcheck=1
 gpgkey=https://dl.ring.cx/ring.pub.key
 enabled=1
+skip_if_unavailable=True
 
 [ring28]
 name=Ring 28 static - $basearch - ring
