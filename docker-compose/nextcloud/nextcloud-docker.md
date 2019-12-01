@@ -60,15 +60,39 @@ requires having the following lines in `config.php`:
   ),
 ```
 
+## SELinux
+
+* On fedora, `/var/log/audit/audit.log` is your friend
+* It seems that my current way to have the persistent container data in `/home/dockeruser`
+  is not the best thing to do. You should better work with (docker) _volumes_.
+
+type=AVC msg=audit(1575217192.400:7775): avc:  denied  { write } for  pid=66900 comm="rsync" name="config" dev="dm-3" ino=3233962 scontext=system_u:system_r:container_t:s0:c754,c866 tcontext=unconfined_u:object_r:user_home_t:s0 tclass=dir permissive=0
+
+This could happen is you don't use the 'z' option on directory/file docker mount. See http://jaormx.github.io/2018/selinux-and-docker-notes/ .
+
+## Podman
+
+* Fedora >= 31 (and RHEL >=8!) does _not_ support docker out of the box (you have to disable 
+  sec groups v2 and fall back to sec groups v1 - see internet).
+* For migration, see https://github.com/containers/libpod/blob/master/transfer.md
+* For pod handling, see https://developers.redhat.com/blog/2019/01/15/podman-managing-containers-pods/
+* However, podman has a few issues as well:
+  - podman-compose does not work reliable. In addition, it is _not_ meant for production.
+  - `/var/run/docker.sock` is no more. Hence the 'let's encrypt' has to be done different.
+  - See https://github.com/portainer/portainer/issues/2991 and 
+    https://www.projectatomic.io/blog/2018/05/podman-varlink/ for more information.
+
 ## Status and known problem
 
+* `version.php` is _not_ in `nextcloud` folder but in `/var/www/html` and has to be copied to the right
+  destination
 * `nextcloud-docker.yml` is using some environment variables. Use 
   `dnc-compose.sh` instead of using `docker-compose` directly.
 * No docker container for the database. I use this compose with an external 
   (mysql) db.
 * A collabora container but it is _not_ (yet) used. Hence, comment it out!
 * Redis container for file locking
-* Solr container for nextant full text search.
+* Solr container for nextant full text search. (Untested!)
 * Uses the _stable_ version of nextcloud (currently 11.0.5).
 
 ### Known problems
