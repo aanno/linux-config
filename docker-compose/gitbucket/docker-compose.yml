@@ -9,10 +9,12 @@ services:
     # ports:
     #   - 8080:8080
     volumes:
-      # - ${BASE}/gitbucket-data:/gitbucket
-      - type: bind
-        source: ${BASE}/gitbucket-data
-        target: /gitbucket
+      - ${BASE}/gitbucket-data:/gitbucket:z
+      #- type: bind
+      #  source: ${BASE}/gitbucket-data
+      #  target: /gitbucket
+      #  volume: 
+      #    mode: z
     environment:
       - GITBUCKET_OPTS=--prefix=${BASE_PATH}
       - JAVA_OPTS=-Xmx512m
