@@ -46,6 +46,13 @@ services:
     networks:
       - proxy-tier
 
+# jrcs/letsencrypt-nginx-proxy-companion does _not_ support wildcard domain
+# (see https://github.com/nginx-proxy/docker-letsencrypt-nginx-proxy-companion/issues/319)
+# 
+# An alternative would be https://github.com/adferrand/dnsrobocert and hence I posted 
+# a question at 
+# https://forum.netcup.de/administration-eines-server-vserver/vserver-server-kvm-server/12532-dnsrobocert-f%C3%BCr-letsencrypt/
+
 #  letsencrypt-companion-old:
 #    image: alastaircoote/docker-letsencrypt-nginx-proxy-companion
 #    container_name: letsencrypt-companion
