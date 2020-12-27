@@ -18,5 +18,15 @@ IGNITION_CONFIG=`readlink -f "${CONFIG_FILE_NAME}.ign"`
 virt-install --connect="qemu:///system" --name="${VM_NAME}" --vcpus="${VCPUS}" --memory="${RAM_MB}" \
         --os-variant="fedora-coreos-$STREAM" --import --graphics=none \
         --disk="size=${DISK_GB},backing_store=${IMAGE}" \
-        --qemu-commandline="-fw_cfg name=opt/com.coreos/config,file=${IGNITION_CONFIG}"
+        --qemu-commandline="-fw_cfg name=opt/com.coreos/config,file=${IGNITION_CONFIG}" \
+        --network network=default
+
+# networking tp:
+# 
+# --network network=default
+# (Default) libvirt NAT networking: Networking will work, but services will only
+# be available on dom0. CoreOS will report (local) ip address, like in
+# 
+# enp1s0: 192.168.122.91 fe80::5054:ff:fe8a:5fc2
+# 
 
