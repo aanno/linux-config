@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  web:
+    image: linuxserver/swag:latest
+    container_name: nginx-autoletsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      # ids of outer user?!? (aanno)
+      # PUID: 1000
+      # PGID: 1000
+      TZ: Europe/Berlin
+      SUBDOMAINS: ''
+      VALIDATION: http
+      DHLEVEL: 2048
+      ONLY_SUBDOMAINS: false
+      STAGING: false
+      # URL: $SERVER_FQDN
+      URL: 127.0.0.1
+      # EMAIL: $EMAIL
+      EMAIL: aanno.trash@gmail.com
+      # EXTRA_DOMAINS: $SSL_DOMAINS
+      EXTRA_DOMAINS: breitbandig.local,netzgeneration.local
+    volumes:
+      - ./nginx-autoletsenrypt/:/config:Z
+    ports:
+      - 8443:443
+      # probably won't work (as validation needs port 80) (aanno)
+      - 8080:80
+    restart: unless-stopped
