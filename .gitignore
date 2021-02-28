@@ -11,3 +11,7 @@ fcos.qcow2
 /docker-compose/gitbucket/plugins
 
 /podman-compose/nextcloud/nginx-autoletsenrypt
+/podman-compose/dnsrobocert/dnsrobocert/config.yml
+/podman-compose/dnsrobocert/cert/
+/podman-compose/dnsrobocert/cert*/
+

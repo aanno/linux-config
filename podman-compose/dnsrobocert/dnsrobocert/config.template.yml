@@ -1,0 +1,22 @@
+# https://dnsrobocert.readthedocs.io/en/latest/user_guide.html
+draft: true
+acme:
+  email_account: thomas.pasch@gmx.de
+  staging: true
+profiles:
+- name: netcup_profile
+  provider: netcup
+  provider_options:
+    auth_customer_id: <id>
+    auth_api_key: <key>
+    auth_api_password: <pw>
+certificates:
+#- domains:
+#  - mail.example.net
+#  - ldap.example.net
+#  profile: henet_profile
+- domains:
+  - "*.example.net"
+  - example.net
+  profile: netcup_profile
+
