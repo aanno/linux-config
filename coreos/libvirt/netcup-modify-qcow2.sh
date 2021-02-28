@@ -15,11 +15,13 @@ fcct -p -s -o "${CONFIG_FILE_NAME}.ign" "${CONFIG_FILE_NAME}.fcc"
 IGNITION_CONFIG=`readlink -f "${CONFIG_FILE_NAME}.ign"`
 COREOS_BOOT_DEV=$(virt-filesystems -a $MOD_IMAGE -l | grep boot | awk -F ' ' '{print $1}')
 
+cp "$IGNITION_CONFIG" config.ign
+
 guestfish add fcos.qcow2 : \
           run : \
           mount "$COREOS_BOOT_DEV" / : \
           mkdir /ignition : \
-          copy-in "$IGNITION_CONFIG" /ignition/ : \
+          copy-in config.ign /ignition/ : \
           unmount-all : \
           exit
 
