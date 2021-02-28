@@ -1,4 +1,5 @@
 #!/bin/bash
+# make a local vm from coreos image
 
 CONFIG_FILE_NAME=my
 

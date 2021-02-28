@@ -3,6 +3,7 @@
 *.tmp
 *.log
 *.ign
+fcos.qcow2
 /.gtm/
 /.idea/workspace.xml
 /docker-compose/nextcloud/proxy/certs/
