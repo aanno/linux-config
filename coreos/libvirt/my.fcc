@@ -22,4 +22,45 @@ systemd:
         contents: |
           [Service]
           Environment=OPTIONS='-oPasswordAuthentication=yes'
+storage:
+  files:
+    - path: /etc/NetworkManager/system-connections/enp1s0.nmconnection
+      mode: 0600
+      contents:
+        inline: |
+          [connection]
+          id=enp1s0
+          type=ethernet
+          interface-name=enp1s0
+          [ipv4]
+          dns-search=
+          method=auto
+          [ipv6]
+          addr-gen-mode=eui64
+          dns-search=
+          method=auto
+  disks:
+    - device: /dev/vda
+      # The name of the primary block device. In virtio-based setups, this is
+	  # likely `/dev/vda`. Elsewhere, it's likely `/dev/sda`.
+	  # We do not want to wipe the partition table since this is the primary
+	  # device.
+      wipe_table: false
+      partitions:
+        - size_mib: 0
+          # Start at 5G so that we leave enough space for the root partition.
+          # See the important NOTE below about this.
+          start_mib: 5000
+          # We assign a descriptive label to the partition. This is important
+          # for referring to it in a device-agnostic way in other parts of the
+          # configuration.
+          label: var
+  filesystems:
+    - path: /var
+      device: /dev/disk/by-partlabel/var
+      # We can select the filesystem we'd like.
+      format: xfs
+      # Ask FCCT to generate a mount unit for us so that this filesystem gets
+      # mounted in the real root.
+      with_mount_unit: true
 
