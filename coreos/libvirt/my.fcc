@@ -36,9 +36,12 @@ storage:
           dns-search=
           method=auto
           [ipv6]
-          addr-gen-mode=eui64
+          #addr-gen-mode=eui64
+          #address1=2a01:1450:4016:801::2003
+          addr-gen-mode=stable-privacy
+          address1=fe80::2605:11ef:fe8e:68a5
           dns-search=
-          method=auto
+          method=manual
   disks:
     - device: /dev/vda
       # The name of the primary block device. In virtio-based setups, this is
