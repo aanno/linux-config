@@ -1,4 +1,4 @@
 #!/bin/bash -x 
 
-podman run -it --entrypoint=sh certbot/certbot
+podman run --rm -it --entrypoint=sh certbot/certbot
 
