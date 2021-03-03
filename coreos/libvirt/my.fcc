@@ -38,10 +38,11 @@ storage:
           [ipv6]
           #addr-gen-mode=eui64
           #address1=2a01:1450:4016:801::2003
-          addr-gen-mode=stable-privacy
-          address1=fe80::5054:ff:fe01:7777
-          dns-search=
-          method=manual
+          #addr-gen-mode=stable-privacy
+          #address1=fe80::5054:ff:fe01:7777
+          #dns-search=
+          #method=manual
+          method=auto
   disks:
     - device: /dev/vda
       # The name of the primary block device. In virtio-based setups, this is
