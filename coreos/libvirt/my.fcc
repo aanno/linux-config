@@ -22,6 +22,71 @@ systemd:
         contents: |
           [Service]
           Environment=OPTIONS='-oPasswordAuthentication=yes'
+    - name: daily.service
+      enabled: false
+      contents: |
+        [Unit]
+        Description=core@daily
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        TimeoutStartSec=0
+        ExecStart=/var/home/core/cron/daily.sh
+    - name: weekly.service
+      enabled: false
+      contents: |
+        [Unit]
+        Description=core@weekly
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        TimeoutStartSec=0
+        ExecStart=/var/home/core/cron/daily.sh
+    # - name: daily.timer
+    #   enabled: true
+    #   contents: |
+    #     [Unit]
+    #     Description=timer@core@weekly
+
+    #     [Service]
+    #     # OnCalendar=*-*-* *:*:00
+    #     AccuracySec=600
+    #     RandomizedDelaySec=300
+    #     RemainAfterElapse=true
+
+    #     [Install]
+    #     WantedBy: multi-user.target
+
+    # - name: daily.timer
+    #   enabled: true
+    #   contents: |
+    #     [Unit]
+    #     Description: timer@core@daily
+
+    #     [Timer]
+    #     OnCalendar=*-*-* *:*:00
+    #     AccuracySec=5m
+    #     RandomizedDelaySec=60
+    #     RemainAfterElapse=true
+
+    #     [Install]
+    #     WantedBy: multi-user.target
+    # - name: weekly.timer
+    #   enabled: false
+    #   contents: |
+    #     [Unit]
+    #     Description=timer@core@daily
+
+    #     [Timer]
+    #     OnCalendar=*-*-* *:*:30
+    #     AccuracySec=5m
+    #     RandomizedDelaySec=60
+    #     RemainAfterElapse=true
+
+    #     [Install]
+    #     WantedBy: multi-user.target
 storage:
   files:
     - path: /etc/NetworkManager/system-connections/enp1s0.nmconnection
@@ -49,7 +114,46 @@ storage:
     - path: /etc/hostname
       mode: 0644
       contents:
-        inline: netzgeneration.com
+        inline: netzgeneration
+    - path: /etc/sysctl.d/10-network.conf
+      mode: 0644
+      contents:
+        inline: |
+          # allow bridge
+          net.ipv4.ip_forward=1
+          net.ipv4.ip_local_reserved_ports=30000-32767
+          net.bridge.bridge-nf-call-iptables=1
+          net.bridge.bridge-nf-call-arptables=1
+          net.bridge.bridge-nf-call-ip6tables=1
+
+          # https://serverfault.com/questions/563700/assign-ipv6-address-to-kvm-guests-on-bridge-mode
+          net.ipv4.conf.all.forwarding=1
+          net.ipv6.conf.default.forwarding=1
+
+          # virsh libvirt complaining
+          net.ipv6.conf.all.accept_ra=2
+
+          # ping/imcp on podman
+          # https://github.com/containers/podman/issues/2488
+          net.ipv4.ping_group_range = 0 2147483647
+    - path: /var/home/core/cron/daily.sh
+      user:
+        name: core
+      mode: 0744
+      contents:
+        inline: |
+          #!/bin/bash -x
+          DATE=`date -Iseconds`
+          echo "$DATE: Hello daily, $*" >>/var/home/core/cron.log
+    - path: /var/home/core/cron/weekly.sh
+      user:
+        name: core
+      mode: 0744
+      contents:
+        inline: |
+          #!/bin/bash -x
+          DATE=`date -Iseconds`
+          echo "$DATE: Hello weekly, $*" >>/var/home/core/cron.log
     - path: /etc/systemd/zram-generator.conf
       mode: 0644
       contents:
@@ -103,6 +207,8 @@ storage:
       # device.
       wipe_table: false
       partitions:
+        - size_mib: 2000
+          label: backup
         - size_mib: 0
           # Start at 5G so that we leave enough space for the root partition.
           # See the important NOTE below about this.
@@ -112,6 +218,10 @@ storage:
           # configuration.
           label: var
   filesystems:
+    - path: /var/backup
+      device: /dev/disk/by-partlabel/backup
+      format: xfs
+      with_mount_unit: true
     - path: /var
       device: /dev/disk/by-partlabel/var
       # We can select the filesystem we'd like.
