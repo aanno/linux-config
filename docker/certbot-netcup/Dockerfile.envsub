@@ -1,0 +1,3 @@
+FROM docker.io/certbot/certbot:${VERSION}
+
+RUN pip install certbot-dns-netcup
