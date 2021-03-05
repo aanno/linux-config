@@ -94,7 +94,8 @@ storage:
     - path: /etc/alternatives/ip6tables-save
       target: /usr/sbin/ip6tables-nft-save
       overwrite: true
-      hard: false  disks:
+      hard: false  
+  disks:
     - device: /dev/vda
       # The name of the primary block device. In virtio-based setups, this is
       # likely `/dev/vda`. Elsewhere, it's likely `/dev/sda`.
