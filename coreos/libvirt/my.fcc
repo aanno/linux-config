@@ -32,7 +32,7 @@ systemd:
 
         [Service]
         TimeoutStartSec=0
-        ExecStart=/var/home/core/cron/daily.sh
+        ExecStart=/bin/sh /var/home/core/cron/daily.sh
     - name: weekly.service
       enabled: false
       contents: |
@@ -43,7 +43,7 @@ systemd:
 
         [Service]
         TimeoutStartSec=0
-        ExecStart=/var/home/core/cron/weekly.sh
+        ExecStart=/bin/sh /var/home/core/cron/weekly.sh
     - name: daily.timer
       enabled: true
       contents: |
@@ -59,10 +59,10 @@ systemd:
         [Install]
         WantedBy=timers.target
     - name: weekly.timer
-      enabled: false
+      enabled: true
       contents: |
         [Unit]
-        Description=timer@core@daily
+        Description=timer@core@weekly
 
         [Timer]
         OnCalendar=*-*-* *:*:30
