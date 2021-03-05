@@ -37,21 +37,69 @@ storage:
           method=auto
           [ipv6]
           dns=fd00::3681:c4ff:fec9:6d8b
-          addr-gen-mode=eui64
-          address1=2001:470:26:ba5:2d41:caa8:525a:abcd
+          # addr-gen-mode=eui64
+          addr-gen-mode=stable-privacy
+          # address1=2001:470:26:ba5:2d41:caa8:525a:abcd
           address2=fe80::4049:b055:c122:abcd
-          #address1=2a01:1450:4016:801::2003
-          #addr-gen-mode=stable-privacy
-          #address1=fe80::5054:ff:fe01:7777
+          # address1=2a01:1450:4016:801::2003
+          # address1=fe80::5054:ff:fe01:7777
           #dns-search=
           #method=manual
           method=auto
-  disks:
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: netzgeneration.com
+    - path: /etc/systemd/zram-generator.conf
+      mode: 0644
+      contents:
+        inline: |
+          # This config file enables a /dev/zram0 device with the default settings
+          [zram0]
+    - path: /etc/zincati/config.d/51-rollout-wariness.toml
+      contents:
+        inline: |
+          [identity]
+          rollout_wariness = 0.6
+    - path: /etc/zincati/config.d/55-updates-strategy.toml
+      contents:
+        inline: |
+          [updates]
+          strategy = "periodic"
+          [[updates.periodic.window]]
+          days = [ "Sat", "Sun" ]
+          start_time = "22:30"
+          length_minutes = 60
+  links:
+    - path: /etc/alternatives/iptables
+      target: /usr/sbin/iptables-nft
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/iptables-restore
+      target: /usr/sbin/iptables-nft-restore
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/iptables-save
+      target: /usr/sbin/iptables-nft-save
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/ip6tables
+      target: /usr/sbin/ip6tables-nft
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/ip6tables-restore
+      target: /usr/sbin/ip6tables-nft-restore
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/ip6tables-save
+      target: /usr/sbin/ip6tables-nft-save
+      overwrite: true
+      hard: false  disks:
     - device: /dev/vda
       # The name of the primary block device. In virtio-based setups, this is
-	  # likely `/dev/vda`. Elsewhere, it's likely `/dev/sda`.
-	  # We do not want to wipe the partition table since this is the primary
-	  # device.
+      # likely `/dev/vda`. Elsewhere, it's likely `/dev/sda`.
+      # We do not want to wipe the partition table since this is the primary
+      # device.
       wipe_table: false
       partitions:
         - size_mib: 0
