@@ -31,6 +31,7 @@ systemd:
         Wants=network-online.target
 
         [Service]
+        User=core
         TimeoutStartSec=0
         ExecStart=/bin/sh /var/home/core/cron/daily.sh
     - name: weekly.service
@@ -42,6 +43,7 @@ systemd:
         Wants=network-online.target
 
         [Service]
+        User=core
         TimeoutStartSec=0
         ExecStart=/bin/sh /var/home/core/cron/weekly.sh
     - name: daily.timer
