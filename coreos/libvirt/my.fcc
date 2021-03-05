@@ -36,7 +36,10 @@ storage:
           dns-search=
           method=auto
           [ipv6]
-          #addr-gen-mode=eui64
+          dns=fd00::3681:c4ff:fec9:6d8b
+          addr-gen-mode=eui64
+          address1=2001:470:26:ba5:2d41:caa8:525a:abcd
+          address2=fe80::4049:b055:c122:abcd
           #address1=2a01:1450:4016:801::2003
           #addr-gen-mode=stable-privacy
           #address1=fe80::5054:ff:fe01:7777
