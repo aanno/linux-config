@@ -3,6 +3,7 @@
 *.tmp
 *.log
 *.ign
+*.out
 fcos.qcow2
 /.gtm/
 /.idea/workspace.xml
@@ -14,4 +15,4 @@ fcos.qcow2
 /podman-compose/dnsrobocert/dnsrobocert/config.yml
 /podman-compose/dnsrobocert/cert/
 /podman-compose/dnsrobocert/cert*/
-
+/docker/certbot-netcup/Dockerfile
