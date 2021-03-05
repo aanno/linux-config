@@ -43,50 +43,35 @@ systemd:
 
         [Service]
         TimeoutStartSec=0
-        ExecStart=/var/home/core/cron/daily.sh
-    # - name: daily.timer
-    #   enabled: true
-    #   contents: |
-    #     [Unit]
-    #     Description=timer@core@weekly
+        ExecStart=/var/home/core/cron/weekly.sh
+    - name: daily.timer
+      enabled: true
+      contents: |
+        [Unit]
+        Description=timer@core@daily
 
-    #     [Service]
-    #     # OnCalendar=*-*-* *:*:00
-    #     AccuracySec=600
-    #     RandomizedDelaySec=300
-    #     RemainAfterElapse=true
+        [Timer]
+        OnCalendar=*-*-* *:*:00
+        # AccuracySec=5m
+        # RandomizedDelaySec=60
+        RemainAfterElapse=true
 
-    #     [Install]
-    #     WantedBy: multi-user.target
+        [Install]
+        WantedBy=timers.target
+    - name: weekly.timer
+      enabled: false
+      contents: |
+        [Unit]
+        Description=timer@core@daily
 
-    # - name: daily.timer
-    #   enabled: true
-    #   contents: |
-    #     [Unit]
-    #     Description: timer@core@daily
+        [Timer]
+        OnCalendar=*-*-* *:*:30
+        # AccuracySec=5m
+        # RandomizedDelaySec=60
+        RemainAfterElapse=true
 
-    #     [Timer]
-    #     OnCalendar=*-*-* *:*:00
-    #     AccuracySec=5m
-    #     RandomizedDelaySec=60
-    #     RemainAfterElapse=true
-
-    #     [Install]
-    #     WantedBy: multi-user.target
-    # - name: weekly.timer
-    #   enabled: false
-    #   contents: |
-    #     [Unit]
-    #     Description=timer@core@daily
-
-    #     [Timer]
-    #     OnCalendar=*-*-* *:*:30
-    #     AccuracySec=5m
-    #     RandomizedDelaySec=60
-    #     RemainAfterElapse=true
-
-    #     [Install]
-    #     WantedBy: multi-user.target
+        [Install]
+        WantedBy=timers.target
 storage:
   files:
     - path: /etc/NetworkManager/system-connections/enp1s0.nmconnection
@@ -101,6 +86,7 @@ storage:
           dns-search=
           method=auto
           [ipv6]
+          # see https://developer.gnome.org/NetworkManager/stable/settings-ipv6.html
           dns=fd00::3681:c4ff:fec9:6d8b
           # addr-gen-mode=eui64
           addr-gen-mode=stable-privacy
@@ -110,7 +96,8 @@ storage:
           # address1=fe80::5054:ff:fe01:7777
           #dns-search=
           #method=manual
-          method=auto
+          #method=auto
+          method=disabled
     - path: /etc/hostname
       mode: 0644
       contents:
@@ -229,4 +216,3 @@ storage:
       # Ask FCCT to generate a mount unit for us so that this filesystem gets
       # mounted in the real root.
       with_mount_unit: true
-
