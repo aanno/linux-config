@@ -95,12 +95,12 @@ storage:
           addr-gen-mode=eui64
           # addr-gen-mode=stable-privacy
           address1=2001:470:26:ba5:2d41:caa8:525a:abcd
-          address2=fe80::4049:b055:c122:abcd
+          # address2=fe80::4049:b055:c122:abcd
           # address1=2a01:1450:4016:801::2003
           # address1=fe80::5054:ff:fe01:7777
           #dns-search=
-          method=manual
-          # method=auto
+          # method=manual
+          method=auto
           # method=disabled
     - path: /etc/hostname
       mode: 0644
