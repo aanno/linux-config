@@ -22,6 +22,18 @@ systemd:
         contents: |
           [Service]
           Environment=OPTIONS='-oPasswordAuthentication=yes'
+    - name: onstart.service
+      enabled: false
+      contents: |
+        [Unit]
+        Description=core@onstart
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        User=core
+        TimeoutStartSec=0
+        ExecStart=/bin/sh /var/home/core/cron/onstart.sh
     - name: daily.service
       enabled: false
       contents: |
@@ -46,6 +58,20 @@ systemd:
         User=core
         TimeoutStartSec=0
         ExecStart=/bin/sh /var/home/core/cron/weekly.sh
+    - name: onstart.timer
+      enabled: true
+      contents: |
+        [Unit]
+        Description=timer@core@onstart
+
+        [Timer]
+        OnStartupSec=15
+        # AccuracySec=5m
+        # RandomizedDelaySec=60
+        RemainAfterElapse=true
+
+        [Install]
+        WantedBy=timers.target
     - name: daily.timer
       enabled: true
       contents: |
@@ -76,6 +102,7 @@ systemd:
         WantedBy=timers.target
 storage:
   files:
+    # local libvirt: enp1s0, netcup: ens3
     - path: /etc/NetworkManager/system-connections/enp1s0.nmconnection
       mode: 0600
       contents:
@@ -127,6 +154,18 @@ storage:
           # ping/imcp on podman
           # https://github.com/containers/podman/issues/2488
           net.ipv4.ping_group_range = 0 2147483647
+
+          # let podman rootless use port 80+
+          net.ipv4.ip_unprivileged_port_start=80
+    - path: /var/home/core/cron/onstart.sh
+      user:
+        name: core
+      mode: 0744
+      contents:
+        inline: |
+          #!/bin/bash -x
+          DATE=`date -Iseconds`
+          echo "$DATE: Hello onstart, $*" >>/var/home/core/cron.log
     - path: /var/home/core/cron/daily.sh
       user:
         name: core
@@ -162,10 +201,11 @@ storage:
           [updates]
           strategy = "periodic"
           [[updates.periodic.window]]
-          days = [ "Sat", "Sun" ]
-          start_time = "22:30"
+          days = [ "Sun", "Mon" ]
+          start_time = "03:15"
           length_minutes = 60
   links:
+    # TODO: ebtables stuff
     - path: /etc/alternatives/iptables
       target: /usr/sbin/iptables-nft
       overwrite: true
