@@ -157,6 +157,14 @@ storage:
 
           # let podman rootless use port 80+
           net.ipv4.ip_unprivileged_port_start=80
+    - path: /etc/sysctl.d/20-vm.conf
+      mode: 0644
+      contents:
+        inline: |
+        # https://code.visualstudio.com/docs/setup/linux
+        fs.inotify.max_user_watches=524288
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
+        vm.max_map_count=262144
     - path: /var/home/core/cron/onstart.sh
       user:
         name: core
