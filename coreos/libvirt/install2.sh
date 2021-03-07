@@ -22,9 +22,12 @@ virt-install --connect="qemu:///system" --name="${VM_NAME}" --vcpus="${VCPUS}" -
         --os-variant="fedora-coreos-$STREAM" --import --graphics=none \
         --disk="size=${DISK_GB},backing_store=${IMAGE}" \
         --qemu-commandline="-fw_cfg name=opt/com.coreos/config,file=${IGNITION_CONFIG}" \
-        --network network=br0
+        --network network=default
 
 # networking tp:
+# 
+# --network network=br0
+# better, but always unstable, sometimes works, sometimes don't
 # 
 # --network network=default
 # (Default) libvirt NAT networking: Networking will work, but services will only
