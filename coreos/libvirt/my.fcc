@@ -167,6 +167,7 @@ storage:
           vm.max_map_count=262144
     - path: /etc/security/limits.conf
       mode: 0644
+      overwrite: true
       contents:
         inline: |
           # /etc/security/limits.conf
@@ -308,7 +309,37 @@ storage:
     - path: /etc/alternatives/ip6tables-save
       target: /usr/sbin/ip6tables-nft-save
       overwrite: true
-      hard: false  
+      hard: false
+      # ebtables
+    - path: /etc/alternatives/ebtables
+      target: /usr/sbin/ebtables-nft
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/ebtables-restore
+      target: /usr/sbin/ebtables-nft-restore
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/ebtables-save
+      target: /usr/sbin/ebtables-nft-save
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/eb6tables
+      target: /usr/sbin/eb6tables-nft
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/eb6tables-restore
+      target: /usr/sbin/eb6tables-nft-restore
+      overwrite: true
+      hard: false
+    - path: /etc/alternatives/eb6tables-save
+      target: /usr/sbin/eb6tables-nft-save
+      overwrite: true
+      hard: false
+  # luks:
+  #   - name: luks
+  #     device: /dev/vda1
+  #     key_file:
+  #       local: ./luks_key
   disks:
     - device: /dev/vda
       # The name of the primary block device. In virtio-based setups, this is
@@ -330,10 +361,12 @@ storage:
   filesystems:
     - path: /var/backup
       device: /dev/disk/by-partlabel/backup
+      # device: /dev/disk/by-id/luks
       format: xfs
       with_mount_unit: true
     - path: /var
       device: /dev/disk/by-partlabel/var
+      # device: /dev/disk/by-id/luks
       # We can select the filesystem we'd like.
       format: xfs
       # Ask FCCT to generate a mount unit for us so that this filesystem gets

@@ -13,7 +13,7 @@ RAM_MB="8192"
 DISK_GB="20"
 STREAM="stable"
 
-fcct -p -s -o "${CONFIG_FILE_NAME}.ign" "${CONFIG_FILE_NAME}.fcc" || exit -1
+fcct -p -s -d . -o "${CONFIG_FILE_NAME}.ign" "${CONFIG_FILE_NAME}.fcc" || exit -1
 
 # absolute path needed
 IGNITION_CONFIG=`readlink -f "${CONFIG_FILE_NAME}.ign"`
