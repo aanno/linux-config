@@ -335,11 +335,6 @@ storage:
       target: /usr/sbin/eb6tables-nft-save
       overwrite: true
       hard: false
-  # luks:
-  #   - name: luks
-  #     device: /dev/vda1
-  #     key_file:
-  #       local: ./luks_key
   disks:
     - device: /dev/vda
       # The name of the primary block device. In virtio-based setups, this is
@@ -358,15 +353,26 @@ storage:
           # for referring to it in a device-agnostic way in other parts of the
           # configuration.
           label: var
+  luks:
+    - name: luks-backup
+      label: luks-backup
+      device: /dev/disk/by-partlabel/backup
+      key_file:
+        local: ./luks_key
+    - name: luks-var
+      label: luks-var
+      device: /dev/disk/by-partlabel/var
+      key_file:
+        local: ./luks_key
   filesystems:
     - path: /var/backup
-      device: /dev/disk/by-partlabel/backup
-      # device: /dev/disk/by-id/luks
+      # device: /dev/disk/by-partlabel/backup
+      device: /dev/mapper/luks-backup
       format: xfs
       with_mount_unit: true
     - path: /var
-      device: /dev/disk/by-partlabel/var
-      # device: /dev/disk/by-id/luks
+      # device: /dev/disk/by-partlabel/var
+      device: /dev/mapper/luks-var
       # We can select the filesystem we'd like.
       format: xfs
       # Ask FCCT to generate a mount unit for us so that this filesystem gets
