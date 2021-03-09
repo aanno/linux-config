@@ -253,7 +253,7 @@ storage:
         inline: |
           [Interface]
           # https://simpledns.plus/private-ipv6
-          Address = 192.168.159.1/24,fdab:ec02:68de:3f47::/64
+          Address = 192.168.159.1/24,fdab:ec02:68de:3f47::1/64
           PrivateKey = yO6VWeg9x/hEA3/e/Obfh5qWx0/s0PkGlI0GhtZ3EVs=
           ListenPort = 51820
 
