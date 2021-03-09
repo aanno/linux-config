@@ -26,6 +26,8 @@ systemd:
         contents: |
           [Service]
           Environment=OPTIONS='-oPasswordAuthentication=yes'
+    - name: wg-quick@wg0.service
+      enabled: true
     - name: onstart.service
       enabled: false
       contents: |
@@ -245,6 +247,28 @@ storage:
           *                hard    nofile          65000
 
           # End of file
+    - path: /etc/wireguard/wg0.conf
+      mode: 0600
+      contents:
+        inline: |
+          [Interface]
+          # https://simpledns.plus/private-ipv6
+          Address = 192.168.159.1/24,fdab:ec02:68de:3f47::/64
+          PrivateKey = yO6VWeg9x/hEA3/e/Obfh5qWx0/s0PkGlI0GhtZ3EVs=
+          ListenPort = 51820
+
+          PostUp = iptables-nft -A FORWARD -i wg0 -j ACCEPT; iptables-nft -t nat -A POSTROUTING -o enp1s0 -j MASQUERADE; ip6tables-nft -A FORWARD -i wg0 -j ACCEPT; ip6tables-nft -t nat -A POSTROUTING -o enp1s0 -j MASQUERADE
+          PostDown = iptables-nft -D FORWARD -i wg0 -j ACCEPT; iptables-nft -t nat -D POSTROUTING -o enp1s0 -j MASQUERADE; ip6tables-nft -D FORWARD -i wg0 -j ACCEPT; ip6tables-nft -t nat -D POSTROUTING -o enp1s0 -j MASQUERADE
+
+          [Peer]
+          PublicKey = 0VR1TY2uJignKcMLKSZnWDEE7kLTiVESwDN+Qtr+h30=
+          PresharedKey = eNatQ21xnWXyMRYz75EVl93lKrLwm71csbIdH2fEgzc=
+          AllowedIPs = 192.168.159.0/24,fdab:ec02:68de:3f47::/64
+
+          [Peer]
+          PublicKey = GZetWiYtanijNBjLBuUiAUqRrZg5UET0US/dWSy+VA4=
+          PresharedKey = jyloWYz4YMGcIH4m/mqkaPue0t+1CO0xXPL4MHueLz4=
+          AllowedIPs = 192.168.159.0/24,fdab:ec02:68de:3f47::/64
     - path: /var/home/core/cron/onstart.sh
       user:
         name: core
@@ -293,6 +317,7 @@ storage:
           start_time = "03:15"
           length_minutes = 60
   links:
+    # probably unneeded
     # TODO: ebtables stuff
     - path: /etc/alternatives/iptables
       target: /usr/sbin/iptables-nft
