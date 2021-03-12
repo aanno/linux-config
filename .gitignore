@@ -16,4 +16,5 @@ fcos.qcow2
 /podman-compose/dnsrobocert/cert/
 /podman-compose/dnsrobocert/cert*/
 /coreos/libvirt/netcup.fcc
+/coreos/libvirt/netcup-local.fcc
 /docker/certbot-netcup/Dockerfile
