@@ -278,6 +278,10 @@ storage:
           #!/bin/bash -x
           DATE=`date -Iseconds`
           echo "$DATE: Hello onstart, $*" >>/var/home/core/cron.log
+          for i in fail2ban nano podman-compose qemu-guest-agent redhat-lsb-core tree; do
+            sudo rpm-ostree install $i || true
+          done
+          # TODO aanno: reboot if something has really been installed (systemctl reboot)
     - path: /var/home/core/cron/daily.sh
       user:
         name: core
