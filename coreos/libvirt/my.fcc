@@ -382,11 +382,11 @@ storage:
       wipe_table: false
       partitions:
         - size_mib: 2000
-          label: backup
-        - size_mib: 0
           # Start at 5G so that we leave enough space for the root partition.
           # See the important NOTE below about this.
           start_mib: 5000
+          label: backup
+        - size_mib: 0
           # We assign a descriptive label to the partition. This is important
           # for referring to it in a device-agnostic way in other parts of the
           # configuration.
