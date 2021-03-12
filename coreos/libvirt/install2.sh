@@ -6,7 +6,7 @@ set -eu
 CONFIG_FILE_NAME=my
 
 # absolute path needed
-IMAGE="$HOME/.local/share/libvirt/images/fedora-coreos-33.20210201.3.0-qemu.x86_64.qcow2"
+IMAGE="$HOME/.local/share/libvirt/images/fedora-coreos-33.20210217.3.0-qemu.x86_64.qcow2"
 VM_NAME="fcos-33"
 VCPUS="4"
 RAM_MB="8192"
