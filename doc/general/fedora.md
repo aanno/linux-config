@@ -231,6 +231,19 @@ Interessante zusätzliche Programme
 * https://fedoraproject.org/wiki/Firewalld?rd=FirewallD
 * http://www.firewalld.org/
 
-### iptables
+## iptables
 
 * http://www.thegeekstuff.com/2011/01/iptables-fundamentals/
+
+## nftables (nft)
+
+* [arch nft overview](https://wiki.archlinux.org/index.php/nftables)
+* [quick howto](https://home.regit.org/netfilter-en/nftables-quick-howto/)
+* http://kangran.su/~nnz/pub/nf-doc/nftables/nft.html
+* [nft wiki](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page)
+* [nft examples](https://github.com/mqus/nft-rules)
+  + [nft vpn example](https://github.com/mqus/nft-rules/blob/master/files/VPN.md)
+
+## SELinux
+
+* [labels and contexts](https://www.thegeekdiary.com/understanding-selinux-file-labelling-and-selinux-context/)
