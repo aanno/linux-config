@@ -228,6 +228,8 @@ Interessante zusätzliche Programme
 * https://www.linode.com/docs/security/firewalls/introduction-to-firewalld-on-centos
 * https://www.certdepot.net/rhel7-get-started-firewalld/
 * https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_firewalls#sec-Introduction_to_firewalld
+* [masquerade](https://www.server-world.info/en/note?os=CentOS_7&p=firewalld&f=2)
+* [postrouting symmetrical NAT](https://unix.stackexchange.com/questions/539828/how-to-use-postrouting-snat-with-firewalld)
 * https://fedoraproject.org/wiki/Firewalld?rd=FirewallD
 * http://www.firewalld.org/
 
@@ -247,3 +249,4 @@ Interessante zusätzliche Programme
 ## SELinux
 
 * [labels and contexts](https://www.thegeekdiary.com/understanding-selinux-file-labelling-and-selinux-context/)
+* [linux capabilities](https://blog.container-solutions.com/linux-capabilities-in-practice)

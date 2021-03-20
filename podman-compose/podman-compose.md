@@ -30,8 +30,12 @@
 
 * https://www.redhat.com/sysadmin/rootless-podman-makes-sense (recommended)
 * https://www.redhat.com/sysadmin/user-namespaces-selinux-rootless-containers
+* https://www.redhat.com/sysadmin/container-networking-podman
+* https://fedoramagazine.org/podman-with-capabilities-on-fedora/
 * https://ask.fedoraproject.org/t/podman-and-volume-permission-denied/6221/2
 * https://opensource.com/article/19/5/shortcomings-rootless-containers
+* https://www.niels.fr/blog/rootless-container-with-systemd/
+* https://github.com/containers/podman/issues/6884
 * https://archive.fosdem.org/2020/schedule/event/security_using_selinux_with_container_runtimes/attachments/slides/4154/export/events/attachments/security_using_selinux_with_container_runtimes/slides/4154/Fosdem_Using_SELinux_with_container_runtimes.pdf (has all the details)
 
 ## mysql backup

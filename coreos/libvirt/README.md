@@ -14,3 +14,8 @@
 ## Firewall
 
 * https://github.com/coreos/fedora-coreos-tracker/issues/467
+
+
+## Cool self-hosting software
+
+* [mistborn](https://gitlab.com/cyber5k/mistborn) run our own privacy protecting family server
