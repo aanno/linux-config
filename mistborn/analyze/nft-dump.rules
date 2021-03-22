@@ -1,0 +1,178 @@
+table ip nat {
+        chain PREROUTING {
+                type nat hook prerouting priority dstnat; policy accept;
+                iifname "wg38635" counter packets 0 bytes 0 jump MISTBORN_PREROUTING_wg38635
+                fib daddr type local counter packets 1 bytes 60 jump DOCKER
+        }
+
+        chain INPUT {
+                type nat hook input priority 100; policy accept;
+        }
+
+        chain POSTROUTING {
+                type nat hook postrouting priority srcnat; policy accept;
+                oifname != "br-4da864113c27" ip saddr 10.2.1.0/24 counter packets 0 bytes 0 masquerade 
+                oifname != "br-4acf7c94ca9e" ip saddr 10.2.0.0/29 counter packets 4 bytes 262 masquerade 
+                oifname != "br-3843e72cd9b0" ip saddr 172.18.0.0/16 counter packets 6 bytes 360 masquerade 
+                oifname != "docker0" ip saddr 172.17.0.0/16 counter packets 0 bytes 0 masquerade 
+                oifname "enp1s0" counter packets 12 bytes 756 masquerade 
+                meta l4proto tcp ip saddr 172.18.0.5 ip daddr 172.18.0.5 tcp dport 53 counter packets 0 bytes 0 masquerade 
+                meta l4proto udp ip saddr 172.18.0.5 ip daddr 172.18.0.5 udp dport 53 counter packets 0 bytes 0 masquerade 
+                meta l4proto tcp ip saddr 172.18.0.6 ip daddr 172.18.0.6 tcp dport 5000 counter packets 0 bytes 0 masquerade 
+        }
+
+        chain OUTPUT {
+                type nat hook output priority -100; policy accept;
+                ip daddr != 127.0.0.0/8 fib daddr type local counter packets 18 bytes 1201 jump DOCKER
+        }
+
+        chain MISTBORN_PREROUTING_wg38635 {
+        }
+
+        chain DOCKER {
+                iifname "br-4da864113c27" counter packets 0 bytes 0 return
+                iifname "br-4acf7c94ca9e" counter packets 0 bytes 0 return
+                iifname "br-3843e72cd9b0" counter packets 0 bytes 0 return
+                iifname "docker0" counter packets 0 bytes 0 return
+                iifname != "br-3843e72cd9b0" meta l4proto tcp ip daddr 10.2.3.1 tcp dport 53 counter packets 0 bytes 0 dnat to 172.18.0.5:53
+                iifname != "br-3843e72cd9b0" meta l4proto udp ip daddr 10.2.3.1 udp dport 53 counter packets 18 bytes 1201 dnat to 172.18.0.5:53
+                iifname != "br-3843e72cd9b0" meta l4proto tcp ip daddr 10.2.3.1 tcp dport 5000 counter packets 0 bytes 0 dnat to 172.18.0.6:5000
+        }
+}
+table ip filter {
+        chain INPUT {
+                type filter hook input priority filter; policy drop;
+                iifname "lo" counter packets 0 bytes 0 accept
+                ct state related,established counter packets 43738 bytes 73026227 accept
+                meta l4proto tcp ip saddr 192.168.10.57 tcp dport 22 counter packets 1 bytes 60 accept
+                counter packets 8 bytes 792 jump MISTBORN_DOCKER_INPUT
+                counter packets 8 bytes 792 jump MISTBORN_WIREGUARD_INPUT
+                counter packets 8 bytes 792 jump MISTBORN_LOG_DROP
+        }
+
+        chain FORWARD {
+                type filter hook forward priority filter; policy accept;
+                counter packets 4203 bytes 1347217 jump DOCKER-USER
+                counter packets 4203 bytes 1347217 jump DOCKER-ISOLATION-STAGE-1
+                oifname "br-4da864113c27" ct state related,established counter packets 6 bytes 506 accept
+                oifname "br-4da864113c27" counter packets 6 bytes 372 jump DOCKER
+                iifname "br-4da864113c27" oifname != "br-4da864113c27" counter packets 0 bytes 0 accept
+                iifname "br-4da864113c27" oifname "br-4da864113c27" counter packets 6 bytes 372 accept
+                oifname "br-4acf7c94ca9e" ct state related,established counter packets 172 bytes 107845 accept
+                oifname "br-4acf7c94ca9e" counter packets 25 bytes 1692 jump DOCKER
+                iifname "br-4acf7c94ca9e" oifname != "br-4acf7c94ca9e" counter packets 149 bytes 13076 accept
+                iifname "br-4acf7c94ca9e" oifname "br-4acf7c94ca9e" counter packets 25 bytes 1692 accept
+                oifname "br-3843e72cd9b0" ct state related,established counter packets 3423 bytes 1196012 accept
+                oifname "br-3843e72cd9b0" counter packets 63 bytes 3780 jump DOCKER
+                iifname "br-3843e72cd9b0" oifname != "br-3843e72cd9b0" counter packets 359 bytes 23934 accept
+                iifname "br-3843e72cd9b0" oifname "br-3843e72cd9b0" counter packets 63 bytes 3780 accept
+                oifname "docker0" ct state related,established counter packets 0 bytes 0 accept
+                oifname "docker0" counter packets 0 bytes 0 jump DOCKER
+                iifname "docker0" oifname != "docker0" counter packets 0 bytes 0 accept
+                iifname "docker0" oifname "docker0" counter packets 0 bytes 0 accept
+                counter packets 0 bytes 0 jump MISTBORN_WIREGUARD_FORWARD
+        }
+
+        chain OUTPUT {
+                type filter hook output priority filter; policy accept;
+                counter packets 20145 bytes 1100151 jump MISTBORN_WIREGUARD_OUTPUT
+                oifname "enp1s0" meta l4proto udp udp dport 53 counter packets 0 bytes 0 jump MISTBORN_LOG_DROP
+        }
+
+        chain MISTBORN_DOCKER_INPUT {
+                iifname "br-*" counter packets 0 bytes 0 accept
+        }
+
+        chain MISTBORN_LOG_DROP {
+                limit rate 6/minute counter packets 8 bytes 792 log prefix "[IPTables-Dropped]: "
+                counter packets 8 bytes 792 drop
+        }
+
+        chain MISTBORN_WIREGUARD_FORWARD {
+                counter packets 0 bytes 0 jump MISTBORN_FORWARD_wg38635
+        }
+
+        chain MISTBORN_WIREGUARD_INPUT {
+                meta l4proto udp udp dport 38635 counter packets 0 bytes 0 accept
+                iifname "wg38635" counter packets 0 bytes 0 accept
+        }
+
+        chain MISTBORN_WIREGUARD_OUTPUT {
+        }
+
+        chain MISTBORN_FORWARD_wg38635 {
+                iifname "wg38635" oifname "enp1s0" counter packets 0 bytes 0 accept
+                iifname "enp1s0" oifname "wg38635" ct state related,established counter packets 0 bytes 0 accept
+        }
+
+        chain DOCKER {
+                iifname != "br-3843e72cd9b0" oifname "br-3843e72cd9b0" meta l4proto tcp ip daddr 172.18.0.5 tcp dport 53 counter packets 0 bytes 0 accept
+                iifname != "br-3843e72cd9b0" oifname "br-3843e72cd9b0" meta l4proto udp ip daddr 172.18.0.5 udp dport 53 counter packets 0 bytes 0 accept
+                iifname != "br-3843e72cd9b0" oifname "br-3843e72cd9b0" meta l4proto tcp ip daddr 172.18.0.6 tcp dport 5000 counter packets 0 bytes 0 accept
+        }
+
+        chain DOCKER-ISOLATION-STAGE-1 {
+                iifname "br-4da864113c27" oifname != "br-4da864113c27" counter packets 0 bytes 0 jump DOCKER-ISOLATION-STAGE-2
+                iifname "br-4acf7c94ca9e" oifname != "br-4acf7c94ca9e" counter packets 149 bytes 13076 jump DOCKER-ISOLATION-STAGE-2
+                iifname "br-3843e72cd9b0" oifname != "br-3843e72cd9b0" counter packets 359 bytes 23934 jump DOCKER-ISOLATION-STAGE-2
+                iifname "docker0" oifname != "docker0" counter packets 0 bytes 0 jump DOCKER-ISOLATION-STAGE-2
+                counter packets 4203 bytes 1347217 return
+        }
+
+        chain DOCKER-ISOLATION-STAGE-2 {
+                oifname "br-4da864113c27" counter packets 0 bytes 0 drop
+                oifname "br-4acf7c94ca9e" counter packets 0 bytes 0 drop
+                oifname "br-3843e72cd9b0" counter packets 0 bytes 0 drop
+                oifname "docker0" counter packets 0 bytes 0 drop
+                counter packets 508 bytes 37010 return
+        }
+
+        chain DOCKER-USER {
+                iifname "enp1s0" meta l4proto tcp tcp dport 5555 counter packets 0 bytes 0 jump MISTBORN_LOG_DROP
+                iifname "enp1s0" meta l4proto tcp tcp dport 443 counter packets 0 bytes 0 jump MISTBORN_LOG_DROP
+                iifname "enp1s0" meta l4proto tcp tcp dport 80 counter packets 0 bytes 0 jump MISTBORN_LOG_DROP
+                iifname "enp1s0" meta l4proto tcp tcp dport 53 counter packets 0 bytes 0 jump MISTBORN_LOG_DROP
+                iifname "enp1s0" meta l4proto udp udp dport 53 counter packets 0 bytes 0 jump MISTBORN_LOG_DROP
+                counter packets 4203 bytes 1347217 return
+        }
+}
+table ip6 nat {
+        chain PREROUTING {
+                type nat hook prerouting priority dstnat; policy accept;
+        }
+
+        chain INPUT {
+                type nat hook input priority 100; policy accept;
+        }
+
+        chain POSTROUTING {
+                type nat hook postrouting priority srcnat; policy accept;
+        }
+
+        chain OUTPUT {
+                type nat hook output priority -100; policy accept;
+        }
+}
+table ip6 filter {
+        chain INPUT {
+                type filter hook input priority filter; policy drop;
+                iifname "lo" counter packets 0 bytes 0 accept
+                ct state related,established counter packets 0 bytes 0 accept
+                counter packets 4 bytes 456 jump MISTBORN_LOG_DROP
+        }
+
+        chain FORWARD {
+                type filter hook forward priority filter; policy drop;
+        }
+
+        chain OUTPUT {
+                type filter hook output priority filter; policy accept;
+                meta l4proto udp udp dport 53 counter packets 0 bytes 0 jump MISTBORN_LOG_DROP
+        }
+
+        chain MISTBORN_LOG_DROP {
+                limit rate 6/minute counter packets 4 bytes 456 log prefix "[IPTables-Dropped]: "
+                counter packets 4 bytes 456 drop
+        }
+}
+
