@@ -1,16 +1,12 @@
 #!/bin/bash
 # make a local vm from coreos image
 
-CONFIG_FILE_NAME=netcup-local
+set -eu
+. env.sh
 
-# absolute path needed
-# IMAGE="$HOME/.local/share/libvirt/images/fedora-coreos-33.20210201.3.0-qemu.x86_64.qcow2"
+CONFIG_FILE_NAME=netcup-local
 IMAGE=`readlink -f fcos.qcow2`
 VM_NAME="fcos-netcup-33"
-VCPUS="2"
-RAM_MB="8192"
-DISK_GB="20"
-STREAM="stable"
 
 fcct -p -s -d . -o "${CONFIG_FILE_NAME}.ign" "${CONFIG_FILE_NAME}.fcc" || exit -1
 
