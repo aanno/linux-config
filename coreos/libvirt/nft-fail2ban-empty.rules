@@ -1,0 +1,716 @@
+table ip filter {
+        chain INPUT {
+                type filter hook input priority filter; policy accept;
+        }
+
+        chain FORWARD {
+                type filter hook forward priority filter; policy accept;
+                iifname "wg0" counter packets 0 bytes 0 accept
+        }
+
+        chain OUTPUT {
+                type filter hook output priority filter; policy accept;
+        }
+}
+table ip6 filter {
+        chain INPUT {
+                type filter hook input priority filter; policy accept;
+        }
+
+        chain FORWARD {
+                type filter hook forward priority filter; policy accept;
+                iifname "wg0" counter packets 0 bytes 0 accept
+        }
+
+        chain OUTPUT {
+                type filter hook output priority filter; policy accept;
+        }
+}
+table bridge filter {
+        chain INPUT {
+                type filter hook input priority filter; policy accept;
+        }
+
+        chain FORWARD {
+                type filter hook forward priority filter; policy accept;
+        }
+
+        chain OUTPUT {
+                type filter hook output priority filter; policy accept;
+        }
+}
+table ip security {
+        chain INPUT {
+                type filter hook input priority 150; policy accept;
+        }
+
+        chain FORWARD {
+                type filter hook forward priority 150; policy accept;
+        }
+
+        chain OUTPUT {
+                type filter hook output priority 150; policy accept;
+        }
+}
+table ip raw {
+        chain PREROUTING {
+                type filter hook prerouting priority raw; policy accept;
+        }
+
+        chain OUTPUT {
+                type filter hook output priority raw; policy accept;
+        }
+}
+table ip mangle {
+        chain PREROUTING {
+                type filter hook prerouting priority mangle; policy accept;
+        }
+
+        chain INPUT {
+                type filter hook input priority mangle; policy accept;
+        }
+
+        chain FORWARD {
+                type filter hook forward priority mangle; policy accept;
+        }
+
+        chain OUTPUT {
+                type route hook output priority mangle; policy accept;
+        }
+
+        chain POSTROUTING {
+                type filter hook postrouting priority mangle; policy accept;
+        }
+}
+table ip nat {
+        chain PREROUTING {
+                type nat hook prerouting priority dstnat; policy accept;
+        }
+
+        chain INPUT {
+                type nat hook input priority 100; policy accept;
+        }
+
+        chain POSTROUTING {
+                type nat hook postrouting priority srcnat; policy accept;
+                oifname "enp1s0" counter packets 262 bytes 19968 masquerade 
+        }
+
+        chain OUTPUT {
+                type nat hook output priority -100; policy accept;
+        }
+}
+table ip6 security {
+        chain INPUT {
+                type filter hook input priority 150; policy accept;
+        }
+
+        chain FORWARD {
+                type filter hook forward priority 150; policy accept;
+        }
+
+        chain OUTPUT {
+                type filter hook output priority 150; policy accept;
+        }
+}
+table ip6 raw {
+        chain PREROUTING {
+                type filter hook prerouting priority raw; policy accept;
+        }
+
+        chain OUTPUT {
+                type filter hook output priority raw; policy accept;
+        }
+}
+table ip6 mangle {
+        chain PREROUTING {
+                type filter hook prerouting priority mangle; policy accept;
+        }
+
+        chain INPUT {
+                type filter hook input priority mangle; policy accept;
+        }
+
+        chain FORWARD {
+                type filter hook forward priority mangle; policy accept;
+        }
+
+        chain OUTPUT {
+                type route hook output priority mangle; policy accept;
+        }
+
+        chain POSTROUTING {
+                type filter hook postrouting priority mangle; policy accept;
+        }
+}
+table ip6 nat {
+        chain PREROUTING {
+                type nat hook prerouting priority dstnat; policy accept;
+        }
+
+        chain INPUT {
+                type nat hook input priority 100; policy accept;
+        }
+
+        chain POSTROUTING {
+                type nat hook postrouting priority srcnat; policy accept;
+                oifname "enp1s0" counter packets 33 bytes 3052 masquerade  
+        }
+
+        chain OUTPUT {
+                type nat hook output priority -100; policy accept;
+        }
+}
+table bridge nat {
+        chain PREROUTING {
+                type filter hook prerouting priority dstnat; policy accept;
+        }
+
+        chain OUTPUT {
+                type filter hook output priority out; policy accept;
+        }
+
+        chain POSTROUTING {
+                type filter hook postrouting priority srcnat; policy accept;
+        }
+}
+table inet firewalld {
+        chain raw_PREROUTING {
+                type filter hook prerouting priority raw + 10; policy accept;
+                icmpv6 type { nd-router-advert, nd-neighbor-solicit } accept
+                meta nfproto ipv6 fib saddr . iif oif missing drop
+                jump raw_PREROUTING_ZONES
+        }
+
+        chain raw_PREROUTING_ZONES {
+                iifname "enp1s0" goto raw_PRE_public
+                iifname "docker0" goto raw_PRE_docker
+                goto raw_PRE_public
+        }
+
+        chain mangle_PREROUTING {
+                type filter hook prerouting priority mangle + 10; policy accept;
+                jump mangle_PREROUTING_ZONES
+        }
+
+        chain mangle_PREROUTING_ZONES {
+                iifname "enp1s0" goto mangle_PRE_public
+                iifname "docker0" goto mangle_PRE_docker
+                goto mangle_PRE_public
+        }
+
+        chain filter_INPUT {
+                type filter hook input priority filter + 10; policy accept;
+                ct state { established, related } accept
+                ct status dnat accept
+                iifname "lo" accept
+                jump filter_INPUT_ZONES
+                ct state { invalid } drop
+                reject with icmpx type admin-prohibited
+        }
+
+        chain filter_FORWARD {
+                type filter hook forward priority filter + 10; policy accept;
+                ct state { established, related } accept
+                ct status dnat accept
+                iifname "lo" accept
+                ip6 daddr { ::/96, ::ffff:0.0.0.0/96, 2002::/24, 2002:a00::/24, 2002:7f00::/24, 2002:a9fe::/32, 2002:ac10::/28, 2002:c0a8::/32, 2002:e000::/19 } reject with icmpv6 type addr-unreachable
+                jump filter_FORWARD_IN_ZONES
+                jump filter_FORWARD_OUT_ZONES
+                ct state { invalid } drop
+                reject with icmpx type admin-prohibited
+        }
+
+        chain filter_OUTPUT {
+                type filter hook output priority filter + 10; policy accept;
+                oifname "lo" accept
+                ip6 daddr { ::/96, ::ffff:0.0.0.0/96, 2002::/24, 2002:a00::/24, 2002:7f00::/24, 2002:a9fe::/32, 2002:ac10::/28, 2002:c0a8::/32, 2002:e000::/19 } reject with icmpv6 type addr-unreachable
+        }
+
+        chain filter_INPUT_ZONES {
+                iifname "enp1s0" goto filter_IN_public
+                iifname "docker0" goto filter_IN_docker
+                goto filter_IN_public
+        }
+
+        chain filter_FORWARD_IN_ZONES {
+                iifname "enp1s0" goto filter_FWDI_public
+                iifname "docker0" goto filter_FWDI_docker
+                goto filter_FWDI_public
+        }
+
+        chain filter_FORWARD_OUT_ZONES {
+                oifname "enp1s0" goto filter_FWDO_public
+                oifname "docker0" goto filter_FWDO_docker
+                goto filter_FWDO_public
+        }
+
+        chain raw_PRE_docker {
+                jump raw_PRE_docker_pre
+                jump raw_PRE_docker_log
+                jump raw_PRE_docker_deny
+                jump raw_PRE_docker_allow
+                jump raw_PRE_docker_post
+        }
+
+        chain raw_PRE_docker_pre {
+        }
+
+        chain raw_PRE_docker_log {
+        }
+
+        chain raw_PRE_docker_deny {
+        }
+
+        chain raw_PRE_docker_allow {
+        }
+
+        chain raw_PRE_docker_post {
+        }
+
+        chain mangle_PRE_docker {
+                jump mangle_PRE_docker_pre
+                jump mangle_PRE_docker_log
+                jump mangle_PRE_docker_deny
+                jump mangle_PRE_docker_allow
+                jump mangle_PRE_docker_post
+        }
+
+        chain mangle_PRE_docker_pre {
+        }
+
+        chain mangle_PRE_docker_log {
+        }
+
+        chain mangle_PRE_docker_deny {
+        }
+
+        chain mangle_PRE_docker_allow {
+        }
+
+        chain mangle_PRE_docker_post {
+        }
+
+        chain filter_IN_docker {
+                jump filter_IN_docker_pre
+                jump filter_IN_docker_log
+                jump filter_IN_docker_deny
+                jump filter_IN_docker_allow
+                jump filter_IN_docker_post
+                accept
+        }
+
+        chain filter_IN_docker_pre {
+        }
+
+        chain filter_IN_docker_log {
+        }
+
+        chain filter_IN_docker_deny {
+        }
+
+        chain filter_IN_docker_allow {
+        }
+
+        chain filter_IN_docker_post {
+        }
+
+        chain filter_FWDI_docker {
+                jump filter_FWDI_docker_pre
+                jump filter_FWDI_docker_log
+                jump filter_FWDI_docker_deny
+                jump filter_FWDI_docker_allow
+                jump filter_FWDI_docker_post
+                accept
+        }
+
+        chain filter_FWDI_docker_pre {
+        }
+
+        chain filter_FWDI_docker_log {
+        }
+
+        chain filter_FWDI_docker_deny {
+        }
+
+        chain filter_FWDI_docker_allow {
+        }
+
+        chain filter_FWDI_docker_post {
+        }
+
+        chain filter_FWDO_docker {
+                jump filter_FWDO_docker_pre
+                jump filter_FWDO_docker_log
+                jump filter_FWDO_docker_deny
+                jump filter_FWDO_docker_allow
+                jump filter_FWDO_docker_post
+                accept
+        }
+
+        chain filter_FWDO_docker_pre {
+        }
+
+        chain filter_FWDO_docker_log {
+        }
+
+        chain filter_FWDO_docker_deny {
+        }
+
+        chain filter_FWDO_docker_allow {
+        }
+
+        chain filter_FWDO_docker_post {
+        }
+
+        chain raw_PRE_public {
+                jump raw_PRE_public_pre
+                jump raw_PRE_public_log
+                jump raw_PRE_public_deny
+                jump raw_PRE_public_allow
+                jump raw_PRE_public_post
+        }
+
+        chain raw_PRE_public_pre {
+        }
+
+        chain raw_PRE_public_log {
+        }
+
+        chain raw_PRE_public_deny {
+        }
+
+        chain raw_PRE_public_allow {
+        }
+
+        chain raw_PRE_public_post {
+        }
+
+        chain filter_IN_public {
+                jump filter_IN_public_pre
+                jump filter_IN_public_log
+                jump filter_IN_public_deny
+                jump filter_IN_public_allow
+                jump filter_IN_public_post
+                meta l4proto { icmp, ipv6-icmp } accept
+        }
+
+        chain filter_IN_public_pre {
+        }
+
+        chain filter_IN_public_log {
+        }
+
+        chain filter_IN_public_deny {
+        }
+
+        chain filter_IN_public_allow {
+                tcp dport 22 ct state { new, untracked } accept
+                ip daddr 224.0.0.251 udp dport 5353 ct state { new, untracked } accept
+                ip6 daddr ff02::fb udp dport 5353 ct state { new, untracked } accept
+                ip6 daddr fe80::/64 udp dport 546 ct state { new, untracked } accept
+        }
+
+        chain filter_IN_public_post {
+        }
+
+        chain filter_FWDI_public {
+                jump filter_FWDI_public_pre
+                jump filter_FWDI_public_log
+                jump filter_FWDI_public_deny
+                jump filter_FWDI_public_allow
+                jump filter_FWDI_public_post
+                meta l4proto { icmp, ipv6-icmp } accept
+        }
+
+        chain filter_FWDI_public_pre {
+        }
+
+        chain filter_FWDI_public_log {
+        }
+
+        chain filter_FWDI_public_deny {
+        }
+
+        chain filter_FWDI_public_allow {
+        }
+
+        chain filter_FWDI_public_post {
+        }
+
+        chain mangle_PRE_public {
+                jump mangle_PRE_public_pre
+                jump mangle_PRE_public_log
+                jump mangle_PRE_public_deny
+                jump mangle_PRE_public_allow
+                jump mangle_PRE_public_post
+        }
+
+        chain mangle_PRE_public_pre {
+        }
+
+        chain mangle_PRE_public_log {
+        }
+
+        chain mangle_PRE_public_deny {
+        }
+
+        chain mangle_PRE_public_allow {
+        }
+
+        chain mangle_PRE_public_post {
+        }
+
+        chain filter_FWDO_public {
+                jump filter_FWDO_public_pre
+                jump filter_FWDO_public_log
+                jump filter_FWDO_public_deny
+                jump filter_FWDO_public_allow
+                jump filter_FWDO_public_post
+        }
+
+        chain filter_FWDO_public_pre {
+        }
+
+        chain filter_FWDO_public_log {
+        }
+
+        chain filter_FWDO_public_deny {
+        }
+
+        chain filter_FWDO_public_allow {
+        }
+
+        chain filter_FWDO_public_post {
+        }
+}
+table ip firewalld {
+        chain nat_PREROUTING {
+                type nat hook prerouting priority dstnat + 10; policy accept;
+                jump nat_PREROUTING_ZONES
+        }
+
+        chain nat_PREROUTING_ZONES {
+                iifname "enp1s0" goto nat_PRE_public
+                iifname "docker0" goto nat_PRE_docker
+                goto nat_PRE_public
+        }
+
+        chain nat_POSTROUTING {
+                type nat hook postrouting priority srcnat + 10; policy accept;
+                jump nat_POSTROUTING_ZONES
+        }
+
+        chain nat_POSTROUTING_ZONES {
+                oifname "enp1s0" goto nat_POST_public
+                oifname "docker0" goto nat_POST_docker
+                goto nat_POST_public
+        }
+
+        chain nat_PRE_docker {
+                jump nat_PRE_docker_pre
+                jump nat_PRE_docker_log
+                jump nat_PRE_docker_deny
+                jump nat_PRE_docker_allow
+                jump nat_PRE_docker_post
+        }
+
+        chain nat_PRE_docker_pre {
+        }
+
+        chain nat_PRE_docker_log {
+        }
+
+        chain nat_PRE_docker_deny {
+        }
+
+        chain nat_PRE_docker_allow {
+        }
+
+        chain nat_PRE_docker_post {
+        }
+
+        chain nat_POST_docker {
+                jump nat_POST_docker_pre
+                jump nat_POST_docker_log
+                jump nat_POST_docker_deny
+                jump nat_POST_docker_allow
+                jump nat_POST_docker_post
+        }
+
+        chain nat_POST_docker_pre {
+        }
+
+        chain nat_POST_docker_log {
+        }
+
+        chain nat_POST_docker_deny {
+        }
+
+        chain nat_POST_docker_allow {
+        }
+
+        chain nat_POST_docker_post {
+        }
+
+        chain nat_PRE_public {
+                jump nat_PRE_public_pre
+                jump nat_PRE_public_log
+                jump nat_PRE_public_deny
+                jump nat_PRE_public_allow
+                jump nat_PRE_public_post
+        }
+
+        chain nat_PRE_public_pre {
+        }
+
+        chain nat_PRE_public_log {
+        }
+
+        chain nat_PRE_public_deny {
+        }
+
+        chain nat_PRE_public_allow {
+        }
+
+        chain nat_PRE_public_post {
+        }
+
+        chain nat_POST_public {
+                jump nat_POST_public_pre
+                jump nat_POST_public_log
+                jump nat_POST_public_deny
+                jump nat_POST_public_allow
+                jump nat_POST_public_post
+        }
+
+        chain nat_POST_public_pre {
+        }
+
+        chain nat_POST_public_log {
+        }
+
+        chain nat_POST_public_deny {
+        }
+
+        chain nat_POST_public_allow {
+        }
+
+        chain nat_POST_public_post {
+        }
+}
+table ip6 firewalld {
+        chain nat_PREROUTING {
+                type nat hook prerouting priority dstnat + 10; policy accept;
+                jump nat_PREROUTING_ZONES
+        }
+
+        chain nat_PREROUTING_ZONES {
+                iifname "enp1s0" goto nat_PRE_public
+                iifname "docker0" goto nat_PRE_docker
+                goto nat_PRE_public
+        }
+
+        chain nat_POSTROUTING {
+                type nat hook postrouting priority srcnat + 10; policy accept;
+                jump nat_POSTROUTING_ZONES
+        }
+
+        chain nat_POSTROUTING_ZONES {
+                oifname "enp1s0" goto nat_POST_public
+                oifname "docker0" goto nat_POST_docker
+                goto nat_POST_public
+        }
+
+        chain nat_PRE_docker {
+                jump nat_PRE_docker_pre
+                jump nat_PRE_docker_log
+                jump nat_PRE_docker_deny
+                jump nat_PRE_docker_allow
+                jump nat_PRE_docker_post
+        }
+
+        chain nat_PRE_docker_pre {
+        }
+
+        chain nat_PRE_docker_log {
+        }
+
+        chain nat_PRE_docker_deny {
+        }
+
+        chain nat_PRE_docker_allow {
+        }
+
+        chain nat_PRE_docker_post {
+        }
+
+        chain nat_POST_docker {
+                jump nat_POST_docker_pre
+                jump nat_POST_docker_log
+                jump nat_POST_docker_deny
+                jump nat_POST_docker_allow
+                jump nat_POST_docker_post
+        }
+
+        chain nat_POST_docker_pre {
+        }
+
+        chain nat_POST_docker_log {
+        }
+
+        chain nat_POST_docker_deny {
+        }
+
+        chain nat_POST_docker_allow {
+        }
+
+        chain nat_POST_docker_post {
+        }
+
+        chain nat_PRE_public {
+                jump nat_PRE_public_pre
+                jump nat_PRE_public_log
+                jump nat_PRE_public_deny
+                jump nat_PRE_public_allow
+                jump nat_PRE_public_post
+        }
+
+        chain nat_PRE_public_pre {
+        }
+
+        chain nat_PRE_public_log {
+        }
+
+        chain nat_PRE_public_deny {
+        }
+
+        chain nat_PRE_public_allow {
+        }
+
+        chain nat_PRE_public_post {
+        }
+
+        chain nat_POST_public {
+                jump nat_POST_public_pre
+                jump nat_POST_public_log
+                jump nat_POST_public_deny
+                jump nat_POST_public_allow
+                jump nat_POST_public_post
+        }
+
+        chain nat_POST_public_pre {
+        }
+
+        chain nat_POST_public_log {
+        }
+
+        chain nat_POST_public_deny {
+        }
+
+        chain nat_POST_public_allow {
+        }
+
+        chain nat_POST_public_post {
+        }
+}
