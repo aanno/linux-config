@@ -21,7 +21,24 @@ firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i enp1s0 -o wg0 -m state
 
 # services
 firewall-cmd --zone=external --add-service http --add-service https --add-service ssh --add-service cockpit
-firewall-cmd --zone=internal --add-service http --add-service https --add-service ssh --add-service cockpit --add-service dhcpv6-client --add-service mdns --add-service samba-client 
+firewall-cmd --zone=internal --add-service http --add-service https --add-service ssh --add-service cockpit --add-service dhcpv6-client --add-service mdns --add-service samba-client
+
+# icmp
+# https://superuser.com/questions/1114065/getting-firewalld-to-allow-ping-requests
+# ping
+firewall-cmd --zone=internal --add-icmp-block-inversion
+firewall-cmd --zone=internal --add-icmp-block=echo-reply
+# tracepath/traceroute
+firewall-cmd --zone=internal --add-icmp-block=time-exceeded
+firewall-cmd --zone=internal --add-icmp-block=port-unreachable
+# mtu discovery
+firewall-cmd --zone=internal --add-icmp-block=fragmentation-needed
+firewall-cmd --zone=internal --add-icmp-block=packet-too-big
+# dynamic IPv6
+firewall-cmd --zone=internal --add-icmp-block=neighbour-solicitation
+firewall-cmd --zone=internal --add-icmp-block=neighbour-advertisement
+firewall-cmd --zone=internal --add-icmp-block=router-advertisement
+firewall-cmd --zone=internal --add-icmp-block=router-solicitation
 
 # make permanent
 # firewall-cmd --runtime-to-permanent
