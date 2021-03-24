@@ -26,6 +26,27 @@ systemd:
         contents: |
           [Service]
           Environment=OPTIONS='-oPasswordAuthentication=yes'
+    - name: network-karg.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=configure network via kernel args (dracut)
+        # We run after `systemd-machine-id-commit.service` to ensure that
+        # `ConditionFirstBoot=true` services won't rerun on the next boot.
+        After=systemd-machine-id-commit.service
+        # ConditionKernelCommandLine=systemd.unified_cgroup_hierarchy
+        ConditionPathExists=!/var/lib/network-karg.stamp
+
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=/bin/rpm-ostree kargs --append="ip=192.168.10.8:192.168.10.3:255.255.255.0:netzgeneration:enp1s0:none:192.168.10.3"
+        ExecStart=/bin/touch /var/lib/network-karg.stamp
+        ExecStart=/bin/systemctl --no-block reboot
+
+        [Install]
+        # WantedBy=network-online.target
+        WantedBy=multi-user.target
     - name: wg-quick@wg0.service
       enabled: true
     - name: onstart.service
@@ -122,14 +143,18 @@ storage:
           type=ethernet
           interface-name=enp1s0
           [ipv4]
-          dns-search=
+          # dns-search=
           method=auto
+          # method=manual
           # dhcp does not work with fedora-coreos-33.20210301.3.1
-          # dns=192.168.10.3
-          # address1=192.168.10.8
+          dns=192.168.10.3
+          # dns=192.168.10.3,fd00::3681:c4ff:fec9:6d8b
+          address1=192.168.10.8
+          gateway=192.168.10.3
           [ipv6]
           # see https://developer.gnome.org/NetworkManager/stable/settings-ipv6.html
           dns=fd00::3681:c4ff:fec9:6d8b
+          # dns=192.168.10.3,fd00::3681:c4ff:fec9:6d8b
           gateway=2001:470:26:ba5:3681:c4ff:fec9:6d8b
           # gateway=fd00::3681:c4ff:fec9:6d8b
           addr-gen-mode=eui64
