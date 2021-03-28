@@ -1,6 +1,15 @@
 # Fedora CoreOS (FCOS)
 
 
+## Run once
+
+* (Only) use local `dnscrypt-proxy` as resolver
+  + `sudo resolvectl dns enp1s0 127.0.0.1 ::1`
+* Enable cockpit (see https://cockpit-project.org/running#coreos)
+  + `sudo podman container runlabel --name cockpit-ws RUN docker.io/cockpit/ws`
+  + `sudo podman container runlabel INSTALL docker.io/cockpit/ws`
+  + `sudo systemctl enable cockpit.service`
+
 ## Config
 
 * [fcc examples](https://coreos.github.io/fcct/examples/)

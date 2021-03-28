@@ -164,7 +164,7 @@ storage:
           # dhcp does not work with fedora-coreos-33.20210301.3.1
           # dns=192.168.10.3
           dns=127.0.0.1
-          address1=192.168.10.8
+          # address1=192.168.10.8
           gateway=192.168.10.3
           [ipv6]
           # see https://developer.gnome.org/NetworkManager/stable/settings-ipv6.html
@@ -324,6 +324,8 @@ storage:
           DATE=`date -Iseconds`
           echo "$DATE: Hello onstart, $*" >>/var/home/core/cron.log
           for i in fail2ban nano podman-compose qemu-guest-agent redhat-lsb-core tree \
+              cockpit-system cockpit-ostree cockpit-podman cockpit-kdump cockpit-podman \
+              cockpit-dashboard cockpit-networkmanager \
               ldns-utils git-lfs dnscrypt-proxy; do
             sudo rpm-ostree install $i || true
           done
