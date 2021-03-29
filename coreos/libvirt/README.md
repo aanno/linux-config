@@ -59,12 +59,19 @@ true
 
 ### Install libvirt (virt-manager)
 
+* https://docs.fedoraproject.org/en-US/quick-docs/getting-started-with-virtualization/
+
 * `sudo dnf install virt-manager virt-install qemu-kvm libvirt-daemon-driver-storage libvirt-daemon-driver-qemu`
 * Enable services: virtlogd, virtqemud, virtstoraged, libvirtd, libvirt-guests
 * https://sysadminde.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt
   + `virsh pool-define-as --name default --type dir --target /var/lib/libvirt/images`
   + `virsh pool-edit default`
   + `virsh pool-list`
+
+### libvirt/qemu: permission denied
+
+* `sudo setfacl -m u:qemu:x /home/tpasch` (see https://unix.stackexchange.com/questions/343814/kvm-cant-access-qcow2-images-storend-on-an-external-hdd)
+* 
 
 ### Misc
 
