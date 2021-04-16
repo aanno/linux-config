@@ -1,15 +1,14 @@
 [virtualbox]
 name=Fedora $releasever - $basearch - VirtualBox
 baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch
-enabled=1
+enabled=0
 gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://www.virtualbox.org/download/oracle_vbox.asc
-skip_if_unavailable=True
 
-[virtualbox26]
-name=Fedora 26 static - $basearch - VirtualBox
-baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/26/$basearch
+[virtualbox-f31]
+name=Fedora f31 static - $basearch - VirtualBox
+baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/31/$basearch
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1

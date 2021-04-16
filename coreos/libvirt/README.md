@@ -39,6 +39,7 @@
   ```
 * Also: kvm (?), qemu (?)
 * `usermod -a -G examplegroup exampleusername`
+
 ### Configure bridge
 
 File `/etc/rc.local`:
@@ -71,7 +72,7 @@ true
 ### libvirt/qemu: permission denied
 
 * `sudo setfacl -m u:qemu:x /home/tpasch` (see https://unix.stackexchange.com/questions/343814/kvm-cant-access-qcow2-images-storend-on-an-external-hdd)
-* 
+* also: https://github.com/jedi4ever/veewee/issues/996
 
 ### Misc
 

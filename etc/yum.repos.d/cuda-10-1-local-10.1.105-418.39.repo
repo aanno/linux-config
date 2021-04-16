@@ -1,0 +1,6 @@
+[cuda-10-1-local-10.1.105-418.39]
+name=cuda-10-1-local-10.1.105-418.39
+baseurl=file:///var/cuda-repo-10-1-local-10.1.105-418.39
+enabled=0
+gpgcheck=1
+gpgkey=file:///var/cuda-repo-10-1-local-10.1.105-418.39/7fa2af80.pub
