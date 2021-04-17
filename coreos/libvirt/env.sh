@@ -1,5 +1,5 @@
 # absolute path needed
-export IMAGE="$HOME/.local/share/libvirt/images/fedora-coreos-33.20210301.3.1-qemu.x86_64.qcow2"
+export IMAGE="$HOME/.local/share/libvirt/images/fedora-coreos-33.20210328.3.0-qemu.x86_64.qcow2"
 export STREAM="stable"
 export VCPUS="4"
 export RAM_MB="8192"
