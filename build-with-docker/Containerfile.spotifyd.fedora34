@@ -1,0 +1,18 @@
+from docker.io/library/fedora:34
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install \
+  git cargo rust alsa-lib-devel openssl-devel pkgconf-pkg-config; \
+  git clone https://github.com/Spotifyd/spotifyd.git; \
+  cd spotifyd; \
+  cargo build --release; \
+  cp -r target/release/ /opt/owntone/;
+  
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+
+# https://www.reddit.com/r/rust/comments/4fd5ng/how_to_use_the_std_library_as_a_dynamically/
+# export RUSTFLAGS="-C prefer-dynamic"; \

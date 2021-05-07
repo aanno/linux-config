@@ -1,0 +1,14 @@
+from docker.io/library/ubuntu:hirsute
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  export DEBIAN_FRONTEND=noninteractive; \
+  ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime; \
+  apt update; \
+  apt -y install \
+  git rustc cargo libasound2-dev libssl-dev pkg-config; \
+  git clone https://github.com/Spotifyd/spotifyd.git; \
+  cd spotifyd; \
+  cargo build --release; \
+  cp target/release/spotifyd /opt/owntone/;
