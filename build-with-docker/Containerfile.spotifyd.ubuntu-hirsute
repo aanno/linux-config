@@ -11,6 +11,9 @@ RUN set -ex;\
     portaudio19-dev libdbus-1-dev libpulse-dev libogg-dev; \
   git clone https://github.com/Spotifyd/spotifyd.git; \
   cd spotifyd; \
-  cargo build --release --all-features; \
+  cargo build --release --no-default-features --all-features \
+    --features pulseaudio_backend,portaudio_backend,alsa_backend,dbus_keyring,dbus_mpris; \
   cargo install --path . --locked; \
   cp -r target/release/spotifyd ~/.cargo /opt/owntone/;
+
+# --all-features
