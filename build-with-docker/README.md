@@ -23,7 +23,7 @@ antlr3-C mxml libsodium libconfuse libwebsockets libspotify
 ### needed runtime installs
 
 ```
-libevent-pthreads-2.1-7 libwebsockets16 libmxml1 libconfuse2 libantlr3c-3.4-0
+libevent-pthreads-2.1-7 libwebsockets16 libmxml1 libconfuse2 libantlr3c-3.4-0 libportaudio2
 ```
 
 sudo ln -s /usr/lib/x86_64-linux-gnu/libantlr3c-3.4.so.0.0.0 /usr/lib/x86_64-linux-gnu/libantlr3c.so
