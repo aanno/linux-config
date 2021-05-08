@@ -4,6 +4,10 @@
 *.log
 *.ign
 *.out
+.cargo/
+opt/
+*.tar.gz
+var/
 fcos.qcow2
 /.gtm/
 /.idea/workspace.xml

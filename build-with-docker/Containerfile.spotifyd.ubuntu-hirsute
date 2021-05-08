@@ -7,8 +7,10 @@ RUN set -ex;\
   ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime; \
   apt update; \
   apt -y install \
-  git rustc cargo libasound2-dev libssl-dev pkg-config; \
+  git rustc cargo libasound2-dev libssl-dev pkg-config \
+    portaudio19-dev libdbus-1-dev libpulse-dev libogg-dev; \
   git clone https://github.com/Spotifyd/spotifyd.git; \
   cd spotifyd; \
-  cargo build --release; \
-  cp target/release/spotifyd /opt/owntone/;
+  cargo build --release --all-features; \
+  cargo install --path . --locked; \
+  cp -r target/release/spotifyd ~/.cargo /opt/owntone/;
