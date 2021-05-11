@@ -38,6 +38,11 @@ RUN set -ex;\
   make lib; \
   make install; \
   cd; \
+  cd NymphCast/src/client; \
+  ln -s /opt/owntone/include/nymph .; \
+  make; \
+  cp bin/* /opt/owntone/bin/; \
+  cd; \
   ln -sf /opt/owntone/lib/* /usr/lib64/ || true; \
   cd NymphCast/player/NymphCastPlayer; \
   ln -s ../../src/client_lib/*.h .; \
@@ -46,6 +51,7 @@ RUN set -ex;\
   cd build; \
   qmake-qt5 ..; \
   make; \
+  cp NymphCastPlayer /opt/owntone/bin/; \
   tree .; \
   make install; \
   
