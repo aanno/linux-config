@@ -39,9 +39,11 @@ RUN set -ex;\
   make install; \
   cd; \
   cd NymphCast/player/NymphCastPlayer; \
+  ln -s ../../src/client_lib/*.h .; \
+  ln -s /opt/owntone/include/nymph .; \
   mkdir build; \
   cd build; \
-  qmake ..; \
+  qmake-qt5 ..; \
   make; \
   tree .; \
   make install; \
