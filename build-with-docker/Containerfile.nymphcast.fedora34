@@ -11,7 +11,8 @@ RUN set -ex;\
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
   dnf -y install \
     git tree gcc-c++ gcc make poco-devel \
-    SDL2-devel SDL2_image-devel ffmpeg-devel; \
+    SDL2-devel SDL2_image-devel ffmpeg-devel libatomic \
+    qt5-qtbase-devel; \
   export DESTDIR=/; \
   export PREFIX=/opt/owntone; \
   git clone https://github.com/MayaPosch/NymphRPC; \
@@ -20,7 +21,7 @@ RUN set -ex;\
   cp lib/* /opt/owntone/lib; \
   cp src/*.h /opt/owntone/include/nymph; \
   cd; \
-  ln -s /opt/owntone/include/lib/* /usr/lib; \
+  ln -s /opt/owntone/lib/* /usr/lib64; \
   git clone https://github.com/MayaPosch/NymphCast; \
   cd NymphCast/src/server; \
   ln -s /opt/owntone/include/nymph .; \
@@ -29,6 +30,19 @@ RUN set -ex;\
   make install; \
   make install-systemd; \
   tree .; \
+  cd; \
+  cd NymphCast/src/client_lib; \
+  ln -s /opt/owntone/include/nymph .; \
+  make lib; \
+  make install; \
+  cd; \
+  cd NymphCast/player/NymphCastPlayer; \
+  mkdir build; \
+  cd build; \
+  qmake ..; \
+  make; \
+  tree .; \
+  make install; \
   
 # CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
 # ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
