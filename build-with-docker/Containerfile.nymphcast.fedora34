@@ -22,7 +22,7 @@ RUN set -ex;\
   ln -s /opt/owntone/lib/libnymphrpc.so.0.1 /opt/owntone/lib/libnymphrpc.so; \
   cp src/*.h /opt/owntone/include/nymph; \
   cd; \
-  ln -s /opt/owntone/lib/* /usr/lib64; \
+  ln -s /opt/owntone/lib/* /usr/lib64/; \
   git clone https://github.com/MayaPosch/NymphCast; \
   cd NymphCast/src/server; \
   ln -s /opt/owntone/include/nymph .; \
@@ -38,6 +38,7 @@ RUN set -ex;\
   make lib; \
   make install; \
   cd; \
+  ln -sf /opt/owntone/lib/* /usr/lib64/ || true; \
   cd NymphCast/player/NymphCastPlayer; \
   ln -s ../../src/client_lib/*.h .; \
   ln -s /opt/owntone/include/nymph .; \
