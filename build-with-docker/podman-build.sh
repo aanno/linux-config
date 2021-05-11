@@ -13,7 +13,7 @@ mkdir -p $CWD/opt/owntone \
   $CWD/var/lib/dnf $CWD/var/cache/dnf \
   $CWD/.cargo;
 rm -rf $CWD/opt/owntone/* || true;
-podman build --pull --rm -t owntone \
+podman build --pull -t owntone \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
   -v $CWD/var/lib/dnf:/var/lib/dnf:z \

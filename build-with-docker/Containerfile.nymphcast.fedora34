@@ -32,7 +32,8 @@ RUN set -ex;\
   tree .; \
   cd; \
   cd NymphCast/src/client_lib; \
-  ln -s /opt/owntone/include/nymph .; \
+  mkdir src; \
+  ln -s /opt/owntone/include/nymph src; \
   make lib; \
   make install; \
   cd; \
