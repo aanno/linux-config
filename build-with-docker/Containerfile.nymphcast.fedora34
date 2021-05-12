@@ -58,6 +58,7 @@ RUN set -ex;\
   make install; \
   cd; \
   git clone --depth 10 https://github.com/MayaPosch/NymphCast-MediaServer.git; \
+  cd NymphCast-MediaServer; \
   ln -s /root/NymphCast/src/client_lib/nymphcast_client.h src/ ; \
   ln -s /opt/owntone/include/nymph src/; \
   make; \
