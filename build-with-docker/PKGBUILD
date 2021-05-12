@@ -42,6 +42,15 @@ package() {
 #    cp ${pkgname}-${pkgver} ${pkgdir}/usr/bin/${pkgname}
      cd ${pkgdir}
      tar xvfz /pacur/owntone.tar.gz
+     mkdir -p usr/lib64/
+     cd usr/lib64
+     #ln -s ${pkgdir}/opt/owntone/lib/* .
+     #ln -s libnymphrpc.so libnymphrpc.so.0.1 || true
+     #ln -s libnymph.so libnymph.so.0.1 || true
+     for i in ${pkgdir}/opt/owntone/lib/*; do
+       ln $i .
+       # cp $i .
+     done
 }
 
 provides=(
