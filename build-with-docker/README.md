@@ -28,6 +28,15 @@ libevent-pthreads-2.1-7 libwebsockets16 libmxml1 libconfuse2 libantlr3c-3.4-0 li
 
 sudo ln -s /usr/lib/x86_64-linux-gnu/libantlr3c-3.4.so.0.0.0 /usr/lib/x86_64-linux-gnu/libantlr3c.so
 
+## nymphcast
+
+Fedora:
+`poco-netssl poco-json poco-data poco-sqlite SDL2_image libevent libatomic`
+
+```bash
+LD_LIBRARY_PATH=./opt/owntone/lib ./opt/owntone/bin/nymphcast_server  -h
+```
+
 ## Misc
 
 ### mDNS/avahi

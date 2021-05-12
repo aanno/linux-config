@@ -43,3 +43,7 @@ package() {
      cd ${pkgdir}
      tar xvfz /pacur/owntone.tar.gz
 }
+
+provides=(
+    "libnymphcast.so.0.1"
+)
