@@ -7,6 +7,8 @@
 .cargo/
 opt/
 *.tar.gz
+*.deb
+*.rpm
 var/
 fcos.qcow2
 /.gtm/

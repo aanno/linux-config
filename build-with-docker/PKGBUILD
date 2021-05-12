@@ -1,0 +1,45 @@
+targets=(
+    "ubuntu-hirsute"
+    "fedora-34"
+)
+pkgname="nymphcast-all"
+pkgver="0.0.1"
+pkgrel="1"
+pkgdesc="nymphcast-all"
+#pkgdesc:centos="Http file server written with Go for CentOS"
+#pkgdesc:debian="Http file server written with Go for Debian"
+#pkgdesc:fedora="Http file server written with Go for Fedora"
+#pkgdesc:ubuntu="Http file server written with Go for Ubuntu"
+pkgdesclong=(
+    "Quick http file server written with Go"
+    "using directory listing similar to apache"
+)
+maintainer="Example <example@pacur.org>"
+arch="all"
+license=("GPLv3")
+section="utils"
+priority="optional"
+url="https://github.com/pacur/${pkgname}"
+#sources=(
+#    "${url}/archive/${pkgver}.tar.gz"
+#)
+#hashsums=(
+#    "3548e1263a931b27970e190f04b74623"
+#)
+
+build() {
+#    mkdir -p "go/src"
+#    export GOPATH="${srcdir}/go"
+#    mv "${pkgname}-${pkgver}" "go/src"
+#    cd "go/src/${pkgname}-${pkgver}"
+#    go get
+#    go build -a
+}
+
+package() {
+#    cd "${srcdir}/go/src/${pkgname}-${pkgver}"
+#    mkdir -p "${pkgdir}/usr/bin"
+#    cp ${pkgname}-${pkgver} ${pkgdir}/usr/bin/${pkgname}
+     cd ${pkgdir}
+     tar xvfz /pacur/owntone.tar.gz
+}
