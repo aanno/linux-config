@@ -15,15 +15,16 @@ RUN set -ex;\
     qt5-qtbase-devel; \
   export DESTDIR=/; \
   export PREFIX=/opt/owntone; \
-  git clone https://github.com/MayaPosch/NymphRPC; \
+  git clone --depth 10 https://github.com/MayaPosch/NymphRPC; \
   cd NymphRPC; \
   make lib; \
   cp lib/* /opt/owntone/lib; \
-  ln -s /opt/owntone/lib/libnymphrpc.so.0.1 /opt/owntone/lib/libnymphrpc.so; \
   cp src/*.h /opt/owntone/include/nymph; \
+  cd /opt/owntone/lib; \
+  ln -s libnymphrpc.so.0.1 libnymphrpc.so; \
   cd; \
   ln -s /opt/owntone/lib/* /usr/lib64/; \
-  git clone https://github.com/MayaPosch/NymphCast; \
+  git clone --depth 10 https://github.com/MayaPosch/NymphCast; \
   cd NymphCast/src/server; \
   ln -s /opt/owntone/include/nymph .; \
   ln -s /usr/include/ffmpeg/* .; \
@@ -37,6 +38,7 @@ RUN set -ex;\
   ln -s /opt/owntone/include/nymph src; \
   make lib; \
   make install; \
+  ln -sf /opt/owntone/lib/* /usr/lib64/ || true; \
   cd; \
   cd NymphCast/src/client; \
   ln -s /opt/owntone/include/nymph .; \
@@ -54,7 +56,13 @@ RUN set -ex;\
   cp NymphCastPlayer /opt/owntone/bin/; \
   tree .; \
   make install; \
-  
+  cd; \
+  git clone --depth 10 https://github.com/MayaPosch/NymphCast-MediaServer.git; \
+  ln -s /root/NymphCast/src/client_lib/nymphcast_client.h src/ ; \
+  ln -s /opt/owntone/include/nymph src/; \
+  make; \
+  cp bin/x86_64-redhat-linux/nymphcast_mediaserver* /opt/owntone/bin/; \
+
 # CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
 # ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
 
