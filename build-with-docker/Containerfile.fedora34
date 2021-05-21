@@ -1,0 +1,29 @@
+from docker.io/library/fedora:34
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  git automake autoconf gettext-devel gperf gawk libtool \
+  sqlite-devel libconfuse-devel libunistring-devel mxml-devel libevent-devel \
+  avahi-devel libgcrypt-devel zlib-devel alsa-lib-devel ffmpeg-devel \
+  libplist-devel libsodium-devel json-c-devel libwebsockets-devel libcurl-devel \
+  java-11-openjdk-headless gnutls-devel protobuf-c-devel libspotify-devel \
+  libwebsockets-devel pulseaudio-libs-devel openssl-devel; \
+  git clone -b spotifyc1 https://github.com/owntone/owntone-server.git; \
+  cd owntone-server; \
+  ./scripts/antlr35_install.sh; \
+  autoreconf -i; \
+  ./configure --prefix=/opt/owntone --sysconfdir=/etc --localstatedir=/var \
+    --enable-chromecast --enable-spotify --with-libwebsockets  --with-pulseaudio; \
+  make; \
+  make install;
+  
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+

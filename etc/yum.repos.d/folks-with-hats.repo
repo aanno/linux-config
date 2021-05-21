@@ -1,6 +1,0 @@
-[folkswithhats]
-name=Folks With Hats
-baseurl=https://dl.folkswithhats.org/fedora/$releasever/
-enabled=1
-metadata_expire=1d
-gpgcheck=0

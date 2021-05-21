@@ -1,6 +1,0 @@
-[rocm]
-name=ROCm $releasever - $basearch - untrusted!
-baseurl=http://repo.radeon.com/rocm/yum/rpm/
-#gpgcheck=1
-#gpgkey=https://dl.ring.cx/ring.pub.key
-enabled=1

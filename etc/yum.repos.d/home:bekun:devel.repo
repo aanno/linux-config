@@ -1,7 +1,0 @@
-[home_bekun_devel]
-name=Oyranos-Devel (Fedora_27)
-type=rpm-md
-baseurl=http://download.opensuse.org/repositories/home:/bekun:/devel/Fedora_27/
-gpgcheck=1
-gpgkey=http://download.opensuse.org/repositories/home:/bekun:/devel/Fedora_27/repodata/repomd.xml.key
-enabled=0

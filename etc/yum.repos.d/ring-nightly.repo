@@ -1,14 +1,14 @@
 [ring]
 name=Ring $releasever - $basearch - ring
-baseurl=https://dl.ring.cx/ring-nightly/fedora_$releasever
+baseurl=https://dl.jami.net/ring-nightly/fedora_$releasever
 gpgcheck=1
-gpgkey=https://dl.ring.cx/ring.pub.key
+gpgkey=https://dl.jami.net/ring.pub.key
 enabled=1
-skip_if_unavailable=True
 
-[ring28]
-name=Ring 28 static - $basearch - ring
-baseurl=https://dl.ring.cx/ring-nightly/fedora_28
+[ring-f31]
+name=Ring f31 - $basearch - ring
+baseurl=https://dl.jami.net/ring-nightly/fedora_31
 gpgcheck=1
-gpgkey=https://dl.ring.cx/ring.pub.key
-enabled=1
+gpgkey=https://dl.jami.net/ring.pub.key
+enabled=0
+

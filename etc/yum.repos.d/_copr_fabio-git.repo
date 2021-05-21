@@ -1,8 +1,0 @@
-[fabio-git]
-name=Copr repo for git owned by fabio
-baseurl=https://copr-be.cloud.fedoraproject.org/results/fabio/git/fedora-$releasever-$basearch/
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://copr-be.cloud.fedoraproject.org/results/fabio/git/pubkey.gpg
-enabled=1
-enabled_metadata=1
