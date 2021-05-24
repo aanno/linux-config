@@ -42,6 +42,8 @@ package() {
 #    cp ${pkgname}-${pkgver} ${pkgdir}/usr/bin/${pkgname}
      cd ${pkgdir}
      tar xvfz /pacur/owntone.tar.gz
+     # shared libs without +x don't work with rpm-build (aanno)
+     chmod a+x opt/owntone/lib/*
      mkdir -p usr/lib64/
      cd usr/lib64
      #ln -s ${pkgdir}/opt/owntone/lib/* .
@@ -53,6 +55,6 @@ package() {
      done
 }
 
-provides=(
-    "libnymphcast.so.0.1"
-)
+# provides=(
+#     "libnymphcast.so.0.1"
+# )
