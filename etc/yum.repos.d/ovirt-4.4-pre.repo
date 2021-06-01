@@ -1,8 +1,0 @@
-[ovirt-4.4-pre]
-name=oVirt 4.4 Pre-Release
-baseurl=https://resources.ovirt.org/pub/ovirt-4.4-pre/rpm/fc$releasever/
-#mirrorlist=https://resources.ovirt.org/pub/yum-repo/mirrorlist-ovirt-4.4-pre-fc$releasever
-enabled=0
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-ovirt-4.4
-
