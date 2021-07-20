@@ -1,8 +1,21 @@
 # nextcloud-spreed
 
+
+## External network
+
+podman network create proxy-tier
+
+/mnt/home/tpasch/.config/cni/net.d/proxy-tier.conflist
+
+$ podman network ls
+NETWORK ID    NAME         VERSION     PLUGINS
+b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
+445ee034896e  proxy-tier   0.4.0       bridge,portmap,firewall,tuning,dnsname
+
 ## References
 
 * https://markus-blog.de/index.php/2020/11/20/how-to-run-nextcloud-talk-high-performance-backend-with-stun-turnserver-on-ubuntu-with-docker-compose/
+* https://arnowelzel.de/nextcloud-talk-mit-coturn-und-eigenem-signaling-server
 
 ### github repositories
 
@@ -16,4 +29,3 @@
 * https://hub.docker.com/_/nats
 * https://hub.docker.com/_/alpine
 * https://hub.docker.com/r/coturn/coturn
-
