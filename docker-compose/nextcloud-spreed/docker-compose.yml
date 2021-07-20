@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  spreedbackend:
+    # build: .
+    image: docker.io/aanno/nextcloud-spreed-signaling:v0.3.0
+    volumes:
+      # from https://github.com/strukturag/nextcloud-spreed-signaling
+      - ./server.conf:/config/server.conf:z,ro
+    # network_mode: host
+    restart: unless-stopped
+    depends_on:
+      - nats
+      - janus
+      - coturn
+  nats:
+    # image: nats:2.1
+    image: docker.io/nats:2.3.2-alpine3.14
+    volumes:
+      # from https://github.com/strukturag/nextcloud-spreed-signaling
+      - ./gnatsd.conf:/config/gnatsd.conf:z,ro
+    command: ["-c", "/config/gnatsd.conf"]
+    # network_mode: host
+    restart: unless-stopped
+  janus:
+    # build: docker/janus
+    image: docker.io/aanno/janus-gateway:v0.11.1
+    command: ["janus", "--full-trickle"]
+    # network_mode: host
+    restart: unless-stopped
+  coturn:
+    # build: docker/coturn
+    # https://hub.docker.com/r/coturn/coturn
+    image: docker.io/coturn/coturn
+    # ok here (tp)
+    network_mode: host
+    command: ["/bin/sh", "-c", "turnserver --prod --fingerprint --use-auth-secret --static-auth-secret=$STATIC_SECRET --realm=$REALM --no-multicast-peers --no-tls --no-dtls"]
+    environment:
+      REALM: signaling.example.com
+      # STATIC_SECRET: openssl rand -hex 32
+      STATIC_SECRET: 1e95cf79ccaf812f2498c4a2470a6dd5e62eeb2451d34e819ea12602b8d1bf67
+    restart: unless-stopped
