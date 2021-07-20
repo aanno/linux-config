@@ -47,7 +47,9 @@ services:
       STATIC_SECRET: 1e95cf79ccaf812f2498c4a2470a6dd5e62eeb2451d34e819ea12602b8d1bf67
     restart: unless-stopped
 
+# https://stackoverflow.com/questions/38088279/communication-between-multiple-docker-compose-projects
+# https://docs.docker.com/compose/networking/
 networks:
-    external: 
-        networks:
-            proxy-tier:
+    proxy-tier:
+        external: true
+        name: proxy-tier
