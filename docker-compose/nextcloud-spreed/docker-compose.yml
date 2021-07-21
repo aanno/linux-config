@@ -30,7 +30,7 @@ services:
     # build: docker/janus
     image: docker.io/aanno/janus-gateway:v0.11.1
     # TODO: "-S", "coturn:5349" does not work (because of host mode)
-    command: ["janus", "-6", "--full-trickle", "-S", "coturn:3478"]
+    command: ["janus", "-6", "--full-trickle", "-S", "192.168.10.20:3478"]
     # network_mode: host
     networks:
         - proxy-tier
@@ -43,7 +43,7 @@ services:
     # default port: 5349
     image: docker.io/coturn/coturn
     # ok here (tp)
-    # network_mode: host
+    network_mode: host
     networks:
         - proxy-tier
     # TODO: variables from 'environment:' do not work here
