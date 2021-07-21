@@ -40,11 +40,25 @@ services:
     network_mode: host
     networks:
         - proxy-tier
-    command: ["/bin/sh", "-c", "turnserver --prod --fingerprint --use-auth-secret --static-auth-secret=$STATIC_SECRET --realm=$REALM --no-multicast-peers --no-tls --no-dtls"]
+    # TODO: variables from 'environment:' do not work here
+    command: [
+             "/bin/sh", "-c", "turnserver",  "--prod",  "--fingerprint",
+             "--use-auth-secret", 
+             "--static-auth-secret=1e95cf79ccaf812f2498c4a2470a6dd5e62eeb2451d34e819ea12602b8d1bf67",
+             "--realm=signaling.example.com",
+             "--no-multicast-peers", "--no-tls", "--no-dtls"
+             ]
     environment:
       REALM: signaling.example.com
       # STATIC_SECRET: openssl rand -hex 32
       STATIC_SECRET: 1e95cf79ccaf812f2498c4a2470a6dd5e62eeb2451d34e819ea12602b8d1bf67
+    # according to https://hub.docker.com/r/coturn/coturn this should speed up persistence
+    volumes:
+      - type: tmpfs
+        target: /var/lib/coturn
+        tmpfs:
+          # bytes
+          size: 100000
     restart: unless-stopped
 
 # https://stackoverflow.com/questions/38088279/communication-between-multiple-docker-compose-projects
@@ -53,3 +67,4 @@ networks:
     proxy-tier:
         external: true
         name: proxy-tier
+
