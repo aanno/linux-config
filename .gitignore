@@ -30,4 +30,5 @@ fcos.qcow2
 
 /docker-compose/nextcloud-spreed/docker-compose.yml
 /docker-compose/nextcloud-spreed/server.conf
+/docker-compose/nextcloud-spreed/scripts/env.sh
 

@@ -1,5 +1,6 @@
 # nextcloud-spreed
 
+Before everything else, `mv scripts/env.sh.template scripts/env.sh` and adapt it to your needs!
 
 ## External network
 
