@@ -4,6 +4,9 @@ services:
   spreedbackend:
     # build: .
     image: docker.io/aanno/nextcloud-spreed-signaling:v0.3.0
+    # TODO tp: only because podman-compose does not use (external network) proxy-tier
+    ports:
+      - "8080:8080"
     volumes:
       # from https://github.com/strukturag/nextcloud-spreed-signaling
       - ./server.conf:/config/server.conf:z,ro
