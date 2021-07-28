@@ -24,3 +24,10 @@ fcos.qcow2
 /coreos/libvirt/netcup.fcc
 /coreos/libvirt/netcup-local.fcc
 /docker/certbot-netcup/Dockerfile
+
+/build-with-docker/log
+/build-with-docker/out.txt
+
+/docker-compose/nextcloud-spreed/docker-compose.yml
+/docker-compose/nextcloud-spreed/server.conf
+
