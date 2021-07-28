@@ -29,8 +29,7 @@ services:
   janus:
     # build: docker/janus
     image: docker.io/aanno/janus-gateway:v0.11.1
-    # TODO: "-S", "coturn:5349" does not work (because of host mode)
-    command: ["janus", "-6", "--full-trickle", "-S", "192.168.10.20:3478"]
+    command: ["janus", "-6", "--full-trickle", "-S", "${SERVER_EXTERNAL_IP}:${TURN_PORT}"]
     # network_mode: host
     networks:
         - proxy-tier
@@ -40,7 +39,7 @@ services:
   coturn:
     # build: docker/coturn
     # https://hub.docker.com/r/coturn/coturn
-    # default port: 5349
+    # default port: 3478
     image: docker.io/coturn/coturn
     # ok here (tp)
     network_mode: host
@@ -50,21 +49,17 @@ services:
     command: [
              "/bin/sh", "-c", "turnserver",  "--prod",  "--fingerprint",
              "--use-auth-secret", 
-             "--static-auth-secret=1e95cf79ccaf812f2498c4a2470a6dd5e62eeb2451d34e819ea12602b8d1bf67",
-             "--realm=signaling.example.com",
+             "--static-auth-secret=${COTURN_SECRET}",
+             "--realm=${COTURN_FQN}",
              "--no-multicast-peers", "--no-tls", "--no-dtls",
              "--log-file=stdout", "-n", "--no-cli"
              ]
-    environment:
-      REALM: signaling.example.com
-      # STATIC_SECRET: openssl rand -hex 32
-      STATIC_SECRET: 1e95cf79ccaf812f2498c4a2470a6dd5e62eeb2451d34e819ea12602b8d1bf67
     # according to https://hub.docker.com/r/coturn/coturn this should speed up persistence
     volumes:
       - type: tmpfs
         target: /var/lib/coturn
         tmpfs:
-          # bytes
+          # max bytes
           size: 100000
     restart: unless-stopped
 
