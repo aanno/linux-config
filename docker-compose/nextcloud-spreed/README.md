@@ -29,6 +29,11 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
 ### Testing
 
 * https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
+* nextcloud-spreed-signaling
+  + `curl -k -v -i https://signaling.breitbandig.local:8443/nextcloud/signaling/api/v1/welcome`
+  + `wget -v --no-check-certificate https://signaling.breitbandig.local:8443/nextcloud/signaling/api/v1/welcome`
+  + _from inside the `nc_app_1` container the following works: _<br/>
+    `curl -k -v -i http://spreed_spreedbackend_1:8080/api/v1/welcome`
 
 ### github repositories
 
@@ -40,6 +45,7 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
   + https://github.com/warmcat/libwebsockets
 * https://github.com/coturn/coturn
   + https://github.com/coturn/coturn/blob/master/examples/etc/turnserver.conf
+  + https://github.com/coturn/coturn/wiki/turnserver
 
 ### docker repositories
 
@@ -47,4 +53,3 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
 * https://hub.docker.com/_/nats
 * https://hub.docker.com/_/alpine
 * https://hub.docker.com/r/coturn/coturn
-
