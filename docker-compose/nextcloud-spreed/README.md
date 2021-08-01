@@ -18,6 +18,8 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
 * Alpine `libwebsockets` package is compiled without IPv6 support. Without changes,
   this results in `janus-gateway` being without IPv6 support.
   Also see https://pkgs.alpinelinux.org/package/v3.14/main/x86_64/libwebsockets
+* 'external networks' are _not_ honoured by `podman-compose` but maybe 
+  https://github.com/containers/podman-compose/issues/283 could fix that
 
 ## References
 
@@ -31,6 +33,7 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
 ### github repositories
 
 * https://github.com/strukturag/nextcloud-spreed-signaling
+  + https://github.com/strukturag/nextcloud-spreed-signaling/blob/master/server.conf.in
 * https://github.com/meetecho/janus-gateway
   + https://janus.conf.meetecho.com/docs/
   + https://github.com/cisco/libsrtp
