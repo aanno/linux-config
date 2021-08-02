@@ -49,8 +49,9 @@ services:
     networks:
         - proxy-tier
     # TODO: variables from 'environment:' do not work here
+    # unsure: --prod --verbose
     command: [
-             "/bin/sh", "-c", "turnserver",  "--prod",  "--fingerprint",
+             "/bin/sh", "-c", "turnserver", "--fingerprint", "--verbose",
              "--external-ip=${SERVER_EXTERNAL_IP}",
              "--listening-ip=${SERVER_EXTERNAL_IP}",
              "--use-auth-secret", 

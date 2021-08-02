@@ -21,6 +21,14 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
 * 'external networks' are _not_ honoured by `podman-compose` but maybe 
   https://github.com/containers/podman-compose/issues/283 could fix that
 
+## TURN/coturn
+
+* docker images:
+  + https://github.com/strukturag/docker-webrtc-turnserver
+  + https://github.com/Monogramm/docker-coturn
+  + https://github.com/coturn/coturn original image, maybe difficult to use:
+    - https://github.com/coturn/coturn/issues/492 (socket: Protocol not supported)
+
 ## References
 
 * https://markus-blog.de/index.php/2020/11/20/how-to-run-nextcloud-talk-high-performance-backend-with-stun-turnserver-on-ubuntu-with-docker-compose/
@@ -28,12 +36,22 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
 
 ### Testing
 
-* https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
+#### Testing `nextcloud-spreed-signaling`
+
 * nextcloud-spreed-signaling
   + `curl -k -v -i https://signaling.breitbandig.local:8443/nextcloud/signaling/api/v1/welcome`
   + `wget -v --no-check-certificate https://signaling.breitbandig.local:8443/nextcloud/signaling/api/v1/welcome`
   + _from inside the `nc_app_1` container the following works: _<br/>
     `curl -k -v -i http://spreed_spreedbackend_1:8080/api/v1/welcome`
+
+#### Testing TURN/coturn
+
+* https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
+* https://stackoverflow.com/questions/44996545/why-my-turn-server-doesnt-work
+* https://github.com/coturn/coturn/issues/745
+* https://manpages.debian.org/testing/coturn/turnutils.1.en.html <br/>
+  `turnutils_uclient -v -P -p 3478 -w 1e95cf79ccaf812f2498c4a2470a6dd5e62eeb2451d34e819ea12602b8d1bf67 signaling.breitbandig.local`
+* https://stackoverflow.com/questions/34030188/easy-way-to-test-turn-server
 
 ### github repositories
 
