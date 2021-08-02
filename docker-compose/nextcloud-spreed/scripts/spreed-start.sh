@@ -11,6 +11,6 @@ source "scripts/env.sh"
 rm docker-compose.yml server.conf || true
 envsubst <docker-compose.in.yml >docker-compose.yml
 envsubst <server.in.conf >server.conf
-podman-compose -p spreed -t identity --podman-run-args='--net proxy-tier' up docker-compose.yml 
+podman-compose -p spreed -t identity --podman-run-args='--net proxy-tier' up docker-compose.yml -d
 
 popd
