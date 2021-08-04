@@ -23,6 +23,7 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
 
 ## TURN/coturn
 
+* https://nextcloud-talk.readthedocs.io/en/latest/TURN/
 * docker images:
   + https://github.com/strukturag/docker-webrtc-turnserver
   + https://github.com/Monogramm/docker-coturn
@@ -54,6 +55,7 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
 
 #### Testing TURN/coturn
 
+* https://nextcloud-talk.readthedocs.io/en/latest/TURN/#6-testing-the-turn-server
 * https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
 * https://stackoverflow.com/questions/44996545/why-my-turn-server-doesnt-work
 * https://github.com/coturn/coturn/issues/745
