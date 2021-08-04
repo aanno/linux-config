@@ -8,10 +8,10 @@ pushd "$GIT_ROOT/docker-compose/nextcloud-spreed"
 
 source "scripts/env.sh"
 
-rm docker-compose.yml server.conf || true
-envsubst <docker-compose.in.yml >docker-compose.yml
+rm coturn-only-compose.yml server.conf || true
+envsubst <coturn-only-compose.in.yml >coturn-only-compose.yml
 envsubst <server.in.conf >server.conf
 podman-compose -p spreed -t identity --podman-run-args='--net proxy-tier' \
-  -f docker-compose.yml up -d
+  -f coturn-only-compose.yml up # -d
 
 popd

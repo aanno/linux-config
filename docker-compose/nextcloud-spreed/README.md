@@ -34,6 +34,14 @@ b932778640d3  cni-podman1  0.4.0       bridge,portmap,firewall,tuning,dnsname
 * https://markus-blog.de/index.php/2020/11/20/how-to-run-nextcloud-talk-high-performance-backend-with-stun-turnserver-on-ubuntu-with-docker-compose/
 * https://arnowelzel.de/nextcloud-talk-mit-coturn-und-eigenem-signaling-server
 
+## TODO
+
+* check if `docker-compose.in.yml` is really needed as `podman-compose` interpolates
+  environment variables
+* check IPv6 support (it is missing with `janus-gateway` and unconfigured in `coturn`)
+* `coturn` config will only work on public IP (not behind firewall) (perhaps with could be
+  fixed)
+
 ### Testing
 
 #### Testing `nextcloud-spreed-signaling`

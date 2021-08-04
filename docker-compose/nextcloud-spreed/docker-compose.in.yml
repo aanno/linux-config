@@ -51,7 +51,7 @@ services:
     # TODO: variables from 'environment:' do not work here
     # unsure: --prod --verbose
     command: [
-             "/bin/sh", "-c", "turnserver", "--fingerprint", "--verbose",
+             "turnserver", "--prod", "--fingerprint", "--verbose",
              "--external-ip=${SERVER_EXTERNAL_IP}",
              "--listening-ip=${SERVER_EXTERNAL_IP}",
              "--use-auth-secret", 
