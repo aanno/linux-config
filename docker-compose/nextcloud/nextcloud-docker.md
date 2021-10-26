@@ -97,6 +97,35 @@ This could happen is you don't use the 'z' option on directory/file docker mount
 
 ### Known problems
 
+#### Upgrade
+
+* https://docs.nextcloud.com/server/latest/admin_manual/maintenance/upgrade.html
+
+```bash
+sudo -u www-data php occ maintenance:mode --on
+sudo -u www-data php occ db:add-missing-columns
+sudo -u www-data php occ db:add-missing-indices
+```
+
+#### File versioning
+
+* https://docs.nextcloud.com/server/18/admin_manual/configuration_files/file_versioning.html
+
+```bash
+sudo -u www-data php occ help versions:cleanup
+sudo -u www-data php occ help versions:expire
+```
+
+#### Trashbin
+
+* https://docs.nextcloud.com/server/latest/user_manual/ar/files/deleted_file_management.html
+* https://docs.nextcloud.com/server/18/admin_manual/configuration_files/file_versioning.html
+
+```bash
+sudo -u www-data php occ help trashbin:cleanup
+sudo -u www-data php occ help trashbin:expire
+```
+
 #### nginx-proxy
 
 * nginx-proxy 
