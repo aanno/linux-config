@@ -20,7 +20,7 @@ podman build --pull -t owntone \
   -v $CWD/var/cache/dnf:/var/cache/dnf:z \
   -v $CWD/opt/owntone:/opt/owntone:z \
   -v $CWD/.cargo:/root/.cargo:z \
-  -f Containerfile.nymphcast.fedora34;
+  -f Containerfile.spotifyd.ubuntu-impish;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt

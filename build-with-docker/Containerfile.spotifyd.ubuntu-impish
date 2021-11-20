@@ -10,7 +10,8 @@ RUN set -ex;\
   apt -y install \
   git rustc cargo libasound2-dev libssl-dev pkg-config \
     portaudio19-dev libdbus-1-dev libpulse-dev libogg-dev; \
-  git clone https://github.com/Spotifyd/spotifyd.git; \
+  git clone -b zeroconf_cache_fix https://github.com/eladyn/spotifyd.git; \
+  echo git clone https://github.com/Spotifyd/spotifyd.git; \
   cd spotifyd; \
   cargo build $FEATURES --release; \
   cargo install $FEATURES --path . --locked; \
