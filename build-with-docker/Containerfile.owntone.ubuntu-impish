@@ -1,4 +1,4 @@
-from docker.io/library/ubuntu:hirsute
+from docker.io/library/ubuntu:impish
 
 RUN set -ex;\
   mkdir /opt/owntone || true; \

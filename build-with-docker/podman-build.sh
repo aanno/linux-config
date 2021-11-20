@@ -25,3 +25,7 @@ tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt
 # podman rmi localhost/owntone
+
+# only for spotifyd
+# TODO: find container name ('relaxed_torvalds' here)
+# podman cp relaxed_torvalds:/opt/owntone/release/spotifyd .
