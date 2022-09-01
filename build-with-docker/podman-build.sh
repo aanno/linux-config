@@ -20,7 +20,7 @@ podman build --pull -t owntone \
   -v $CWD/var/cache/dnf:/var/cache/dnf:z \
   -v $CWD/opt/owntone:/opt/owntone:z \
   -v $CWD/.cargo:/root/.cargo:z \
-  -f Containerfile.spotifyd.ubuntu-impish;
+  -f Containerfile.owntone.ubuntu-jammy;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt

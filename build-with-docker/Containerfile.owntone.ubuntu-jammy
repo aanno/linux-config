@@ -1,0 +1,40 @@
+from docker.io/library/ubuntu:jammy
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  export DEBIAN_FRONTEND=noninteractive; \
+  ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime; \
+  apt-get update; \
+  apt-get -y install curl gnupg2 libterm-readline-gnu-perl; \
+  mkdir -p /usr/local/share/keyrings; \
+  curl https://apt.mopidy.com/mopidy.gpg >/usr/local/share/keyrings/mopidy-archive-keyring.gpg; \
+  # curl https://apt.mopidy.com/mopidy.gpg | apt-key add -; \
+  curl https://apt.mopidy.com/buster.list >/etc/apt/sources.list.d/mopidy.list; \
+  apt-get update; \
+  apt-get -y install \
+  #build-essential git automake autoconf gettext gperf gawk libtool \
+  #sqlite3 libsqlite3-dev libconfuse-dev libunistring-dev libmxml-dev libevent-dev \
+  libavahi-client-dev libgcrypt-dev zlib1g-dev alsa-tools ffmpeg \
+  #libplist-dev libsodium-dev libjson-c-dev libwebsockets-dev libcurl4-gnutls-dev \
+  #openjdk-11-jdk-headless gnutls-dev libprotobuf-c-dev libspotify-dev \
+  libwebsockets-dev libpulse-dev openssl libgnutls28-dev \
+  libavformat-dev libavcodec-dev libavcodec-extra libavutil-dev libavfilter-dev libavfilter-extra \
+  build-essential git autotools-dev autoconf automake libtool gettext gawk \
+  gperf bison flex libconfuse-dev libunistring-dev libsqlite3-dev \
+  libavcodec-dev libavformat-dev libavfilter-dev libswscale-dev libavutil-dev \
+  libasound2-dev libmxml-dev libgcrypt20-dev libavahi-client-dev zlib1g-dev \
+  libevent-dev libplist-dev libsodium-dev libjson-c-dev libwebsockets-dev \
+  libcurl4-openssl-dev libprotobuf-c-dev; \
+  git clone https://github.com/owntone/owntone-server.git; \
+  cd owntone-server; \
+  # ./scripts/antlr35_install.sh; \
+  autoreconf -i; \
+  ./configure --prefix=/opt/owntone --sysconfdir=/etc --localstatedir=/var \
+    --enable-chromecast --enable-spotify --with-libwebsockets  	--with-pulseaudio; \
+  make; \
+  make install;
+  
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+
