@@ -6,7 +6,7 @@ set -xe
 CWD=`pwd`
 
 rm -rf ./opt || true
-rm *.gz *.tgz owntone.* || true
+rm *.gz *.tgz || true
 podman rmi localhost/owntone || true
 
 mkdir -p $CWD/opt/owntone \
@@ -21,7 +21,7 @@ podman build --pull -t owntone \
   -v $CWD/var/cache/dnf:/var/cache/dnf:z \
   -v $CWD/opt/owntone:/opt/owntone:z \
   -v $CWD/.cargo:/root/.cargo:z \
-  -f Containerfile.owntone.ubuntu-jammy;
+  -f Containerfile.spotifyd.ubuntu-jammy;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt
