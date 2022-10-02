@@ -1,0 +1,79 @@
+version: '3.7'
+
+services:
+  spreedbackend:
+    # build: .
+    image: docker.io/aanno/nextcloud-spreed-signaling:v0.3.0
+    # TODO tp: only because podman-compose does not use (external network) proxy-tier
+    ports:
+      - "8080:8080"
+    volumes:
+      # from https://github.com/strukturag/nextcloud-spreed-signaling
+      - ./server.conf:/config/server.conf:z,ro
+    # network_mode: host
+    networks:
+        - proxy-tier
+    restart: unless-stopped
+    depends_on:
+      - nats
+      - janus
+      - coturn
+  nats:
+    # image: nats:2.1
+    image: docker.io/nats:2.3.2-alpine3.14
+    volumes:
+      # from https://github.com/strukturag/nextcloud-spreed-signaling
+      - ./gnatsd.conf:/config/gnatsd.conf:z,ro
+    command: ["-c", "/config/gnatsd.conf"]
+    # network_mode: host
+    networks:
+        - proxy-tier
+    restart: unless-stopped
+  janus:
+    # build: docker/janus
+    image: docker.io/aanno/janus-gateway:v0.11.1
+    command: ["janus", "-6", "--full-trickle", "-S", "${SERVER_EXTERNAL_IP}:${TURN_PORT}"]
+    # network_mode: host
+    networks:
+        - proxy-tier
+    restart: unless-stopped
+    depends_on:
+      - coturn
+  coturn:
+    # build: docker/coturn
+    # https://hub.docker.com/r/coturn/coturn
+    # default port: 3478
+    image: docker.io/coturn/coturn
+    # ok here (tp)
+    network_mode: host
+    networks:
+        - proxy-tier
+    # TODO: variables from 'environment:' do not work here
+    # unsure: --prod --verbose
+    command: [
+             "turnserver", "--fingerprint", "--verbose",
+             "--external-ip=${SERVER_EXTERNAL_IP}",
+             "--listening-ip=${SERVER_EXTERNAL_IP}",
+             "--use-auth-secret", 
+             "--static-auth-secret=${COTURN_SECRET}",
+             "--realm=${COTURN_FQN}",
+             "--no-multicast-peers", "--no-tls", "--no-dtls",
+             "--stale-nonce", "--bps-capacity=0", "--total-quota=0", "--listening-port=3478",
+             "--log-file=stdout"
+             ]
+    # according to https://hub.docker.com/r/coturn/coturn this should speed up persistence
+    volumes:
+      - type: tmpfs
+        target: /var/lib/coturn
+        tmpfs:
+          # max bytes
+          size: 100000
+    restart: unless-stopped
+
+# https://stackoverflow.com/questions/38088279/communication-between-multiple-docker-compose-projects
+# https://docs.docker.com/compose/networking/
+networks:
+    proxy-tier:
+        external: true
+        name: proxy-tier
+

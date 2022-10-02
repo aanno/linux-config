@@ -1,4 +1,4 @@
-from docker.io/library/fedora:34
+from docker.io/library/fedora:35
 
 RUN set -ex;\
   mkdir /opt/owntone || true; \

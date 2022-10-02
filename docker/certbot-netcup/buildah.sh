@@ -1,6 +1,6 @@
 #!/bin/bash -x 
 
-export VERSION="v1.17.0"
+export VERSION="v1.29.0"
 export IMAGE="docker.io/aanno/certbot-netcup:$VERSION"
 
 envsubst <Dockerfile.envsub >Dockerfile

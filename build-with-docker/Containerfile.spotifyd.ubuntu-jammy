@@ -1,0 +1,27 @@
+from docker.io/library/ubuntu:jammy
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  export DEBIAN_FRONTEND=noninteractive; \
+  export FEATURES="--no-default-features --all-features --features pulseaudio_backend,portaudio_backend,alsa_backend,dbus_keyring,dbus_mpris"; \
+  export CARGO_HOME=/root/.cargo; \
+  export RUSTUP_HOME=/root/.rustup; \
+  ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime; \
+  apt update; \
+  apt -y install curl build-essential; \
+  echo "use rustup instead of cargo/rustc from distro https://stackoverflow.com/questions/57251508/run-rustups-curl-fetched-installer-script-non-interactively"; \
+  curl https://sh.rustup.rs -sSf | sh -s -- -y; \
+  . $HOME/.cargo/env; \
+  apt -y install \
+  git libasound2-dev libssl-dev pkg-config \
+    portaudio19-dev libdbus-1-dev libpulse-dev libogg-dev; \
+  echo not using git clone https://github.com/Spotifyd/spotifyd.git; \
+  git clone -b cached_credentials_fix https://github.com/eladyn/spotifyd.git; \
+  cd spotifyd; \
+  cargo build $FEATURES --release; \
+  cargo install $FEATURES --path . --locked; \
+  echo not using cp -r target/release/spotifyd ~/.cargo /opt/owntone/; \
+  cp -r target/release/spotifyd /opt/owntone/;
+
+# --all-features

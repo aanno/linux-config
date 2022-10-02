@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  talk:
+    image: aanno/nc.all-in-one.talk:latest
+    ports:
+      # turn server tcp/udp
+      - 3478:3478
+    environment:
+      NC_DOMAIN: netzgeneration.local
+      TURN_SECRET: 1e95cf79ccaf812f2498c4a2470a6dd5e62eeb2451d34e819ea12602b8d1bf67
+      JANUS_API_KEY: a39fa4d0b1580307ea0f9f23e8c36832
+      SIGNALING_SECRET: a39fa4d0b1580307ea0f9f23e8c36832
+    networks:
+      - proxy-tier
+
+networks:
+  proxy-tier:
+    external: true
+    name: proxy-tier
