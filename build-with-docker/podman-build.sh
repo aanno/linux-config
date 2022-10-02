@@ -12,7 +12,7 @@ podman rmi localhost/owntone || true
 mkdir -p $CWD/opt/owntone \
   $CWD/var/lib/apt $CWD/var/cache/apt \
   $CWD/var/lib/dnf $CWD/var/cache/dnf \
-  $CWD/.cargo;
+  $CWD/.cargo $CWD/.rustup;
 rm -rf $CWD/opt/owntone/* || true;
 podman build --pull -t owntone \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
@@ -21,6 +21,7 @@ podman build --pull -t owntone \
   -v $CWD/var/cache/dnf:/var/cache/dnf:z \
   -v $CWD/opt/owntone:/opt/owntone:z \
   -v $CWD/.cargo:/root/.cargo:z \
+  -v $CWD/.rustup:/root/.rustup:z \
   -f Containerfile.spotifyd.ubuntu-jammy;
 tar cvfz owntone.tar.gz ./opt/
 

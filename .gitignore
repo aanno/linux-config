@@ -5,6 +5,7 @@
 *.ign
 *.out
 .cargo/
+.rustup/
 opt/
 *.tar.gz
 *.deb
