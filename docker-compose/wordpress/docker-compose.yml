@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+    wordpress:
+        image: wordpress:latest
+        depends_on:
+            - db
+        ports:
+            - 9080:80
+        restart: always
+        volumes:
+            - ./wp/plugins:/var/www/html/wp-content/plugins:z
+            - ./wp/themes:/var/www/html/wp-content/themes:z
+            - ./wp/uploads:/var/www/html/wp-content/uploads:z
+            - ./wp/wp-config.php:/var/www/html/wp-config.php:z
+        env_file:
+          - db.env
+        networks:
+          - proxy-tier
+
+# https://stackoverflow.com/questions/38088279/communication-between-multiple-docker-compose-projects
+# https://docs.docker.com/compose/networking/
+networks:
+    proxy-tier:
+        external: true
+        name: proxy-tier
