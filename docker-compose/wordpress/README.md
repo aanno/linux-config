@@ -17,3 +17,5 @@
 * https://github.com/roots/bedrock
 * https://github.com/valeriaelias/docker-wordpress-bedrock
 * https://medium.com/@emilpriver/docker-docker-compose-wordpress-bedrock-9b840ef0b981
+* [nginx as reverse proxy](https://stackoverflow.com/questions/38205743/nginx-proxy-to-wordpress-website)
+* [nginx as direct server](https://www.netz39.de/2014/installation-of-wordpress-in-a-subdirectory-with-nginx/)
