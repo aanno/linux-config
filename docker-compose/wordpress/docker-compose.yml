@@ -12,11 +12,15 @@ services:
             - ./wp/plugins:/var/www/html/wp-content/plugins:z
             - ./wp/themes:/var/www/html/wp-content/themes:z
             - ./wp/uploads:/var/www/html/wp-content/uploads:z
-            - ./wp/wp-config.php:/var/www/html/wp-config.php:z
+            # - ./wp/wp-config.php:/var/www/html/wp-config.php:z
+            - wp:/var/www/html/wp
         env_file:
           - db.env
         networks:
           - proxy-tier
+          
+volumes:
+    wp:
 
 # https://stackoverflow.com/questions/38088279/communication-between-multiple-docker-compose-projects
 # https://docs.docker.com/compose/networking/
