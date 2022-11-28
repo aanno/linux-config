@@ -1,4 +1,6 @@
 db.env
+db-export.env
+create.sql
 docker-compose/wordpress/wp/
 *~
 *.bak
