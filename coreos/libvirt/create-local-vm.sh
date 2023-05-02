@@ -5,7 +5,7 @@ set -eu
 . env.sh
 
 CONFIG_FILE_NAME=my
-VM_NAME="fcos-33"
+VM_NAME="fcos-37"
 TMP=`mktemp -d`
 
 fcct -p -s -d . -o "${CONFIG_FILE_NAME}.ign" "${CONFIG_FILE_NAME}.fcc" || exit -1
@@ -15,6 +15,10 @@ cp "${CONFIG_FILE_NAME}.ign" "$TMP/${CONFIG_FILE_NAME}.ign"
 # IGNITION_CONFIG=`readlink -f "${CONFIG_FILE_NAME}.ign"`
 IGNITION_CONFIG="$TMP/${CONFIG_FILE_NAME}.ign"
 chmod -R o+rx "$TMP"
+# https://docs.fedoraproject.org/en-US/fedora-coreos/getting-started/
+# Setup the correct SELinux label to allow access to the config
+chcon --verbose --type svirt_home_t "$TMP/${CONFIG_FILE_NAME}.ign"
+
 
 virt-install --connect="qemu:///system" --name="${VM_NAME}" --vcpus="${VCPUS}" --memory="${RAM_MB}" \
         --os-variant="fedora-coreos-$STREAM" --import --graphics=none \

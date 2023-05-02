@@ -6,7 +6,7 @@ set -eu
 
 CONFIG_FILE_NAME=netcup-local
 IMAGE=`readlink -f fcos.qcow2`
-VM_NAME="fcos-netcup-33"
+VM_NAME="fcos-netcup-37"
 
 fcct -p -s -d . -o "${CONFIG_FILE_NAME}.ign" "${CONFIG_FILE_NAME}.fcc" || exit -1
 

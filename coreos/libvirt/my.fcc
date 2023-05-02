@@ -1,5 +1,5 @@
 variant: fcos
-version: 1.3.0
+version: 1.4.0
 passwd:
   users:
     - name: core
@@ -136,16 +136,16 @@ systemd:
 storage:
   files:
     - path: /etc/systemd/resolved.conf
-      mode: 644
+      mode: 0644
       overwrite: true
       contents:
         local: ./systemd-resolved/resolved.libvirt-local.conf
     - path: /etc/dnscrypt-proxy/dnscrypt-proxy.toml
-      mode: 644
+      mode: 0644
       contents:
         local: ./dnscrypt-proxy/dnscrypt-proxy.libvirt-local.toml
     - path: /etc/systemd/system/dnscrypt-proxy.service
-      mode: 644
+      mode: 0644
       contents:
         local: dnscrypt-proxy/dnscrypt-proxy.service
     # local libvirt: enp1s0, netcup: ens3
