@@ -2,6 +2,10 @@
 
 FCOS can be used as platform for GPU number crunching.
 
+## nvidia containter toolkit configuration
+
+* https://gist.github.com/bernardomig/315534407585d5912f5616c35c7fe374
+
 ## References
 
 * https://gitlab.com/container-toolkit-fcos/driver
