@@ -3,7 +3,7 @@ export IMAGE="$HOME/.local/share/libvirt/images/fedora-coreos-37.20230401.3.0-qe
 export STREAM="stable"
 export VCPUS="4"
 export RAM_MB="8192"
-export DISK_GB="10"
+export DISK_GB="15"
 export NETWORK="network=br0"
 # networking tp:
 # 
