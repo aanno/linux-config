@@ -1,0 +1,465 @@
+variant: fcos
+version: 1.4.0
+passwd:
+  users:
+    - name: core
+      password_hash: $y$j9T$yCdprixgRIXOyZGe.vJgo1$2MJRNBFaIF/zB0353BY2QzDcq5/qBA1fW4OiTcKOcZ0
+      ssh_authorized_keys:
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQb6Th6D/3IOdjPKgYzOI/TkQuwd4SLxFu3wmcMVcOd tpasch@linux.fritz.box
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5NSD1wNDCbz6348KE/QdljNI8J2QuPZqBYgJBEFasWoKHBkaGcmurv6J+9HaIMzN11dU267f43j0kKW/WNotDLi7BDLka2PKamcDyCAWI1pr9R7QsZuCmUWrm+QNAYLWICr/e2kE198xp/Up/lTlCr0M5eUlsJULYf06PRInedOfk7D0O3rNMhVy3grZF5muMXfnYr0exVaMPQt+iVVPV+uAsY0u/io728j63Ebsl1uGkK6BswB5/J8RiWOBRpxZugQ3dYRz4aZAHJL42BbdtjbLfr9d8HMGQuO6r2b+OvkTWTONNS8sHGrMsSVb8rRL0y2m4/JwkLTJ0Zq2Rb1IYOC30Ibc4KW9d/FwviOIeGG+us27/d4KHYT5vweNKL7ADAsyQm/A/1IEAg9g4sDExJ1Oy+OKCL+XHxmMFV8WFdo4n3gJdcU2qLfz/RVK1ARUBcWYL0coBb2+CPXP54OOAuR2pQ7kwMLAyykQPKyE5q1OOVEd3il/u8q0CsACebeY9fO4WrS5PEXLNivxOal7m/pAgWfGeIdOouzZPsoRiplD6q9K3TJ59GbGEFnPfjSp5fnUePnPTHXdkf37c5RhbQetnSuq3rneHt9feEhFz1pPs5Ta91WkQjIn/eg8eeevpYmvjnG6XRzwWyVXe5YCbvyF/BW5JVWmR0yarjowmsQ== tpasch@node1
+    - name: tpasch
+      password_hash: $y$j9T$yCdprixgRIXOyZGe.vJgo1$2MJRNBFaIF/zB0353BY2QzDcq5/qBA1fW4OiTcKOcZ0
+      ssh_authorized_keys: 
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQb6Th6D/3IOdjPKgYzOI/TkQuwd4SLxFu3wmcMVcOd tpasch@linux.fritz.box
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5NSD1wNDCbz6348KE/QdljNI8J2QuPZqBYgJBEFasWoKHBkaGcmurv6J+9HaIMzN11dU267f43j0kKW/WNotDLi7BDLka2PKamcDyCAWI1pr9R7QsZuCmUWrm+QNAYLWICr/e2kE198xp/Up/lTlCr0M5eUlsJULYf06PRInedOfk7D0O3rNMhVy3grZF5muMXfnYr0exVaMPQt+iVVPV+uAsY0u/io728j63Ebsl1uGkK6BswB5/J8RiWOBRpxZugQ3dYRz4aZAHJL42BbdtjbLfr9d8HMGQuO6r2b+OvkTWTONNS8sHGrMsSVb8rRL0y2m4/JwkLTJ0Zq2Rb1IYOC30Ibc4KW9d/FwviOIeGG+us27/d4KHYT5vweNKL7ADAsyQm/A/1IEAg9g4sDExJ1Oy+OKCL+XHxmMFV8WFdo4n3gJdcU2qLfz/RVK1ARUBcWYL0coBb2+CPXP54OOAuR2pQ7kwMLAyykQPKyE5q1OOVEd3il/u8q0CsACebeY9fO4WrS5PEXLNivxOal7m/pAgWfGeIdOouzZPsoRiplD6q9K3TJ59GbGEFnPfjSp5fnUePnPTHXdkf37c5RhbQetnSuq3rneHt9feEhFz1pPs5Ta91WkQjIn/eg8eeevpYmvjnG6XRzwWyVXe5YCbvyF/BW5JVWmR0yarjowmsQ== tpasch@node1
+# allow passwd login
+# https://discussion.fedoraproject.org/t/best-way-to-enable-password-auth-on-ssh/17731/4
+# minutely, hourly, daily, monthly,
+# weekly, yearly, quarterly, semiannually
+# *-*-* *:*:00, *-*-* *:00:00, *-*-* 00:00:00, *-*-01 00:00:00,
+# Mon *-*-* 00:00:00, *-01-01 00:00:00, *-01,04,07,10-01 00:00:00, *-01,07-01 00:00:00
+systemd:
+  units:
+    - name: sshd.service
+      dropins:
+      - name: allowpasswordauth.conf
+        contents: |
+          [Service]
+          Environment=OPTIONS='-oPasswordAuthentication=yes'
+    # - name: network-karg.service
+    #   enabled: true
+    #   contents: |
+    #     [Unit]
+    #     Description=configure network via kernel args (dracut)
+    #     # We run after `systemd-machine-id-commit.service` to ensure that
+    #     # `ConditionFirstBoot=true` services won't rerun on the next boot.
+    #     After=systemd-machine-id-commit.service
+    #     # ConditionKernelCommandLine=systemd.unified_cgroup_hierarchy
+    #     ConditionPathExists=!/var/lib/network-karg.stamp
+
+    #     [Service]
+    #     Type=oneshot
+    #     RemainAfterExit=yes
+    #     ExecStart=/bin/rpm-ostree kargs --append="ip=192.168.10.8:192.168.10.3:255.255.255.0:netzgeneration:enp1s0:none:192.168.10.3"
+    #     ExecStart=/bin/touch /var/lib/network-karg.stamp
+    #     ExecStart=/bin/systemctl --no-block reboot
+
+    #     [Install]
+    #     # WantedBy=network-online.target
+    #     WantedBy=multi-user.target
+    - name: wg-quick@wg0.service
+      enabled: true
+    - name: dnscrypt-proxy.service
+      enabled: true
+    - name: onstart.service
+      enabled: false
+      contents: |
+        [Unit]
+        Description=core@onstart
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        User=core
+        TimeoutStartSec=0
+        ExecStart=/bin/sh /var/home/core/cron/onstart.sh
+    - name: daily.service
+      enabled: false
+      contents: |
+        [Unit]
+        Description=core@daily
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        User=core
+        TimeoutStartSec=0
+        ExecStart=/bin/sh /var/home/core/cron/daily.sh
+    - name: weekly.service
+      enabled: false
+      contents: |
+        [Unit]
+        Description=core@weekly
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        User=core
+        TimeoutStartSec=0
+        ExecStart=/bin/sh /var/home/core/cron/weekly.sh
+    - name: onstart.timer
+      enabled: true
+      contents: |
+        [Unit]
+        Description=timer@core@onstart
+
+        [Timer]
+        OnStartupSec=3
+        # AccuracySec=5m
+        # RandomizedDelaySec=60
+        RemainAfterElapse=true
+
+        [Install]
+        WantedBy=timers.target
+    - name: daily.timer
+      enabled: true
+      contents: |
+        [Unit]
+        Description=timer@core@daily
+
+        [Timer]
+        # OnCalendar=*-*-* 00:00:00
+        # fake
+        OnCalendar=*-*-* *:*:00
+        # AccuracySec=5m
+        # RandomizedDelaySec=60
+        RemainAfterElapse=true
+
+        [Install]
+        WantedBy=timers.target
+    - name: weekly.timer
+      enabled: true
+      contents: |
+        [Unit]
+        Description=timer@core@weekly
+
+        [Timer]
+        # OnCalendar=Mon *-*-* 00:00:00
+        # fake
+        OnCalendar=*-*-* *:*:30
+        # AccuracySec=5m
+        # RandomizedDelaySec=60
+        RemainAfterElapse=true
+
+        [Install]
+        WantedBy=timers.target
+storage:
+  files:
+    - path: /etc/systemd/resolved.conf
+      mode: 0644
+      overwrite: true
+      contents:
+        local: ./systemd-resolved/resolved.libvirt-local.conf
+    - path: /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+      mode: 0644
+      contents:
+        local: ./dnscrypt-proxy/dnscrypt-proxy.libvirt-local.toml
+    - path: /etc/systemd/system/dnscrypt-proxy.service
+      mode: 0644
+      contents:
+        local: dnscrypt-proxy/dnscrypt-proxy.service
+    # local libvirt: enp1s0, netcup: ens3
+    - path: /etc/NetworkManager/system-connections/enp1s0.nmconnection
+      mode: 0600
+      contents:
+        inline: |
+          [connection]
+          id=enp1s0
+          type=ethernet
+          interface-name=enp1s0
+          [ipv4]
+          # dns-search=
+          method=auto
+          # method=manual
+          # dhcp does not work with fedora-coreos-33.20210301.3.1
+          # dns=192.168.10.3
+          dns=127.0.0.1
+          # address1=192.168.10.8
+          gateway=192.168.10.3
+          [ipv6]
+          # see https://developer.gnome.org/NetworkManager/stable/settings-ipv6.html
+          # dns=fd00::3681:c4ff:fec9:6d8b
+          dns=::1
+          gateway=2001:470:26:ba5:3681:c4ff:fec9:6d8b
+          # gateway=fd00::3681:c4ff:fec9:6d8b
+          addr-gen-mode=eui64
+          # addr-gen-mode=stable-privacy
+          address1=2001:470:26:ba5:2d41:caa8:525a:abcd
+          # address2=fd00::3681:c4ff:fec9:abcd
+          # address2=fe80::4049:b055:c122:abcd
+          # address1=2a01:1450:4016:801::2003
+          # address1=fe80::5054:ff:fe01:7777
+          #dns-search=
+          # method=manual
+          method=auto
+          # method=disabled
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: netzgeneration
+    - path: /etc/sysctl.d/10-network.conf
+      mode: 0644
+      contents:
+        inline: |
+          # allow bridge
+          net.ipv4.ip_forward=1
+          net.ipv4.ip_local_reserved_ports=30000-32767
+          net.bridge.bridge-nf-call-iptables=1
+          net.bridge.bridge-nf-call-arptables=1
+          net.bridge.bridge-nf-call-ip6tables=1
+
+          # https://serverfault.com/questions/563700/assign-ipv6-address-to-kvm-guests-on-bridge-mode
+          net.ipv4.conf.all.forwarding=1
+          net.ipv6.conf.default.forwarding=1
+
+          # virsh libvirt complaining
+          net.ipv6.conf.all.accept_ra=2
+
+          # ping/imcp on podman
+          # https://github.com/containers/podman/issues/2488
+          net.ipv4.ping_group_range = 0 2147483647
+
+          # let podman rootless use port 80+
+          net.ipv4.ip_unprivileged_port_start=80
+    - path: /etc/sysctl.d/20-vm.conf
+      mode: 0644
+      contents:
+        inline: |
+          # https://code.visualstudio.com/docs/setup/linux
+          fs.inotify.max_user_watches=524288
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
+          vm.max_map_count=262144
+    - path: /etc/security/limits.conf
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          # /etc/security/limits.conf
+          #
+          #This file sets the resource limits for the users logged in via PAM.
+          #It does not affect resource limits of the system services.
+          #
+          #Also note that configuration files in /etc/security/limits.d directory,
+          #which are read in alphabetical order, override the settings in this
+          #file in case the domain is the same or more specific.
+          #That means for example that setting a limit for wildcard domain here
+          #can be overriden with a wildcard setting in a config file in the
+          #subdirectory, but a user specific setting here can be overriden only
+          #with a user specific setting in the subdirectory.
+          #
+          #Each line describes a limit for a user in the form:
+          #
+          #<domain>        <type>  <item>  <value>
+          #
+          #Where:
+          #<domain> can be:
+          #        - a user name
+          #        - a group name, with @group syntax
+          #        - the wildcard *, for default entry
+          #        - the wildcard %, can be also used with %group syntax,
+          #                 for maxlogin limit
+          #
+          #<type> can have the two values:
+          #        - "soft" for enforcing the soft limits
+          #        - "hard" for enforcing hard limits
+          #
+          #<item> can be one of the following:
+          #        - core - limits the core file size (KB)
+          #        - data - max data size (KB)
+          #        - fsize - maximum filesize (KB)
+          #        - memlock - max locked-in-memory address space (KB)
+          #        - nofile - max number of open file descriptors
+          #        - rss - max resident set size (KB)
+          #        - stack - max stack size (KB)
+          #        - cpu - max CPU time (MIN)
+          #        - nproc - max number of processes
+          #        - as - address space limit (KB)
+          #        - maxlogins - max number of logins for this user
+          #        - maxsyslogins - max number of logins on the system
+          #        - priority - the priority to run user process with
+          #        - locks - max number of file locks the user can hold
+          #        - sigpending - max number of pending signals
+          #        - msgqueue - max memory used by POSIX message queues (bytes)
+          #        - nice - max nice priority allowed to raise to values: [-20, 19]
+          #        - rtprio - max realtime priority
+          #
+          #<domain>      <type>  <item>         <value>
+          #
+
+          #*               soft    core            0
+          #*               hard    rss             10000
+          #@student        hard    nproc           20
+          #@faculty        soft    nproc           20
+          #@faculty        hard    nproc           50
+          #ftp             hard    nproc           0
+          #@student        -       maxlogins       4
+
+          # https://solr.apache.org/guide/8_3/taking-solr-to-production.html
+          root             hard    nproc           65000
+          *                hard    nproc           65000
+          root             hard    nofile          65000
+          *                hard    nofile          65000
+
+          # End of file
+    - path: /etc/wireguard/wg0.conf
+      mode: 0600
+      contents:
+        inline: |
+          [Interface]
+          # https://simpledns.plus/private-ipv6
+          Address = 192.168.159.1/24,fdab:ec02:68de:3f47::1/64
+          PrivateKey = yO6VWeg9x/hEA3/e/Obfh5qWx0/s0PkGlI0GhtZ3EVs=
+          ListenPort = 51820
+
+          # PostUp = iptables-nft -A FORWARD -i wg0 -j ACCEPT; iptables-nft -t nat -A POSTROUTING -o enp1s0 -j MASQUERADE; ip6tables-nft -A FORWARD -i wg0 -j ACCEPT; ip6tables-nft -t nat -A POSTROUTING -o enp1s0 -j MASQUERADE
+          # PostDown = iptables-nft -D FORWARD -i wg0 -j ACCEPT; iptables-nft -t nat -D POSTROUTING -o enp1s0 -j MASQUERADE; ip6tables-nft -D FORWARD -i wg0 -j ACCEPT; ip6tables-nft -t nat -D POSTROUTING -o enp1s0 -j MASQUERADE
+
+          [Peer]
+          PublicKey = 0VR1TY2uJignKcMLKSZnWDEE7kLTiVESwDN+Qtr+h30=
+          PresharedKey = eNatQ21xnWXyMRYz75EVl93lKrLwm71csbIdH2fEgzc=
+          AllowedIPs = 192.168.159.20/32,fdab:ec02:68de:3f47::0020/128
+          Endpoint = 192.168.10.57:51820
+
+          [Peer]
+          PublicKey = GZetWiYtanijNBjLBuUiAUqRrZg5UET0US/dWSy+VA4=
+          PresharedKey = jyloWYz4YMGcIH4m/mqkaPue0t+1CO0xXPL4MHueLz4=
+          AllowedIPs = 192.168.159.0/24,fdab:ec02:68de:3f47::/64
+    - path: /var/home/core/cron/onstart.sh
+      user:
+        name: core
+      mode: 0744
+      contents:
+        inline: |
+          #!/bin/bash -x
+          DATE=`date -Iseconds`
+          echo "$DATE: Hello onstart, $*" >>/var/home/core/cron.log
+          for i in fail2ban nano podman-compose qemu-guest-agent redhat-lsb-core tree \
+              cockpit-system cockpit-ostree cockpit-podman cockpit-kdump cockpit-podman \
+              cockpit-dashboard cockpit-networkmanager \
+              ldns-utils git-lfs dnscrypt-proxy; do
+            sudo rpm-ostree install $i || true
+          done
+          # TODO aanno: reboot if something has really been installed (systemctl reboot)
+    - path: /var/home/core/cron/daily.sh
+      user:
+        name: core
+      mode: 0744
+      contents:
+        inline: |
+          #!/bin/bash -x
+          DATE=`date -Iseconds`
+          echo "$DATE: Hello daily, $*" >>/var/home/core/cron.log
+    - path: /var/home/core/cron/weekly.sh
+      user:
+        name: core
+      mode: 0744
+      contents:
+        inline: |
+          #!/bin/bash -x
+          DATE=`date -Iseconds`
+          echo "$DATE: Hello weekly, $*" >>/var/home/core/cron.log
+    - path: /etc/systemd/zram-generator.conf
+      mode: 0644
+      contents:
+        inline: |
+          # This config file enables a /dev/zram0 device with the default settings
+          [zram0]
+    - path: /etc/zincati/config.d/51-rollout-wariness.toml
+      contents:
+        inline: |
+          [identity]
+          rollout_wariness = 0.6
+    - path: /etc/zincati/config.d/55-updates-strategy.toml
+      contents:
+        inline: |
+          [updates]
+          strategy = "periodic"
+          [[updates.periodic.window]]
+          days = [ "Sun", "Mon" ]
+          start_time = "03:15"
+          length_minutes = 60
+  # links:
+  #   # probably unneeded
+  #   - path: /etc/alternatives/iptables
+  #     target: /usr/sbin/iptables-nft
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/iptables-restore
+  #     target: /usr/sbin/iptables-nft-restore
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/iptables-save
+  #     target: /usr/sbin/iptables-nft-save
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/ip6tables
+  #     target: /usr/sbin/ip6tables-nft
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/ip6tables-restore
+  #     target: /usr/sbin/ip6tables-nft-restore
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/ip6tables-save
+  #     target: /usr/sbin/ip6tables-nft-save
+  #     overwrite: true
+  #     hard: false
+  #     # ebtables
+  #   - path: /etc/alternatives/ebtables
+  #     target: /usr/sbin/ebtables-nft
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/ebtables-restore
+  #     target: /usr/sbin/ebtables-nft-restore
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/ebtables-save
+  #     target: /usr/sbin/ebtables-nft-save
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/eb6tables
+  #     target: /usr/sbin/eb6tables-nft
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/eb6tables-restore
+  #     target: /usr/sbin/eb6tables-nft-restore
+  #     overwrite: true
+  #     hard: false
+  #   - path: /etc/alternatives/eb6tables-save
+  #     target: /usr/sbin/eb6tables-nft-save
+  #     overwrite: true
+  #     hard: false
+  disks:
+    # libvirt: /dev/vda, netcup: /dev/sda
+    - device: /dev/vda
+      # The name of the primary block device. In virtio-based setups, this is
+      # likely `/dev/vda`. Elsewhere, it's likely `/dev/sda`.
+      # We do not want to wipe the partition table since this is the primary
+      # device.
+      wipe_table: false
+      partitions:
+        - size_mib: 2000
+          # Start at 5G so that we leave enough space for the root partition.
+          # See the important NOTE below about this.
+          start_mib: 5000
+          label: backup
+        - size_mib: 0
+          # We assign a descriptive label to the partition. This is important
+          # for referring to it in a device-agnostic way in other parts of the
+          # configuration.
+          label: var
+  luks:
+    - name: luks-backup
+      label: luks-backup
+      device: /dev/disk/by-partlabel/backup
+      key_file:
+        local: ./luks_key
+    - name: luks-var
+      label: luks-var
+      device: /dev/disk/by-partlabel/var
+      key_file:
+        local: ./luks_key
+  filesystems:
+    - path: /var/backup
+      # device: /dev/disk/by-partlabel/backup
+      device: /dev/mapper/luks-backup
+      format: xfs
+      with_mount_unit: true
+    - path: /var
+      # device: /dev/disk/by-partlabel/var
+      device: /dev/mapper/luks-var
+      # We can select the filesystem we'd like.
+      format: xfs
+      # Ask FCCT to generate a mount unit for us so that this filesystem gets
+      # mounted in the real root.
+      with_mount_unit: true
