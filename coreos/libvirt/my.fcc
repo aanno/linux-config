@@ -121,8 +121,9 @@ systemd:
         [Service]
         Type=oneshot
         RemainAfterExit=yes
+        # curl -s -L https://container-toolkit-fcos.gitlab.io/container-runtime/stable/fedora${FEDORA_VERSION_ID}/container-runtime.repo \
         ExecStart=/bin/sh -c 'FEDORA_VERSION_ID=$(cat /etc/os-release | grep VERSION_ID | cut -d = -f2); \
-            curl -s -L https://container-toolkit-fcos.gitlab.io/container-runtime/stable/fedora$$FEDORA_VERSION_ID/container-runtime.repo \
+            curl -s -L https://container-toolkit-fcos.gitlab.io/container-runtime/stable/fedora37/container-runtime.repo \
                 > /etc/yum.repos.d/container-runtime.repo'
         ExecStart=/usr/bin/rpm-ostree install --idempotent --allow-inactive nvidia-container-runtime
         # Once the nvidia-container-runtime has been installed docker needs to be configured to use it so we use jq to merge
@@ -146,41 +147,6 @@ storage:
     - path: /etc/containers/oci/hooks.d
       mode: 0755
   files:
-    # local libvirt: enp1s0, netcup: ens3
-    - path: /etc/NetworkManager/system-connections/enp1s0.nmconnection
-      mode: 0600
-      contents:
-        inline: |
-          [connection]
-          id=enp1s0
-          type=ethernet
-          interface-name=enp1s0
-          [ipv4]
-          # dns-search=
-          method=auto
-          # method=manual
-          # dhcp does not work with fedora-coreos-33.20210301.3.1
-          # dns=192.168.10.2
-          dns=127.0.0.1
-          # address1=192.168.10.8
-          gateway=192.168.10.2
-          [ipv6]
-          # see https://developer.gnome.org/NetworkManager/stable/settings-ipv6.html
-          # dns=fd00::3681:c4ff:fec9:6d8b
-          dns=::1
-          gateway=2001:470:26:ba5:3681:c4ff:fec9:6d8b
-          # gateway=fd00::3681:c4ff:fec9:6d8b
-          addr-gen-mode=eui64
-          # addr-gen-mode=stable-privacy
-          address1=2001:470:26:ba5:2d41:caa8:525a:abcd
-          # address2=fd00::3681:c4ff:fec9:abcd
-          # address2=fe80::4049:b055:c122:abcd
-          # address1=2a01:1450:4016:801::2003
-          # address1=fe80::5054:ff:fe01:7777
-          #dns-search=
-          # method=manual
-          method=auto
-          # method=disabled
     - path: /etc/hostname
       mode: 0644
       contents:
@@ -458,50 +424,3 @@ storage:
           
           [nvidia-container-runtime.modes.csv]
           mount-spec-path = "/etc/nvidia-container-runtime/host-files-for-container.d"
-  disks:
-    # libvirt: /dev/vda, netcup: /dev/sda
-    - device: /dev/disk/by-id/coreos-boot-disk
-      # The name of the primary block device. In virtio-based setups, this is
-      # likely `/dev/vda`. Elsewhere, it's likely `/dev/sda`.
-      # We do not want to wipe the partition table since this is the primary
-      # device.
-      wipe_table: false
-      partitions:
-        - number: 4
-          size_mib: 10000
-          label: root
-          resize: true
-        - number: 5
-          size_mib: 2000
-          label: backup
-        - number: 6
-          size_mib: 0
-          # We assign a descriptive label to the partition. This is important
-          # for referring to it in a device-agnostic way in other parts of the
-          # configuration.
-          label: var
-  luks:
-    - name: luks-backup
-      label: luks-backup
-      device: /dev/disk/by-partlabel/backup
-      key_file:
-        local: ./luks_key
-    - name: luks-var
-      label: luks-var
-      device: /dev/disk/by-partlabel/var
-      key_file:
-        local: ./luks_key
-  filesystems:
-    - path: /var/backup
-      # device: /dev/disk/by-partlabel/backup
-      device: /dev/mapper/luks-backup
-      format: xfs
-      with_mount_unit: true
-    - path: /var
-      # device: /dev/disk/by-partlabel/var
-      device: /dev/mapper/luks-var
-      # We can select the filesystem we'd like.
-      format: xfs
-      # Ask FCCT to generate a mount unit for us so that this filesystem gets
-      # mounted in the real root.
-      with_mount_unit: true

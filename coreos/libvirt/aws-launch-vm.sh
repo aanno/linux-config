@@ -36,11 +36,15 @@ aws ec2 run-instances                     \
     --key-name $SSHKEY                    \
     --subnet-id $SUBNET                   \
     --security-group-ids $SECURITY_GROUPS \
-    #--user-data "file://${IGNITION_CONFIG}"      \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${NAME}}]" \
-    --block-device-mappings "VirtualName=/dev/xvda,DeviceName=/dev/xvda,Ebs={VolumeSize=${DISK}}"
+    --block-device-mappings "VirtualName=/dev/xvda,DeviceName=/dev/xvda,Ebs={VolumeSize=${DISK}}" \
+    --user-data "file://${IGNITION_CONFIG}"      \
+    >run.log.json
+
+#--user-data "file://${IGNITION_CONFIG}"      \
+#--user-data "https://breitbandig.de/nextcloud/s/TRAqLnHBeMqgZtR/download?path=.&files=my.ign" \
 
 rm -rf "$TMP"
 
-pause 10
-aws ec2 describe-instances
+sleep 10
+aws ec2 describe-instances >describe.log.json
