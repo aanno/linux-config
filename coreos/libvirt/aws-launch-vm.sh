@@ -19,8 +19,11 @@ SSHKEY='redsnapper-tp'     # the name of your SSH key: `aws ec2 describe-key-pai
 IMAGE='ami-097f5ccd7b9deca93'     # the AMI ID found on the download page
 DISK='20'           # the size of the hard disk
 REGION='eu-central-1'  # the target region
-TYPE='t2.micro'     # the instance type
-SUBNET='subnet-ae95e7c4' # the subnet: `aws ec2 describe-subnets`
+TYPE='g2.2xlarge'     # the instance type
+# with ipv6
+# SUBNET='subnet-ae95e7c4' # the subnet: `aws ec2 describe-subnets`
+# without ipv6
+SUBNET='subnet-00ae908c3081d45cd' # the subnet: `aws ec2 describe-subnets`
 SECURITY_GROUPS='sg-08c516b4328e8e738' # the security group `aws ec2 describe-security-groups`
 # USERDATA='/path/to/config.ign' # path to your Ignition config
 
@@ -45,7 +48,6 @@ aws ec2 run-instances                     \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${NAME}}]" \
     --block-device-mappings "VirtualName=/dev/xvda,DeviceName=/dev/xvda,Ebs={VolumeSize=${DISK}}" \
     --user-data "file://${IGNITION_CONFIG}"      \
-    --instance-market-options file://spot-options.json \
     >run.log.json
 
 #--instance-market-options file://spot-options.json \

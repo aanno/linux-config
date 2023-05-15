@@ -1,0 +1,426 @@
+variant: fcos
+version: 1.5.0
+passwd:
+  users:
+    - name: core
+      password_hash: $y$j9T$yCdprixgRIXOyZGe.vJgo1$2MJRNBFaIF/zB0353BY2QzDcq5/qBA1fW4OiTcKOcZ0
+      ssh_authorized_keys:
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQb6Th6D/3IOdjPKgYzOI/TkQuwd4SLxFu3wmcMVcOd tpasch@linux.fritz.box
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5NSD1wNDCbz6348KE/QdljNI8J2QuPZqBYgJBEFasWoKHBkaGcmurv6J+9HaIMzN11dU267f43j0kKW/WNotDLi7BDLka2PKamcDyCAWI1pr9R7QsZuCmUWrm+QNAYLWICr/e2kE198xp/Up/lTlCr0M5eUlsJULYf06PRInedOfk7D0O3rNMhVy3grZF5muMXfnYr0exVaMPQt+iVVPV+uAsY0u/io728j63Ebsl1uGkK6BswB5/J8RiWOBRpxZugQ3dYRz4aZAHJL42BbdtjbLfr9d8HMGQuO6r2b+OvkTWTONNS8sHGrMsSVb8rRL0y2m4/JwkLTJ0Zq2Rb1IYOC30Ibc4KW9d/FwviOIeGG+us27/d4KHYT5vweNKL7ADAsyQm/A/1IEAg9g4sDExJ1Oy+OKCL+XHxmMFV8WFdo4n3gJdcU2qLfz/RVK1ARUBcWYL0coBb2+CPXP54OOAuR2pQ7kwMLAyykQPKyE5q1OOVEd3il/u8q0CsACebeY9fO4WrS5PEXLNivxOal7m/pAgWfGeIdOouzZPsoRiplD6q9K3TJ59GbGEFnPfjSp5fnUePnPTHXdkf37c5RhbQetnSuq3rneHt9feEhFz1pPs5Ta91WkQjIn/eg8eeevpYmvjnG6XRzwWyVXe5YCbvyF/BW5JVWmR0yarjowmsQ== tpasch@node1
+    - name: tpasch
+      password_hash: $y$j9T$yCdprixgRIXOyZGe.vJgo1$2MJRNBFaIF/zB0353BY2QzDcq5/qBA1fW4OiTcKOcZ0
+      ssh_authorized_keys: 
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQb6Th6D/3IOdjPKgYzOI/TkQuwd4SLxFu3wmcMVcOd tpasch@linux.fritz.box
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5NSD1wNDCbz6348KE/QdljNI8J2QuPZqBYgJBEFasWoKHBkaGcmurv6J+9HaIMzN11dU267f43j0kKW/WNotDLi7BDLka2PKamcDyCAWI1pr9R7QsZuCmUWrm+QNAYLWICr/e2kE198xp/Up/lTlCr0M5eUlsJULYf06PRInedOfk7D0O3rNMhVy3grZF5muMXfnYr0exVaMPQt+iVVPV+uAsY0u/io728j63Ebsl1uGkK6BswB5/J8RiWOBRpxZugQ3dYRz4aZAHJL42BbdtjbLfr9d8HMGQuO6r2b+OvkTWTONNS8sHGrMsSVb8rRL0y2m4/JwkLTJ0Zq2Rb1IYOC30Ibc4KW9d/FwviOIeGG+us27/d4KHYT5vweNKL7ADAsyQm/A/1IEAg9g4sDExJ1Oy+OKCL+XHxmMFV8WFdo4n3gJdcU2qLfz/RVK1ARUBcWYL0coBb2+CPXP54OOAuR2pQ7kwMLAyykQPKyE5q1OOVEd3il/u8q0CsACebeY9fO4WrS5PEXLNivxOal7m/pAgWfGeIdOouzZPsoRiplD6q9K3TJ59GbGEFnPfjSp5fnUePnPTHXdkf37c5RhbQetnSuq3rneHt9feEhFz1pPs5Ta91WkQjIn/eg8eeevpYmvjnG6XRzwWyVXe5YCbvyF/BW5JVWmR0yarjowmsQ== tpasch@node1
+# allow passwd login
+# https://discussion.fedoraproject.org/t/best-way-to-enable-password-auth-on-ssh/17731/4
+# minutely, hourly, daily, monthly,
+# weekly, yearly, quarterly, semiannually
+# *-*-* *:*:00, *-*-* *:00:00, *-*-* 00:00:00, *-*-01 00:00:00,
+# Mon *-*-* 00:00:00, *-01-01 00:00:00, *-01,04,07,10-01 00:00:00, *-01,07-01 00:00:00
+systemd:
+  units:
+    - name: sshd.service
+      dropins:
+      - name: allowpasswordauth.conf
+        contents: |
+          [Service]
+          Environment=OPTIONS='-oPasswordAuthentication=yes'
+    - name: onstart.service
+      enabled: false
+      contents: |
+        [Unit]
+        Description=core@onstart
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        User=core
+        TimeoutStartSec=0
+        ExecStart=/bin/sh /var/home/core/cron/onstart.sh
+    - name: daily.service
+      enabled: false
+      contents: |
+        [Unit]
+        Description=core@daily
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        User=core
+        TimeoutStartSec=0
+        ExecStart=/bin/sh /var/home/core/cron/daily.sh
+    - name: weekly.service
+      enabled: false
+      contents: |
+        [Unit]
+        Description=core@weekly
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        User=core
+        TimeoutStartSec=0
+        ExecStart=/bin/sh /var/home/core/cron/weekly.sh
+    - name: onstart.timer
+      enabled: true
+      contents: |
+        [Unit]
+        Description=timer@core@onstart
+
+        [Timer]
+        OnStartupSec=3
+        # AccuracySec=5m
+        # RandomizedDelaySec=60
+        RemainAfterElapse=true
+
+        [Install]
+        WantedBy=timers.target
+    - name: daily.timer
+      enabled: true
+      contents: |
+        [Unit]
+        Description=timer@core@daily
+
+        [Timer]
+        # OnCalendar=*-*-* 00:00:00
+        # fake
+        OnCalendar=*-*-* *:*:00
+        # AccuracySec=5m
+        # RandomizedDelaySec=60
+        RemainAfterElapse=true
+
+        [Install]
+        WantedBy=timers.target
+    - name: weekly.timer
+      enabled: true
+      contents: |
+        [Unit]
+        Description=timer@core@weekly
+
+        [Timer]
+        # OnCalendar=Mon *-*-* 00:00:00
+        # fake
+        OnCalendar=*-*-* *:*:30
+        # AccuracySec=5m
+        # RandomizedDelaySec=60
+        RemainAfterElapse=true
+
+        [Install]
+        WantedBy=timers.target
+    - name: acme-corp-layer-nvidia-container-runtime.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Layer nvidia-container-runtime
+        After=network-online.target
+        # We run before `zincati.service` to avoid conflicting rpm-ostree transactions.
+        Before=zincati.service
+        ConditionPathExists=!/var/lib/%N.stamp
+
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        # curl -s -L https://container-toolkit-fcos.gitlab.io/container-runtime/stable/fedora${FEDORA_VERSION_ID}/container-runtime.repo \
+        ExecStart=/bin/sh -c 'FEDORA_VERSION_ID=$(cat /etc/os-release | grep VERSION_ID | cut -d = -f2); \
+            curl -s -L https://container-toolkit-fcos.gitlab.io/container-runtime/stable/fedora37/container-runtime.repo \
+                > /etc/yum.repos.d/container-runtime.repo'
+        ExecStart=/usr/bin/rpm-ostree install --idempotent --allow-inactive nvidia-container-runtime
+        # Once the nvidia-container-runtime has been installed docker needs to be configured to use it so we use jq to merge
+        # in the runtime config details into config.json...
+        ExecStart=/bin/sh -c 'if [[ -f /usr/bin/nvidia-container-cli && -f /etc/docker/nvidia-runtime-post-install.json ]]; then \
+            touch /etc/docker/daemon.json; \
+            jq -s "add" /etc/docker/daemon.json /etc/docker/nvidia-driver-post-install.json > /etc/docker/daemon-temp.json; \
+            mv /etc/docker/daemon-temp.json /etc/docker/daemon.json; \
+            rm /etc/docker/nvidia-driver-post-install.json; \
+            /bin/touch /var/lib/%N.stamp; fi; reboot'
+        Restart=on-failure
+        RestartSec=60
+
+        [Install]
+        WantedBy=multi-user.target
+storage:
+  directories:
+    # /usr/share/containers/oci/hooks.d is read only
+    # but https://manpages.ubuntu.com/manpages/impish/man5/oci-hooks.5.html suggests that
+    # /etc/containers/oci/hooks.d is also possible
+    - path: /etc/containers/oci/hooks.d
+      mode: 0755
+  files:
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: netzgeneration
+    - path: /etc/sysctl.d/10-network.conf
+      mode: 0644
+      contents:
+        inline: |
+          # allow bridge
+          net.ipv4.ip_forward=1
+          net.ipv4.ip_local_reserved_ports=30000-32767
+          net.bridge.bridge-nf-call-iptables=1
+          net.bridge.bridge-nf-call-arptables=1
+          net.bridge.bridge-nf-call-ip6tables=1
+
+          # https://serverfault.com/questions/563700/assign-ipv6-address-to-kvm-guests-on-bridge-mode
+          net.ipv4.conf.all.forwarding=1
+          net.ipv6.conf.default.forwarding=1
+
+          # virsh libvirt complaining
+          net.ipv6.conf.all.accept_ra=2
+
+          # ping/imcp on podman
+          # https://github.com/containers/podman/issues/2488
+          net.ipv4.ping_group_range = 0 2147483647
+
+          # let podman rootless use port 80+
+          net.ipv4.ip_unprivileged_port_start=80
+    - path: /etc/sysctl.d/20-vm.conf
+      mode: 0644
+      contents:
+        inline: |
+          # https://code.visualstudio.com/docs/setup/linux
+          fs.inotify.max_user_watches=524288
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
+          vm.max_map_count=262144
+    - path: /etc/security/limits.conf
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          # /etc/security/limits.conf
+          #
+          #This file sets the resource limits for the users logged in via PAM.
+          #It does not affect resource limits of the system services.
+          #
+          #Also note that configuration files in /etc/security/limits.d directory,
+          #which are read in alphabetical order, override the settings in this
+          #file in case the domain is the same or more specific.
+          #That means for example that setting a limit for wildcard domain here
+          #can be overriden with a wildcard setting in a config file in the
+          #subdirectory, but a user specific setting here can be overriden only
+          #with a user specific setting in the subdirectory.
+          #
+          #Each line describes a limit for a user in the form:
+          #
+          #<domain>        <type>  <item>  <value>
+          #
+          #Where:
+          #<domain> can be:
+          #        - a user name
+          #        - a group name, with @group syntax
+          #        - the wildcard *, for default entry
+          #        - the wildcard %, can be also used with %group syntax,
+          #                 for maxlogin limit
+          #
+          #<type> can have the two values:
+          #        - "soft" for enforcing the soft limits
+          #        - "hard" for enforcing hard limits
+          #
+          #<item> can be one of the following:
+          #        - core - limits the core file size (KB)
+          #        - data - max data size (KB)
+          #        - fsize - maximum filesize (KB)
+          #        - memlock - max locked-in-memory address space (KB)
+          #        - nofile - max number of open file descriptors
+          #        - rss - max resident set size (KB)
+          #        - stack - max stack size (KB)
+          #        - cpu - max CPU time (MIN)
+          #        - nproc - max number of processes
+          #        - as - address space limit (KB)
+          #        - maxlogins - max number of logins for this user
+          #        - maxsyslogins - max number of logins on the system
+          #        - priority - the priority to run user process with
+          #        - locks - max number of file locks the user can hold
+          #        - sigpending - max number of pending signals
+          #        - msgqueue - max memory used by POSIX message queues (bytes)
+          #        - nice - max nice priority allowed to raise to values: [-20, 19]
+          #        - rtprio - max realtime priority
+          #
+          #<domain>      <type>  <item>         <value>
+          #
+
+          #*               soft    core            0
+          #*               hard    rss             10000
+          #@student        hard    nproc           20
+          #@faculty        soft    nproc           20
+          #@faculty        hard    nproc           50
+          #ftp             hard    nproc           0
+          #@student        -       maxlogins       4
+
+          # https://solr.apache.org/guide/8_3/taking-solr-to-production.html
+          root             hard    nproc           65000
+          *                hard    nproc           65000
+          root             hard    nofile          65000
+          *                hard    nofile          65000
+
+          # End of file
+    - path: /var/home/core/cron/onstart.sh
+      user:
+        name: core
+      mode: 0744
+      contents:
+        inline: |
+          #!/bin/bash -x
+          DATE=`date -Iseconds`
+          echo "$DATE: Hello onstart, $*" >>/var/home/core/cron.log
+          #for i in fail2ban nano podman-compose qemu-guest-agent redhat-lsb-core tree \
+          #    cockpit-system cockpit-ostree cockpit-podman cockpit-kdump cockpit-podman \
+          #    cockpit-dashboard cockpit-networkmanager \
+          #    ldns-utils git-lfs dnscrypt-proxy; do
+          #  sudo rpm-ostree install $i || true
+          #done
+          # TODO aanno: reboot if something has really been installed (systemctl reboot)
+    - path: /var/home/core/cron/daily.sh
+      user:
+        name: core
+      mode: 0744
+      contents:
+        inline: |
+          #!/bin/bash -x
+          DATE=`date -Iseconds`
+          echo "$DATE: Hello daily, $*" >>/var/home/core/cron.log
+    - path: /var/home/core/cron/weekly.sh
+      user:
+        name: core
+      mode: 0744
+      contents:
+        inline: |
+          #!/bin/bash -x
+          DATE=`date -Iseconds`
+          echo "$DATE: Hello weekly, $*" >>/var/home/core/cron.log
+    - path: /etc/systemd/zram-generator.conf
+      mode: 0644
+      contents:
+        inline: |
+          # This config file enables a /dev/zram0 device with the default settings
+          [zram0]
+    - path: /etc/zincati/config.d/51-rollout-wariness.toml
+      contents:
+        inline: |
+          [identity]
+          rollout_wariness = 0.6
+    - path: /etc/zincati/config.d/55-updates-strategy.toml
+      contents:
+        inline: |
+          [updates]
+          strategy = "periodic"
+          [[updates.periodic.window]]
+          days = [ "Sun", "Mon" ]
+          start_time = "03:15"
+          length_minutes = 60
+    # Currently we are using cgroupsv1 FCOS nodes as nvidia-container-runtime is generating errors
+    # when cgroupsv2 is enabled.  This probably means some config here or close by needs tuning...
+    # - path: /etc/nvidia-container-runtime/config.toml
+    #   mode: 0644
+    #   contents:
+    #     inline: |
+    #       disable-require = false
+    #       swarm-resource = "DOCKER_RESOURCE_GPU"
+
+    #       [nvidia-container-cli]
+    #       root = "/run/nvidia/driver"
+    #       path = "/usr/bin/nvidia-container-cli"
+    #       environment = []
+    #       debug = "/var/log/nvidia-container-toolkit.log"
+    #       load-kmods = true
+    #       ldconfig = "/sbin/ldconfig"
+
+    #       [nvidia-container-runtime]
+    #       debug = "/var/log/nvidia-container-runtime.log"
+    # Only necessary if you want to say declare gpu resource presence on your node pre-installation.
+    - path: /etc/docker/daemon.json
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          {
+            "node-generic-resources": ["acme-linux=1", "acme-gpu=1"]
+          }
+    - path: /etc/docker/nvidia-runtime-post-install.json
+      mode: 0644
+      contents:
+        inline: |
+          {
+            "runtimes":
+            {
+              "nvidia":
+              {
+                  "path": "/usr/bin/nvidia-container-runtime",
+                  "runtimeArgs": []
+              }
+            }
+            ,"default-runtime": "nvidia"
+          }
+    # https://gist.github.com/bernardomig/315534407585d5912f5616c35c7fe374
+    - path: /etc/containers/oci/hooks.d/oci-nvidia-hook.json
+      mode: 0644
+      contents:
+        inline: |
+          {
+            "version": "1.0.0",
+            "hook": {
+              "path": "/usr/bin/nvidia-container-runtime-hook",
+              "args": ["nvidia-container-runtime-hook", "prestart"],
+              "env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+              ]
+            },
+            "when": {
+              "always": true,
+              "commands": [".*"]
+            },
+            "stages": ["prestart"]
+          }
+    # original content:
+    #
+    # disable-require = false
+    # swarm-resource = "DOCKER_RESOURCE_GPU"
+    #
+    # [nvidia-container-cli]
+    # root = "/run/nvidia/driver"
+    # path = "/usr/bin/nvidia-container-cli"
+    # environment = []
+    # debug = "/var/log/nvidia-container-toolkit.log"
+    # load-kmods = true
+    # ldconfig = "/sbin/ldconfig"
+    #
+    # [nvidia-container-runtime]
+    # debug = "/var/log/nvidia-container-runtime.log"
+    - path: /etc/nvidia-container-runtime/config.toml
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          disable-require = false
+          #swarm-resource = "DOCKER_RESOURCE_GPU"
+          #accept-nvidia-visible-devices-envvar-when-unprivileged = true
+          #accept-nvidia-visible-devices-as-volume-mounts = false
+          
+          [nvidia-container-cli]
+          #root = "/run/nvidia/driver"
+          #path = "/usr/bin/nvidia-container-cli"
+          environment = []
+          #debug = "/var/log/nvidia-container-toolkit.log"
+          #ldcache = "/etc/ld.so.cache"
+          load-kmods = true
+          # important change (tp)
+          no-cgroups = true
+          #user = "root:video"
+          ldconfig = "@/sbin/ldconfig"
+          
+          [nvidia-container-runtime]
+          #debug = "/var/log/nvidia-container-runtime.log"
+          log-level = "info"
+          
+          # Specify the runtimes to consider. This list is processed in order and the PATH
+          # searched for matching executables unless the entry is an absolute path.
+          runtimes = [
+            "docker-runc",
+            "runc",
+          ]
+          
+          mode = "auto"
+          
+          [nvidia-container-runtime.modes.csv]
+          mount-spec-path = "/etc/nvidia-container-runtime/host-files-for-container.d"
