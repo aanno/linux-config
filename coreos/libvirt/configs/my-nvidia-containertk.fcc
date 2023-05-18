@@ -121,8 +121,9 @@ systemd:
         [Service]
         Type=oneshot
         RemainAfterExit=yes
+        # curl -s -L https://container-toolkit-fcos.gitlab.io/container-runtime/stable/fedora${FEDORA_VERSION_ID}/container-runtime.repo \
         ExecStart=/bin/sh -c 'FEDORA_VERSION_ID=$(cat /etc/os-release | grep VERSION_ID | cut -d = -f2); \
-            curl -s -L https://container-toolkit-fcos.gitlab.io/container-runtime/stable/fedora$$FEDORA_VERSION_ID/container-runtime.repo \
+            curl -s -L https://container-toolkit-fcos.gitlab.io/container-runtime/stable/fedora37/container-runtime.repo \
                 > /etc/yum.repos.d/container-runtime.repo'
         ExecStart=/usr/bin/rpm-ostree install --idempotent --allow-inactive nvidia-container-runtime
         # Once the nvidia-container-runtime has been installed docker needs to be configured to use it so we use jq to merge
@@ -480,28 +481,28 @@ storage:
           # for referring to it in a device-agnostic way in other parts of the
           # configuration.
           label: var
-  luks:
-    - name: luks-backup
-      label: luks-backup
-      device: /dev/disk/by-partlabel/backup
-      key_file:
-        local: ./luks_key
-    - name: luks-var
-      label: luks-var
-      device: /dev/disk/by-partlabel/var
-      key_file:
-        local: ./luks_key
-  filesystems:
-    - path: /var/backup
-      # device: /dev/disk/by-partlabel/backup
-      device: /dev/mapper/luks-backup
-      format: xfs
-      with_mount_unit: true
-    - path: /var
-      # device: /dev/disk/by-partlabel/var
-      device: /dev/mapper/luks-var
-      # We can select the filesystem we'd like.
-      format: xfs
-      # Ask FCCT to generate a mount unit for us so that this filesystem gets
-      # mounted in the real root.
-      with_mount_unit: true
+  # luks:
+  #   - name: luks-backup
+  #     label: luks-backup
+  #     device: /dev/disk/by-partlabel/backup
+  #     key_file:
+  #       local: ./luks_key
+  #   - name: luks-var
+  #     label: luks-var
+  #     device: /dev/disk/by-partlabel/var
+  #     key_file:
+  #       local: ./luks_key
+  # filesystems:
+  #   - path: /var/backup
+  #     # device: /dev/disk/by-partlabel/backup
+  #     device: /dev/mapper/luks-backup
+  #     format: xfs
+  #     with_mount_unit: true
+  #   - path: /var
+  #     # device: /dev/disk/by-partlabel/var
+  #     device: /dev/mapper/luks-var
+  #     # We can select the filesystem we'd like.
+  #     format: xfs
+  #     # Ask FCCT to generate a mount unit for us so that this filesystem gets
+  #     # mounted in the real root.
+  #     with_mount_unit: true
