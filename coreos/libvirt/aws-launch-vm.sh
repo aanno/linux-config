@@ -57,4 +57,4 @@ aws ec2 run-instances                     \
 rm -rf "$TMP"
 
 sleep 10
-aws ec2 describe-instances >describe.log.json
+aws ec2 describe-instances | tee describe.log.json
