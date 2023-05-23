@@ -1,5 +1,6 @@
 --verbose
 -s dir
+-t rpm
 --name spotifyd
 --license GPL-3.0
 --version 0.3.5
@@ -9,4 +10,10 @@
 --rpm-autoprov
 --rpm-autoreq
 --rpm-autoreqprov
-
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
+--depends libasound2
+--depends libssl
+--depends portaudio19
+--depends libdbus-1
+--depends libpulse
+--depends libogg

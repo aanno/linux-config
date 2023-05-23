@@ -8,9 +8,9 @@ RUN set -ex;\
   apt-get update; \
   apt-get -y install curl gnupg2 libterm-readline-gnu-perl; \
   mkdir -p /usr/local/share/keyrings; \
-  curl https://apt.mopidy.com/mopidy.gpg >/usr/local/share/keyrings/mopidy-archive-keyring.gpg; \
+  #curl https://apt.mopidy.com/mopidy.gpg >/usr/local/share/keyrings/mopidy-archive-keyring.gpg; \
   # curl https://apt.mopidy.com/mopidy.gpg | apt-key add -; \
-  curl https://apt.mopidy.com/buster.list >/etc/apt/sources.list.d/mopidy.list; \
+  #curl https://apt.mopidy.com/bullseye.list >/etc/apt/sources.list.d/mopidy.list; \
   apt-get update; \
   apt-get -y install \
   #build-essential git automake autoconf gettext gperf gawk libtool \

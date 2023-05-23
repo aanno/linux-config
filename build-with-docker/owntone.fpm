@@ -1,0 +1,42 @@
+--verbose
+-s tar
+-t deb
+--name owntone-server
+--license GPL-2.0
+--version 28.6
+--architecture x86_64
+--description "OwnTone is a Linux/FreeBSD DAAP (iTunes), MPD (Music Player Daemon) and RSP (Roku) media server."
+--url "https://github.com/owntone/owntone-server"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
+--depends libavahi-client
+--depends libgcrypt
+--depends zlib1g
+--depends libwebsockets
+--depends libpulse
+--depends libgnutls28
+--depends libavformat
+--depends libavcodec
+--depends libavcodec-extra
+--depends libavutil
+--depends libavfilter
+--depends libconfuse
+--depends libunistring
+--depends libsqlite3
+--depends libavcodec
+--depends libswscale
+--depends libavutil
+--depends libasound2
+--depends libmxml
+--depends libgcrypt20
+--depends libavahi-client
+--depends libevent
+--depends libplist
+--depends libsodium
+--depends libjson-c
+--depends libcurl4-openssl
+--depends libprotobuf-c-dev
+
+owntone.tar.gz
