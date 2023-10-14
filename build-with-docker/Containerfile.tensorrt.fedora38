@@ -1,0 +1,36 @@
+from docker.io/library/fedora:38
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install 'dnf-command(config-manager)'; \
+  dnf -y config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/fedora37/x86_64/cuda-fedora37.repo; \
+  dnf -y install \
+  python3-pip cuda-12-2 cmake; \
+  # git automake autoconf gettext-devel gperf gawk libtool \
+  # git cmake gcc-c++ ninja-build obs-studio-devel opencv-devel qt6-qtbase-devel zsh \
+  # java-11-openjdk-headless gnutls-devel protobuf-c-devel libspotify-devel \
+  # libwebsockets-devel pulseaudio-libs-devel openssl-devel \
+  # git automake autoconf gettext-devel gperf gawk libtool bison flex \
+  # sqlite-devel libconfuse-devel libunistring-devel mxml-devel libevent-devel \
+  # avahi-devel libgcrypt-devel zlib-devel alsa-lib-devel ffmpeg-devel \
+  # libplist-devel libsodium-devel json-c-devel libwebsockets-devel \
+  # libcurl-devel protobuf-c-devel; \
+  #git clone --recursive https://github.com/royshil/obs-backgroundremoval.git; \
+  #cd obs-backgroundremoval; \
+  #git submodule update --init; \
+  #.github/scripts/build-linux --skip-deps; \
+  #cmake --install build_x86_64 --prefix /usr; \
+  #cd /opt/owntone; \
+  #tar cvfz obs-bgremoval.tar.gz /usr/share/obs/obs-plugins /usr/lib64/obs-plugins;
+  pip3 install tensorrt;
+
+  
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+

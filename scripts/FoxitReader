@@ -1,0 +1,5 @@
+#!/bin/sh
+ appname="FoxitReader"
+
+ selfpath="/home/tpasch/foxitreader"
+ exec "$selfpath/$appname" "$@"

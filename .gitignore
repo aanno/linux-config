@@ -18,6 +18,17 @@ var/
 fcos.qcow2
 /.gtm/
 /.idea/workspace.xml
+
+/coreos/libvirt/*.img
+/coreos/libvirt/*.gz
+/coreos/libvirt/*.qcow2
+/coreos/libvirt/*.fcc
+/coreos/libvirt/*.orig
+/coreos/libvirt/*.log.json
+/coreos/libvirt/*.gone
+
+/docker/certbot-netcup/Dockerfile
+
 /docker-compose/nextcloud/proxy/certs/
 /docker-compose/nextcloud/proxy/html/.well-known/
 /docker-compose/gitbucket/plugins
@@ -26,15 +37,18 @@ fcos.qcow2
 /podman-compose/dnsrobocert/dnsrobocert/config.yml
 /podman-compose/dnsrobocert/cert/
 /podman-compose/dnsrobocert/cert*/
-/coreos/libvirt/netcup.fcc
-/coreos/libvirt/netcup-local.fcc
-/docker/certbot-netcup/Dockerfile
 
 /build-with-docker/log
 /build-with-docker/out.txt
+/build-with-docker/.fpm
+/build-with-docker/pacur.json
+/build-with-docker/spotifyd-*
 
 /docker-compose/nextcloud-spreed/docker-compose.yml
 /docker-compose/nextcloud-spreed/server.conf
 /docker-compose/nextcloud-spreed/scripts/env.sh
 /docker-compose/nextcloud-spreed/coturn-only-compose.yml
 
+/scripts/fpm
+/scripts/aws
+/scripts/aws_completer
