@@ -22,7 +22,7 @@ podman build --pull -t owntone \
   -v $CWD/opt/owntone:/opt/owntone:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.obs-bgremoval.fedora38;
+  -f Containerfile.tensorrt.fedora38;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt
