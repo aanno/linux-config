@@ -1,4 +1,4 @@
-from docker.io/library/ubuntu:lunar
+from docker.io/library/ubuntu:mantic
 
 RUN set -ex;\
   mkdir /opt/owntone || true; \
