@@ -31,10 +31,12 @@ RUN set -ex;\
   git clone --depth 10 --branch 11.1 https://github.com/MariaDB/server.git mariadb-server; \
   mkdir mariadb-build; \
   cd mariadb-build; \
+  make; \
+  make package || true; \
   mkdir -p _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1; \
-  cp /opt/owntone/make-it-longer/mariadb-build/man/*.1 _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1; \
+  cp -n /opt/owntone/make-it-longer/mariadb-build/man/*.1 _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1; \
   mkdir -p _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man8; \
-  cp /opt/owntone/make-it-longer/mariadb-build/man/*.8 _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man8; \
+  cp -n /opt/owntone/make-it-longer/mariadb-build/man/*.8 _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man8; \
   cmake -DRPM=fedora ../mariadb-server; \
   make package;
   
