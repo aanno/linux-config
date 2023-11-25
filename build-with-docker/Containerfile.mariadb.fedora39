@@ -14,6 +14,8 @@ from docker.io/library/fedora:39
 #    File not found: /opt/owntone/make-it-longer/mariadb-build/_CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1/mariadb-backup.1\*
 #    File not found: /opt/owntone/make-it-longer/mariadb-build/_CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1/mbstream.1\*
 
+# https://jira.mariadb.org/projects/MDEV/issues/MDEV-32741
+COPY CPackRPM.cmake.diff /root/
 
 RUN set -ex;\
   mkdir /opt/owntone || true; \
@@ -24,6 +26,8 @@ RUN set -ex;\
   #dnf -y install \
   #https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
   dnf -y install dnf-plugins-core; \
+  dnf -y install patch cmake; \
+  patch -d/ -p0 </root/CPackRPM.cmake.diff; \
   dnf -y builddep mariadb-server; \
   dnf -y install git snappy-devel csnappy-devel libpmem-devel lzo-devel bzip2-devel rpm-build rpm ; \
   mkdir /opt/owntone/make-it-longer; \
@@ -33,11 +37,6 @@ RUN set -ex;\
   cd mariadb-build; \
   cmake -DRPM=fedora ../mariadb-server; \
   make; \
-  make package || true; \
-  mkdir -p _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1 || true; \
-  cp -n /opt/owntone/make-it-longer/mariadb-build/man/*.1 _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1 || true; \
-  mkdir -p _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man8 || true; \
-  cp -n /opt/owntone/make-it-longer/mariadb-build/man/*.8 _CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man8 || true; \
   make package;
   
 # CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]

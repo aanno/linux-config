@@ -1,0 +1,11 @@
+--- /usr/share/cmake/Modules/Internal/CPack/CPackRPM.cmake	2023-11-25 09:30:37.078970170 +0100
++++ /usr/share/cmake/Modules/Internal/CPack/CPackRPM.cmake	2023-11-25 09:32:03.197577839 +0100
+@@ -596,7 +596,7 @@
+       set(DIRECTIVE "%dir ")
+     endif()
+ 
+-    string(APPEND INSTALL_FILES "${DIRECTIVE}\"${F}\"\n")
++    string(APPEND INSTALL_FILES "${DIRECTIVE}${F}\n")
+   endforeach()
+ 
+   if(REQUIRES_SYMLINK_RELOCATION_SCRIPT)
