@@ -9,3 +9,12 @@
    endforeach()
  
    if(REQUIRES_SYMLINK_RELOCATION_SCRIPT)
+@@ -1317,7 +1317,7 @@
+         string(APPEND F_PREFIX " ")
+       endif()
+       # Rebuild the user list file
+-      string(APPEND CPACK_RPM_USER_INSTALL_FILES "${F_PREFIX}\"${F_PATH}\"\n")
++      string(APPEND CPACK_RPM_USER_INSTALL_FILES "${F_PREFIX}${F_PATH}\n")
+ 
+       # Remove from CPACK_RPM_INSTALL_FILES and CPACK_ABSOLUTE_DESTINATION_FILES_INTERNAL
+       list(REMOVE_ITEM CPACK_RPM_INSTALL_FILES_LIST ${F_PATH})
