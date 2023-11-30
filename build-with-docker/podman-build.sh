@@ -22,7 +22,7 @@ podman build --pull -t owntone \
   -v $CWD/opt/owntone:/opt/owntone:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.mariadb.fedora39;
+  -f Containerfile.galera-4.fedora39;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt
