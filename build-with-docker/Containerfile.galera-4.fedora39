@@ -33,8 +33,19 @@ RUN set -ex;\
   cmake . ;\
   make package;\
   tar xvfz galera-4-26.4.16-Linux-x86_64.tar.gz;\
-  cd galera-4-26.4.16-Linux-x86_64;\
-  tree .; 
+  # cd galera-4-26.4.16-Linux-x86_64;\
+  # tree .;\
+  mkdir -p usr/bin usr/lib64 usr/share/galera-4 usr/share/doc/galera-4 usr/share/man/man8 etc/systemd/system;\
+  cp galera-4-26.4.16-Linux-x86_64/bin/* usr/bin/;\
+  cp galera-4-26.4.16-Linux-x86_64/doc/* usr/share/doc/galera-4/;\
+  cp galera-4-26.4.16-Linux-x86_64/man/man8/* usr/share/man/man8/;\
+  cp galera-4-26.4.16-Linux-x86_64/share/* usr/share/galera-4/;\
+  cp galera-4-26.4.16-Linux-x86_64/lib/* usr/lib64;\
+  cp usr/share/galera-4/garb.cnf etc;\
+  cp usr/share/galera-4/garb.service etc/systemd/system/;\
+  cp usr/share/galera-4/garb-systemd usr/bin/;\
+  tar cvfz galera-4-26.4.16.tgz usr/ etc/;\
+  tree usr etc;
   
 # CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
 # ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]

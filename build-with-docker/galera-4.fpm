@@ -1,0 +1,21 @@
+--verbose
+-s tar
+-t rpm
+--name galera-4
+--license GPL-2.0
+--version 26.4.16
+--architecture x86_64
+--description "true multi-master, active-active cluster read and write to any node at any time for mysql and mariadb."
+--url "https://galeracluster.com/"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
+--depends openssl-libs
+--depends libstdc++
+--depends zlib
+--depends boost-program-options
+--depends libgcc
+--depends glibc
+
+galera-4-26.4.16.tgz
