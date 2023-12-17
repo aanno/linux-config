@@ -12,10 +12,5 @@ fi
 export TF_GPU_ALLOCATOR=cuda_malloc_async
 
 conda activate automl
-
-# https://unix.stackexchange.com/questions/4650/how-to-determine-the-path-to-a-sourced-tcsh-or-bash-shell-script-from-within-the
-# python $HOME/bin/automl-test.py
-SOURCE_DIR=`dirname ${BASH_SOURCE[${#BASH_SOURCE[@]} - 1]}`
-python $SOURCE_DIR/automl-test.py
-
+python $HOME/bin/automl-test.py
 
