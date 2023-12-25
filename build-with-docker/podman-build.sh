@@ -31,3 +31,9 @@ tar cvfz owntone.tar.gz ./opt/
 # only for spotifyd
 # TODO: find container name ('relaxed_torvalds' here)
 # podman cp relaxed_torvalds:/opt/owntone/release/spotifyd .
+
+# galera-4
+# cp opt/owntone/make-it-longer/galera-4-26.4.16/galera-4-26.4.16.tgz .
+# cp galera-4.fpm .fpm
+# fpm galera-4-26.4.16.tgz
+
