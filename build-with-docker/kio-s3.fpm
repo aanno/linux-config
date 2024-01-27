@@ -1,4 +1,5 @@
 --verbose
+--log info
 -s tar
 -t rpm
 --name kf5-kio-s3
@@ -15,7 +16,3 @@
 --depends zlib
 --depends libgcc
 --depends kf5-kio
-
-kio-s3.tgz
-
-# kf5-kio-devel git extra-cmake-modules kf5-kdoctools-devel kf5-ki18n-devel

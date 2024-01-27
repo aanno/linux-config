@@ -1,4 +1,5 @@
 --verbose
+--log info
 -s tar
 -t rpm
 --name aws-sdk-cpp
@@ -15,9 +16,4 @@
 --depends libstdc++
 --depends zlib
 --depends libgcc
---depends crypto
 --depends libcurl
-
-aws-sdk-cpp.tgz
-
-# --depends pipewire-pulseaudio

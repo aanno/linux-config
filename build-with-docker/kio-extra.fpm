@@ -1,4 +1,5 @@
 --verbose
+--log info
 -s tar
 -t rpm
 --name kf5-kio-extra
@@ -18,7 +19,3 @@
 --depends kf5-kguiaddons
 --depends kf5-karchive
 --depends kf5-libkexiv2
-
-kio-extra.tgz
-
-# qt5-qtsvg-devel kf5-syntax-highlighting-devel kf5-kguiaddons-devel kf5-karchive-devel kf5-libkexiv2-devel
