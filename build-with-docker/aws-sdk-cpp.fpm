@@ -1,0 +1,23 @@
+--verbose
+-s tar
+-t rpm
+--name aws-sdk-cpp
+--license Apache-2.0
+--version 1.11.252
+--architecture x86_64
+--description "modern C++ (version C++ 11 or later) interface for Amazon Web Services (AWS)"
+--url "https://github.com/aws/aws-sdk-cpp"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
+--depends openssl-libs
+--depends libstdc++
+--depends zlib
+--depends libgcc
+--depends crypto
+--depends libcurl
+
+aws-sdk-cpp.tgz
+
+# --depends pipewire-pulseaudio

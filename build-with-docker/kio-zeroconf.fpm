@@ -1,0 +1,21 @@
+--verbose
+-s tar
+-t rpm
+--name kf5-kio-zeroconf
+--license GPL-2.0
+--version 26.4.16
+--architecture x86_64
+--description "KIO worker to discover file systems by DNS-SD (zeroconf)."
+--url "https://invent.kde.org/network/kio-zeroconf"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
+--depends libstdc++
+--depends libgcc
+--depends kf5-kdnssd
+--depends kf5-kdbusaddons
+
+kio-zeroconf.tgz
+
+# kf5-kdnssd-devel kf5-kdbusaddons-devel

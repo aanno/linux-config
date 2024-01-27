@@ -1,0 +1,24 @@
+--verbose
+-s tar
+-t rpm
+--name kf5-kio-extra
+--license GPL-2.0
+--version 24.01.90
+--architecture x86_64
+--description "Additional components to increase the functionality of KIO."
+--url "https://invent.kde.org/network/kio-extras"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
+--depends libstdc++
+--depends libgcc
+--depends qt5-qtsvg
+--depends kf5-syntax-highlighting
+--depends kf5-kguiaddons
+--depends kf5-karchive
+--depends kf5-libkexiv2
+
+kio-extra.tgz
+
+# qt5-qtsvg-devel kf5-syntax-highlighting-devel kf5-kguiaddons-devel kf5-karchive-devel kf5-libkexiv2-devel

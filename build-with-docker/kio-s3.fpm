@@ -1,0 +1,21 @@
+--verbose
+-s tar
+-t rpm
+--name kf5-kio-s3
+--license GPL-2.0
+--version 1.0
+--architecture x86_64
+--description "KIO interface for Amazon Web Services S3 storage, based on aws-sdk-cpp."
+--url "https://invent.kde.org/network/kio-s3"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
+--depends libstdc++
+--depends zlib
+--depends libgcc
+--depends kf5-kio
+
+kio-s3.tgz
+
+# kf5-kio-devel git extra-cmake-modules kf5-kdoctools-devel kf5-ki18n-devel
