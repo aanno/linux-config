@@ -1,0 +1,20 @@
+--verbose
+--log info
+-s tar
+-t rpm
+--name kasmvncserver
+--license GPL-2.0
+--version 1.2.0
+--architecture x86_64
+--description "web-based access to a linux desktop or application (from x11)."
+--url "https://github.com/kasmtech/KasmVNC"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
+--depends libstdc++
+--depends zlib
+--depends libgcc
+--depends gnutls
+--depends libjpeg-turbo
+--depends libwebp
