@@ -18,3 +18,6 @@
 --depends gnutls
 --depends libjpeg-turbo
 --depends libwebp
+--depends perl-Switch
+--depends perl-YAML-Tiny
+--depends perl-Hash-Merge-Simple
