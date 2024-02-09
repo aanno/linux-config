@@ -21,3 +21,5 @@
 --depends perl-Switch
 --depends perl-YAML-Tiny
 --depends perl-Hash-Merge-Simple
+--after-install kasmvncserver.dir/.scripts/after_install
+--after-remove kasmvncserver.dir/.scripts/after_remove

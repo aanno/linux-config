@@ -28,6 +28,16 @@ pushd kasmvncserver.dir
     ln -s Xvnc kasmXvnc
   popd
 
+  pushd opt/kasmvncserver
+    # Hack
+    mkdir -p builder/startup/deb
+    cp ../../usr/lib/kasmvncserver/select-de.sh builder/startup/deb/
+    # Ok
+    mkdir lib
+    cd lib
+    ln -s ../../../usr/lib/kasmvncserver .
+  popd
+
   pushd usr/share/man/man1
     mv Xvnc.1.gz kasmXvnc.1.gz
     mv vncconfig.1.gz kasmvncconfig.1.gz
