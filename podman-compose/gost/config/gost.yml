@@ -1,0 +1,81 @@
+# https://gost.run/en/getting-started/configuration-overview/
+# https://gost.run/en/reference/configuration/file/
+services:
+- name: proxy-http
+  addr: ":8080"
+  handler:
+    type: http
+    #chain: chain-0
+    # auth is not used if auther is present (tp)
+    # auth:
+    #   username: gost
+    #   password: gost
+    auther: auther-0
+    # metadata:
+    #   foo: bar
+    #   gost v2 - not used in gost v3
+    #   secrets: /config/secrets-template.txt
+  listener:
+    type: tcp
+    # auth is not used if auther is present (tp)
+    # auth:
+    #   username: gost
+    #   password: gost
+    auther: auther-0
+    #metadata:
+      #foo: bar
+- name: proxy-socks5
+  addr: ":1080"
+  handler:
+    type: socks5
+    #chain: chain-0
+    # auth is not used if auther is present (tp)
+    # auth:
+    #   username: gost
+    #   password: gost
+    auther: auther-0
+  listener:
+    type: tcp
+    # auth is not used if auther is present (tp)
+    # auth:
+    #   username: gost
+    #   password: gost
+    auther: auther-0
+
+# chains:
+# - name: chain-0
+#   hops:
+#   - name: hop-0
+#     nodes:
+#     - name: node-0
+#       addr: 192.168.1.1:8080
+#       connector:
+#         type: socks5
+#         auth:
+#           username: gost
+#           password: gost
+#         metadata:
+#           bar: baz
+#       dialer:
+#         type: tls
+#         metadata:
+#           bar: baz
+
+authers:
+- name: auther-0
+  auths:
+  - username: user1
+    password: pass1
+  - username: user2
+    password: pass2
+
+log:
+  output: stderr
+  level: debug
+  format: json
+  rotation:
+    maxSize: 100
+    maxAge: 10
+    maxBackups: 3
+    localTime: false
+    compress: false
