@@ -1,0 +1,42 @@
+version: '3'
+
+# successful used with podman (even with: network_mode: host)! (tp)
+# https://rustdesk.com/docs/en/self-host/rustdesk-server-oss/docker/
+services:
+  hbbs:
+    # By default, hbbs listens on 21115 (TCP), 21116 (TCP/UDP) and 21118 (TCP)
+    container_name: hbbs
+    image: docker.io/rustdesk/rustdesk-server:latest
+    # additional port 21114/tcp (tls)
+    # image: docker.io/rustdesk/rustdesk-server-pro:latest
+    command: hbbs
+    volumes:
+      - ./data:/root:z
+    # not with podman rootless
+    network_mode: "host"
+    depends_on:
+      - hbbr
+    restart: unless-stopped
+
+  hbbr:
+    # By default, hbbr listens on 21117 (TCP) and 21119 (TCP)
+    container_name: hbbr
+    image: docker.io/rustdesk/rustdesk-server:latest
+    command: hbbr
+    volumes:
+      - ./data:/root:z
+    # not with podman rootless
+    network_mode: "host"
+    restart: unless-stopped
+
+#  rustweb seems to be dead (2 years old)
+#  rustweb:
+#    # https://rustdesk.com/docs/en/dev/build/web/
+#    container_name: rustweb
+#    image: docker.io/keyurbhole/flutter_web_desk:latest
+#    depends_on:
+#      - hbbr
+#      - hbbs
+#    port:
+#      5000:5000
+#    restart: unless-stopped
