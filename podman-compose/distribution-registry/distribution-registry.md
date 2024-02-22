@@ -2,6 +2,18 @@
 
 Simple docker registry from the docker community.
 
+## Create htpasswd file 
+
+Create file and first users:
+```bash
+htpasswd -cbB htpasswd user1 pass1
+```
+
+Create other users:
+```bash
+htpasswd -bB htpasswd user2 pass2
+```
+
 ## Testing
 
 ```bash
