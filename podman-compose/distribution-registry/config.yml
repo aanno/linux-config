@@ -24,10 +24,10 @@ storage:
       dryrun: false
     readonly:
       enabled: false
-# auth:
-#   htpasswd:
-#     realm: basic-realm
-#     path: /path/to/htpasswd
+auth:
+  htpasswd:
+    realm: basic-realm
+    path: /etc/docker/registry/htpasswd
 http:
   # addr: localhost:5000
   addr: 0.0.0.0:5000
