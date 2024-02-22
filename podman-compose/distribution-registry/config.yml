@@ -1,0 +1,72 @@
+# https://distribution.github.io/distribution/about/configuration/
+version: 0.1
+log:
+  accesslog:
+    disabled: true
+  level: debug
+  formatter: text
+  fields:
+    service: registry
+# only one storage type (tp)
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+    maxthreads: 100
+  delete:
+    enabled: true
+  redirect:
+    disable: false
+  maintenance:
+    uploadpurging:
+      enabled: true
+      age: 168h
+      interval: 24h
+      dryrun: false
+    readonly:
+      enabled: false
+# auth:
+#   htpasswd:
+#     realm: basic-realm
+#     path: /path/to/htpasswd
+http:
+  # addr: localhost:5000
+  addr: 0.0.0.0:5000
+  # prefix: /my/nested/registry/
+  # host: https://myregistryaddress.org:5000
+  # secret: asecretforlocaldevelopment
+  relativeurls: false
+  draintimeout: 30s
+  # tls:
+  #   certificate: /path/to/x509/public
+  #   key: /path/to/x509/private
+  #   clientcas:
+  #     - /path/to/ca.pem
+  #     - /path/to/another/ca.pem
+  #   letsencrypt:
+  #     cachefile: /path/to/cache-file
+  #     email: emailused@letsencrypt.com
+  #     hosts: [myregistryaddress.org]
+  #     directoryurl: https://acme-v02.api.letsencrypt.org/directory
+  # debug:
+  #   addr: localhost:5001
+  #   prometheus:
+  #     enabled: true
+  #     path: /metrics
+  # headers:
+  #   X-Content-Type-Options: [nosniff]
+  http2:
+    disabled: false
+  h2c:
+    enabled: false
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+validation:
+  manifests:
+    urls:
+      allow:
+        - ^https?://([^/]+\.)*example\.com/
+      deny:
+        - ^https?://www\.example\.com/
