@@ -6,41 +6,15 @@ services:
   handler:
     type: http
     chain: chain-1
-    # auth is not used if auther is present (tp)
-    # auth:
-    #   username: gost
-    #   password: gost
-    # auther: auther-0
-    # metadata:
-    #   foo: bar
-    #   gost v2 - not used in gost v3
-    #   secrets: /config/secrets-template.txt
   listener:
     type: tcp
-    # auth is not used if auther is present (tp)
-    # auth:
-    #   username: gost
-    #   password: gost
-    # auther: auther-0
-    #metadata:
-      #foo: bar
 - name: proxy-socks5
   addr: ":1080"
   handler:
     type: socks5
     chain: chain-0
-    # auth is not used if auther is present (tp)
-    # auth:
-    #   username: gost
-    #   password: gost
-    # auther: auther-0
   listener:
     type: tcp
-    # auth is not used if auther is present (tp)
-    # auth:
-    #   username: gost
-    #   password: gost
-    # auther: auther-0
 
 chains:
 - name: chain-0
@@ -48,36 +22,25 @@ chains:
   - name: hop-0
     nodes:
     - name: node-0
-      # addr: vps-cb3bc564.vps.ovh.net:1080
       addr: 57.128.159.33:1080
-      # addr: 2001:41d0:801:2000::16cd
       connector:
         type: socks5
-        # auther: auther-0
         auth:
           username: user1
           password: pass1
-        # metadata:
-        #   bar: baz
       dialer:
         type: tcp
         auth:
           username: user1
           password: pass1
-      #  type: tls
-        # metadata:
-        #   bar: baz
 - name: chain-1
   hops:
   - name: hop-1
     nodes:
     - name: node-1
-      # addr: vps-cb3bc564.vps.ovh.net:1080
       addr: 57.128.159.33:1080
-      # addr: 2001:41d0:801:2000::16cd
       connector:
         type: http
-        # auther: auther-0
         auth:
           username: user1
           password: pass1
