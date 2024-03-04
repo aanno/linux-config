@@ -1,3 +1,5 @@
+.env
+*-subst.*
 htpasswd
 data/
 db.env
