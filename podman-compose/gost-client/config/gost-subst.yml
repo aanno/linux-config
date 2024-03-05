@@ -22,33 +22,33 @@ chains:
   - name: hop-0
     nodes:
     - name: node-0
-      addr: 57.128.159.33:1080
+      addr: $REMOTE_SOCKS
       connector:
         type: socks5
         auth:
-          username: user1
-          password: pass1
+          username: $REMOTE_PROXY_USER
+          password: $REMOTE_PROXY_PW
       dialer:
         type: tcp
         auth:
-          username: user1
-          password: pass1
+          username: $REMOTE_PROXY_USER
+          password: $REMOTE_PROXY_PW
 - name: chain-1
   hops:
   - name: hop-1
     nodes:
     - name: node-1
-      addr: 57.128.159.33:1080
+      addr: $REMOTE_PROXY
       connector:
         type: http
         auth:
-          username: user1
-          password: pass1
+          username: $REMOTE_PROXY_USER
+          password: $REMOTE_PROXY_PW
       dialer:
         type: tcp
         auth:
-          username: user1
-          password: pass1
+          username: $REMOTE_PROXY_USER
+          password: $REMOTE_PROXY_PW
 
 authers:
 - name: auther-0

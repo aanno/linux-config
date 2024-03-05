@@ -1,5 +1,6 @@
 .env
-*-subst.*
+!*-subst.*
+gost.yml
 htpasswd
 data/
 db.env
