@@ -1,3 +1,5 @@
+scripts/*
+!scripts/*.sh
 .env
 !*-subst.*
 gost.yml
