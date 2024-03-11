@@ -1,5 +1,12 @@
 # podman-compose superset
 
+```bash
+./start-superset.sh
+```
+
+```bash
+xdg-open http://localhost:8088
+```
 
 ## Build superset docker image with podman
 
