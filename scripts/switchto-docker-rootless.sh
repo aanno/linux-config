@@ -1,7 +1,8 @@
 #!/bin/bash -x
 
 systemctl --user stop podman.socket || true
-systemctl --user start docker
+# systemctl --user stop docker || true
+systemctl --user restart docker
 curl -H "Content-Type: application/json" \
 	--unix-socket /run/user/$UID/docker.sock \
     http://localhost/_ping
