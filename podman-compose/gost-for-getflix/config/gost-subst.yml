@@ -1,0 +1,20 @@
+# https://gost.run/en/getting-started/configuration-overview/
+# https://gost.run/en/reference/configuration/file/
+services:
+- name: proxy-socks5
+  addr: ":1080"
+  handler:
+    type: socks5
+  listener:
+    type: tcp
+
+log:
+  output: stderr
+  level: debug
+  format: json
+  rotation:
+    maxSize: 100
+    maxAge: 10
+    maxBackups: 3
+    localTime: false
+    compress: false

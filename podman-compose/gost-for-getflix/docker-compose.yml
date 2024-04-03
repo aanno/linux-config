@@ -1,0 +1,26 @@
+version: '3.8'
+
+# v2:
+# https://v2.gost.run/en/getting-started/
+# https://github.com/ginuerzh/gost
+# docker.io/ginuerzh/gost:latest
+
+# v3:
+# https://gost.run/en/getting-started/configuration-overview/
+# https://github.com/go-gost/gost
+
+services:
+  gost-proxy-server:
+    container_name: gost-proxy-server
+    # image: docker.io/ginuerzh/gost:latest
+    # image: docker.io/go-gost/gost:latest
+    image: docker.io/aanno/gost:latest
+    # command: -C /config/config.txt
+    # not with podman rootless
+    # otherwise very difficult to get IP (or use localhost)
+    network_mode: "host"
+    restart: unless-stopped
+    volumes:
+      - ./config/gost.yml:/etc/gost/gost.yml:z,ro
+      - ./config/resolv.conf:/etc/resolv.conf:z,ro
+      - ./config:/config:z,ro
