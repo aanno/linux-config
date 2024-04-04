@@ -19,10 +19,10 @@ podman build --pull -t owntone \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
   -v $CWD/var/lib/dnf:/var/lib/dnf:z \
   -v $CWD/var/cache/dnf:/var/cache/dnf:z \
-  -v $CWD/opt/owntone:/opt/owntone:z \
+  -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.peazip.fedora39;
+  -f Containerfile.openvpn3-client.fedora39;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt

@@ -1,0 +1,46 @@
+from docker.io/library/fedora:39
+
+# https://github.com/OpenVPN/openvpn3-linux/blob/master/BUILD.md
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  mkdir /opt/openvpn3 || true; \
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  #dnf -y install \
+  #https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  #dnf -y install \
+  #https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  # dnf -y install dnf-plugins-core; \
+  # dnf -y install patch cmake; \
+  # patch -d/ -p0 </root/CPackRPM.cmake.diff; \
+  # dnf -y builddep mariadb-server; \
+  dnf -y install git openssl-devel rpm-build rpm shadow-utils \
+    gcc-c++ git autoconf autoconf-archive automake make \
+    pkgconfig glib2-devel jsoncpp-devel libuuid-devel   \
+    libcap-ng-devel selinux-policy-devel lz4-devel      \
+    zlib-devel libxml2 tinyxml2-devel python3-dbus      \
+    python3-gobject python3-pyOpenSSL python3-jinja2    \
+    python3-docutils bzip2 polkit systemd-devel         \
+    python3-systemd \
+    libnl3-devel protobuf-compiler protobuf protobuf-devel; \
+  groupadd -r openvpn; \
+  useradd -r -s /sbin/nologin -g openvpn openvpn; \
+  mkdir /opt/owntone/make-it-longer || true; \
+  cd /opt/owntone/make-it-longer; \
+  git clone --depth 10 --recursive https://github.com/OpenVPN/openvpn3-linux.git; \
+  cd openvpn3-linux; \
+  ./bootstrap.sh; \
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var; \
+  # --enable-bash-completion --enable-addons-aws --enable-dco --enable-selinux-build \
+  make; \
+  # https://www.baeldung.com/linux/change-install-dir-make-install \
+  make DESTDIR=/opt/openvpn3 install; \
+  # ??? \
+  openvpn3-admin init-config --write-configs; \
+  # WRONG \
+  # make rpm;
+
+  
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+
