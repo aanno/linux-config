@@ -15,6 +15,12 @@ services:
     # image: docker.io/ginuerzh/gost:latest
     # image: docker.io/go-gost/gost:latest
     image: docker.io/aanno/gost:latest
+    dns:
+      # Deutschland - Frankfurt - no vpn
+      - 54.93.169.181
+      # Großbritannien - London - no vpn
+      - 212.71.249.225
+
     # command: -C /config/config.txt
     # not with podman rootless
     # otherwise very difficult to get IP (or use localhost)
@@ -22,5 +28,5 @@ services:
     restart: unless-stopped
     volumes:
       - ./config/gost.yml:/etc/gost/gost.yml:z,ro
-      - ./config/resolv.conf:/etc/resolv.conf:z,ro
+      # - ./config/resolv.conf:/etc/resolv.conf:z,ro
       - ./config:/config:z,ro
