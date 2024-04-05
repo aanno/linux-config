@@ -20,7 +20,12 @@ services:
       - 54.93.169.181
       # Großbritannien - London - no vpn
       - 212.71.249.225
-
+    cap_add:
+      - NET_ADMIN
+      # - NET_RAW
+    devices:
+      - /dev/net/tun
+      - /dev/null
     # command: -C /config/config.txt
     # not with podman rootless
     # otherwise very difficult to get IP (or use localhost)
