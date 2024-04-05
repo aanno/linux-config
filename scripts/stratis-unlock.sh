@@ -20,7 +20,7 @@ fi
 # if sudo mount -o defaults,lazytime /dev/stratis/pool1/stratis-home /stratis/home; then
 if mount /stratis/home; then
   # bind mount from fstab
-  mount /home/tpasch/bin
+  mount $HOME/bin
   echo "Please do:"
   echo ". ~/.bashrc"
 else
