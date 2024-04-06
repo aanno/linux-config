@@ -23,9 +23,14 @@ services:
     cap_add:
       - NET_ADMIN
       # - NET_RAW
+    # privileged: true
     devices:
       - /dev/net/tun
       - /dev/null
+    # security_opt:
+      # - "label=type:legulas_mariadb.process"
+      # - "label=disable"
+      # - "label=type:ovpn_container.process"
     # command: -C /config/config.txt
     # not with podman rootless
     # otherwise very difficult to get IP (or use localhost)
