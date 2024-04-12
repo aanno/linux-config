@@ -6,6 +6,8 @@ services:
     # image: docker.io/ginuerzh/gost:latest
     # image: docker.io/go-gost/gost:latest
     build: .
+    ports:
+      - 1194:1194
     dns:
       # germany - Frankfurt - no vpn
       - 54.93.169.181
