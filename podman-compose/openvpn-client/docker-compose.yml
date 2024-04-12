@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  openvpn-client:
+    container_name: openvpn-client
+    # image: docker.io/ginuerzh/gost:latest
+    # image: docker.io/go-gost/gost:latest
+    build: .
+    dns:
+      # germany - Frankfurt - no vpn
+      - 54.93.169.181
+      # uk - London - no vpn
+      - 212.71.249.225
+    cap_add:
+      - NET_ADMIN
+    # privileged: true
+    devices:
+      - /dev/net/tun
+      - /dev/null
+    # security_opt:
+      # - "label=disable"
+      # - "label=type:ovpn_container.process"
+    # command: -C /config/config.txt
+    # not with podman rootless
+    # otherwise very difficult to get IP (or use localhost)
+    entrypoint: /usr/sbin/openvpn --config /config/getflix-dnsonly.ovpn --auth-user-pass /config/passfile
+    network_mode: "host"
+    restart: unless-stopped
+    volumes:
+      - ./config:/config:z,ro
