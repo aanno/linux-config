@@ -22,7 +22,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.mariadb.fedora40;
+  -f Containerfile.owntone.ubuntu-noble;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt

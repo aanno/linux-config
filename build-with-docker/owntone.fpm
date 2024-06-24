@@ -3,7 +3,7 @@
 -t deb
 --name owntone-server
 --license GPL-2.0
---version 28.6
+--version 28.9
 --architecture x86_64
 --description "OwnTone is a Linux/FreeBSD DAAP (iTunes), MPD (Music Player Daemon) and RSP (Roku) media server."
 --url "https://github.com/owntone/owntone-server"
