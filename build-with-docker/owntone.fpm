@@ -29,7 +29,7 @@
 --depends libswscale
 --depends libavutil
 --depends libasound2
---depends libmxml
+--depends libxml2
 --depends libgcrypt20
 --depends libavahi-client
 --depends libevent
