@@ -22,7 +22,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.openvpn3-client.fedora39;
+  -f Containerfile.mariadb.fedora40;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt
@@ -33,7 +33,7 @@ tar cvfz owntone.tar.gz ./opt/
 # podman cp relaxed_torvalds:/opt/owntone/release/spotifyd .
 
 # galera-4
-# cp opt/owntone/make-it-longer/galera-4-26.4.16/galera-4-26.4.16.tgz .
+# cp opt/owntone/make-it-longer/galera-4-26.4.18/galera-4-26.4.18.tgz .
 # cp galera-4.fpm .fpm
-# fpm galera-4-26.4.16.tgz
+# fpm galera-4-26.4.18.tgz
 

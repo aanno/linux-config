@@ -1,4 +1,4 @@
-from docker.io/library/fedora:39
+from docker.io/library/fedora:40
 
 #  CPackRPM: source dir path '/opt/owntone/mariadb-server' is shorter than
 #  debuginfo sources dir path '/usr/src/debug/MariaDB-/src_0'! Source dir path
@@ -21,23 +21,31 @@ RUN set -ex;\
   mkdir /opt/owntone || true; \
   cd; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
-  #dnf -y install \
-  #https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
-  #dnf -y install \
-  #https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
-  dnf -y install dnf-plugins-core; \
-  dnf -y install patch cmake; \
-  patch -d/ -p0 </root/CPackRPM.cmake.diff; \
-  dnf -y builddep mariadb-server; \
-  dnf -y install git snappy-devel csnappy-devel libpmem-devel lzo-devel bzip2-devel rpm-build rpm ; \
+  dnf -y install patch cmake tree; \
+  # patch -d/ -p0 </root/CPackRPM.cmake.diff; \
+  # dnf -y builddep mariadb-server; \
+  # https://mariadb.com/kb/en/building-the-galera-wsrep-package-on-fedora/ \
+  dnf -y install automake gcc gcc-c++ boost-devel check-devel glibc-devel openssl-devel ; \
   mkdir /opt/owntone/make-it-longer || true; \
   cd /opt/owntone/make-it-longer; \
-  git clone --depth 10 --branch 11.1 https://github.com/MariaDB/server.git mariadb-server; \
-  mkdir mariadb-build; \
-  cd mariadb-build; \
-  cmake -DRPM=fedora ../mariadb-server; \
-  make; \
-  make package;
+  curl https://releases.galeracluster.com/galera-4/source/galera-4-26.4.18.tar.gz | tar xvz;\
+  cd galera-4-26.4.18;\
+  cmake . ;\
+  make package;\
+  tar xvfz galera-4-26.4.18-Linux-x86_64.tar.gz;\
+  # cd galera-4-26.4.18-Linux-x86_64;\
+  # tree .;\
+  mkdir -p usr/bin usr/lib64 usr/share/galera-4 usr/share/doc/galera-4 usr/share/man/man8 etc/systemd/system;\
+  cp galera-4-26.4.18-Linux-x86_64/bin/* usr/bin/;\
+  cp galera-4-26.4.18-Linux-x86_64/doc/* usr/share/doc/galera-4/;\
+  cp galera-4-26.4.18-Linux-x86_64/man/man8/* usr/share/man/man8/;\
+  cp galera-4-26.4.18-Linux-x86_64/share/* usr/share/galera-4/;\
+  cp galera-4-26.4.18-Linux-x86_64/lib/* usr/lib64;\
+  cp usr/share/galera-4/garb.cnf etc;\
+  cp usr/share/galera-4/garb.service etc/systemd/system/;\
+  cp usr/share/galera-4/garb-systemd usr/bin/;\
+  tar cvfz galera-4-26.4.18.tgz usr/ etc/;\
+  tree usr etc;
   
 # CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
 # ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]

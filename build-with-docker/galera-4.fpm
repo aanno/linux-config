@@ -3,7 +3,7 @@
 -t rpm
 --name galera-4
 --license GPL-2.0
---version 26.4.16
+--version 26.4.18
 --architecture x86_64
 --description "true multi-master, active-active cluster read and write to any node at any time for mysql and mariadb."
 --url "https://galeracluster.com/"
@@ -18,4 +18,4 @@
 --depends libgcc
 --depends glibc
 
-galera-4-26.4.16.tgz
+galera-4-26.4.18.tgz
