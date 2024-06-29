@@ -1,1 +1,1 @@
-/home/tpasch/idea-IU-233.13135.103/bin/idea.sh
+D:/home/tpasch/idea-IU-233.13135.103/bin/idea.sh

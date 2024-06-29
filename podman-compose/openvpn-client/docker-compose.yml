@@ -1,42 +1,32 @@
 version: '3.8'
 
-# v2:
-# https://v2.gost.run/en/getting-started/
-# https://github.com/ginuerzh/gost
-# docker.io/ginuerzh/gost:latest
-
-# v3:
-# https://gost.run/en/getting-started/configuration-overview/
-# https://github.com/go-gost/gost
-
 services:
-  gost-proxy-server:
-    container_name: gost-proxy-server
+  openvpn-client:
+    container_name: openvpn-client
     # image: docker.io/ginuerzh/gost:latest
     # image: docker.io/go-gost/gost:latest
-    image: docker.io/aanno/gost:latest
+    build: .
+    ports:
+      - 1194:1194
     dns:
-      # Deutschland - Frankfurt - no vpn
+      # germany - Frankfurt - no vpn
       - 54.93.169.181
-      # Großbritannien - London - no vpn
+      # uk - London - no vpn
       - 212.71.249.225
     cap_add:
       - NET_ADMIN
-      # - NET_RAW
     # privileged: true
     devices:
       - /dev/net/tun
       - /dev/null
     # security_opt:
-      # - "label=type:legulas_mariadb.process"
       # - "label=disable"
       # - "label=type:ovpn_container.process"
     # command: -C /config/config.txt
     # not with podman rootless
     # otherwise very difficult to get IP (or use localhost)
+    entrypoint: /usr/sbin/openvpn --config /config/getflix-dnsonly.ovpn --auth-user-pass /config/passfile
     network_mode: "host"
     restart: unless-stopped
     volumes:
-      - ./config/gost.yml:/etc/gost/gost.yml:z,ro
-      # - ./config/resolv.conf:/etc/resolv.conf:z,ro
       - ./config:/config:z,ro
