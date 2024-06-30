@@ -24,9 +24,11 @@ RUN set -ex;\
   # https://negativo17.org/multimedia/
   dnf -y install dnf-plugins-core ; \
   dnf config-manager --add-repo=https://negativo17.org/repos/fedora-multimedia.repo ; \
+  # known NOT to work: 
+  # ffmpeg-devel
   dnf -y install git cmake python3-pip yasm nasm six doxygen perl \
   libsrtp-devel gsm-devel libzrtpcpp-devel opus-devel speex-devel speexdsp \
-  bcg729-devel libaom-devel codec2-devel ffmpeg-devel jsoncpp-devel libjpeg-turbo-devel \
+  bcg729-devel libaom-devel codec2-devel jsoncpp-devel libjpeg-turbo-devel \
   liboqs-devel libvpx-devel libxml2-devel libyuv-devel mbedtls-devel opencore-amr-devel \
   openh264-devel openldap-devel soci-devel sqlite-devel vo-amrwbenc-devel libuv-devel \
   zlib-ng-compat-devel zlib-ng-devel zxing-cpp-devel webrtc-audio-processing-devel \
@@ -40,9 +42,12 @@ RUN set -ex;\
   cd linphone-desktop ; \
   mkdir build ; \
   cd build ; \
+  # ffmpeg:
+  # opt/owntone/make-it-longer/linphone-desktop/linphone-sdk/external/ffmpeg/libavutil/imgutils.h:116:35: note: expected 'const uint8_t **' {aka 'const unsigned char **'} but argument is of type 'uint8_t * const*' {aka 'unsigned char * const*'}
+  # h264: depends on ENABLE_NON_FREE_FEATURES, which needs license
   cmake .. -DENABLE_APP_PACKAGING=YES \
-    -DENABLE_GPL_THIRD_PARTIES=ON  -DENABLE_FFMPEG=ON -DENABLE_NON_FREE_FEATURES=ON \
-    -DENABLE_OPENH264=ON -DENABLE_VIDEO=ON \
+    -DENABLE_GPL_THIRD_PARTIES=ON  -DENABLE_FFMPEG=OFF -DENABLE_NON_FREE_FEATURES=OFF \
+    -DENABLE_OPENH264=OFF -DENABLE_VIDEO=ON \
     -DCMAKE_BUILD_PARALLEL_LEVEL=6 -DCMAKE_BUILD_TYPE=RelWithDebInfo ; \
   cmake --build . --parallel 6 --config RelWithDebInfo ; \
   cmake --install . ; \
