@@ -1,0 +1,55 @@
+from docker.io/library/fedora:40
+
+#  CPackRPM: source dir path '/opt/owntone/mariadb-server' is shorter than
+#  debuginfo sources dir path '/usr/src/debug/MariaDB-/src_0'! Source dir path
+#  must be longer than debuginfo sources dir path.  Set
+#  CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX variable to a shorter value or make
+#  source dir path longer.  Required for debuginfo packaging.  See
+#  documentation of CPACK_RPM_DEBUGINFO_PACKAGE variable for details.
+
+#error: File not found: /opt/owntone/make-it-longer/mariadb-build/_CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1/mariabackup.1\*
+#error: File not found: /opt/owntone/make-it-longer/mariadb-build/_CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1/mariadb-backup.1\*
+#error: File not found: /opt/owntone/make-it-longer/mariadb-build/_CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1/mbstream.1\*
+#    File not found: /opt/owntone/make-it-longer/mariadb-build/_CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1/mariabackup.1\*
+#    File not found: /opt/owntone/make-it-longer/mariadb-build/_CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1/mariadb-backup.1\*
+#    File not found: /opt/owntone/make-it-longer/mariadb-build/_CPack_Packages/Linux/RPM/mariadb-11.1.3-linux-x86_64/backup/usr/share/man/man1/mbstream.1\*
+
+# https://jira.mariadb.org/projects/MDEV/issues/MDEV-32741
+COPY CPackRPM.cmake.diff /root/
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  # https://negativo17.org/multimedia/
+  dnf -y install dnf-plugins-core ; \
+  dnf config-manager --add-repo=https://negativo17.org/repos/fedora-multimedia.repo ; \
+  dnf -y install git cmake python3-pip yasm nasm six doxygen perl \
+  libsrtp-devel gsm-devel libzrtpcpp-devel opus-devel speex-devel speexdsp \
+  bcg729-devel libaom-devel codec2-devel ffmpeg-devel jsoncpp-devel libjpeg-turbo-devel \
+  liboqs-devel libvpx-devel libxml2-devel libyuv-devel mbedtls-devel opencore-amr-devel \
+  openh264-devel openldap-devel soci-devel sqlite-devel vo-amrwbenc-devel libuv-devel \
+  zlib-ng-compat-devel zlib-ng-devel zxing-cpp-devel webrtc-audio-processing-devel \
+  meson v4l-utils libv4l-devel libXinerama-devel glew-devel ; \
+  # dnf -y builddep mariadb-server; \
+  dnf -y install qt5-* ; \
+  pip3 install --user pystache six; \
+  mkdir /opt/owntone/make-it-longer || true; \
+  cd /opt/owntone/make-it-longer; \
+  git clone --depth 200 --recursive https://gitlab.linphone.org/BC/public/linphone-desktop.git ; \
+  cd linphone-desktop ; \
+  mkdir build ; \
+  cd build ; \
+  cmake .. -DENABLE_APP_PACKAGING=YES \
+    -DENABLE_GPL_THIRD_PARTIES=ON  -DENABLE_FFMPEG=ON -DENABLE_NON_FREE_FEATURES=ON \
+    -DENABLE_OPENH264=ON -DENABLE_VIDEO=ON \
+    -DCMAKE_BUILD_PARALLEL_LEVEL=6 -DCMAKE_BUILD_TYPE=RelWithDebInfo ; \
+  cmake --build . --parallel 6 --config RelWithDebInfo ; \
+  cmake --install . ; \
+  ./OUTPUT/bin/linphone --verbose
+  # make; \
+  # make package;
+  
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+
