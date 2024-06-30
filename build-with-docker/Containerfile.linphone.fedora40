@@ -26,11 +26,15 @@ RUN set -ex;\
   dnf config-manager --add-repo=https://negativo17.org/repos/fedora-multimedia.repo ; \
   # known NOT to work: 
   # ffmpeg-devel
-  dnf -y install git cmake python3-pip yasm nasm six doxygen perl \
+  # openldap-devel
+  #   /usr/bin/ld: /usr/lib64/libcurl.so.4: undefined reference to `ldap_free_urldesc@OPENLDAP_2.200'
+  #   /usr/bin/ld: /usr/lib64/libcurl.so.4: undefined reference to `ldap_sasl_bind@OPENLDAP_2.200'
+
+  dnf -y install openldap-devel git cmake python3-pip yasm nasm six doxygen perl \
   libsrtp-devel gsm-devel libzrtpcpp-devel opus-devel speex-devel speexdsp \
   bcg729-devel libaom-devel codec2-devel jsoncpp-devel libjpeg-turbo-devel \
   liboqs-devel libvpx-devel libxml2-devel libyuv-devel mbedtls-devel opencore-amr-devel \
-  openh264-devel openldap-devel soci-devel sqlite-devel vo-amrwbenc-devel libuv-devel \
+  openh264-devel soci-devel sqlite-devel vo-amrwbenc-devel libuv-devel \
   zlib-ng-compat-devel zlib-ng-devel zxing-cpp-devel webrtc-audio-processing-devel \
   meson v4l-utils libv4l-devel libXinerama-devel glew-devel ; \
   # dnf -y builddep mariadb-server; \
@@ -48,6 +52,7 @@ RUN set -ex;\
   cmake .. -DENABLE_APP_PACKAGING=YES \
     -DENABLE_GPL_THIRD_PARTIES=ON  -DENABLE_FFMPEG=OFF -DENABLE_NON_FREE_FEATURES=OFF \
     -DENABLE_OPENH264=OFF -DENABLE_VIDEO=ON \
+    -DENABLE_LDAP=OFF -DENABLE_OPENLDAP=OFF \
     -DCMAKE_BUILD_PARALLEL_LEVEL=6 -DCMAKE_BUILD_TYPE=RelWithDebInfo ; \
   cmake --build . --parallel 6 --config RelWithDebInfo ; \
   cmake --install . ; \
