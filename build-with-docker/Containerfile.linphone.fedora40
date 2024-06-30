@@ -29,7 +29,6 @@ RUN set -ex;\
   # openldap-devel
   #   /usr/bin/ld: /usr/lib64/libcurl.so.4: undefined reference to `ldap_free_urldesc@OPENLDAP_2.200'
   #   /usr/bin/ld: /usr/lib64/libcurl.so.4: undefined reference to `ldap_sasl_bind@OPENLDAP_2.200'
-
   dnf -y install openldap-devel git cmake python3-pip yasm nasm six doxygen perl \
   libsrtp-devel gsm-devel libzrtpcpp-devel opus-devel speex-devel speexdsp \
   bcg729-devel libaom-devel codec2-devel jsoncpp-devel libjpeg-turbo-devel \
