@@ -7,10 +7,16 @@ services:
     type: socks5
   listener:
     type: tcp
+- name: proxy-http
+  addr: ":8080"
+  handler:
+    type: http
+  listener:
+    type: tcp
 
 log:
   output: stderr
-  level: debug
+  level: info
   format: json
   rotation:
     maxSize: 100
