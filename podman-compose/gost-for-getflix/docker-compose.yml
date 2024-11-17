@@ -40,7 +40,14 @@ services:
     # otherwise very difficult to get IP (or use localhost)
     # network_mode: "host"
     restart: unless-stopped
+    networks:
+      - getflix
     volumes:
       - ./config/gost.yml:/etc/gost/gost.yml:z,ro
       # - ./config/resolv.conf:/etc/resolv.conf:z,ro
       - ./config:/config:z,ro
+
+# podman network create --dns 54.93.169.181 getflix
+networks:
+  getflix: 
+    external: true
