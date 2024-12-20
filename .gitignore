@@ -1,4 +1,6 @@
+*.orig
 ._*
+/build-with-docker/spotifyd
 scripts/*
 passfile
 !scripts/*.sh
