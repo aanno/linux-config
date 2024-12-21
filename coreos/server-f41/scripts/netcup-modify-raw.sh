@@ -19,7 +19,7 @@ if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
   butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
 fi
 
-cp "$IMAGE" "$MOD_IMAGE"
+cp "$IMAGE_RAW" "$MOD_IMAGE"
 
 # absolute path needed
 IGNITION_CONFIG=`readlink -f "${IGNITION_CONFIG}.ign"`
@@ -27,7 +27,7 @@ COREOS_BOOT_DEV=$(virt-filesystems -a $MOD_IMAGE -l | grep boot | awk -F ' ' '{p
 
 cp "$IGNITION_CONFIG" config.ign
 
-guestfish add custom.qcow2 : \
+guestfish add $MOD_IMAGE : \
           run : \
           mount "$COREOS_BOOT_DEV" / : \
           mkdir /ignition : \

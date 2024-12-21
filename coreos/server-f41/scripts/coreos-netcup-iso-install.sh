@@ -37,6 +37,6 @@ coreos-installer iso customize \
     --dest-ignition ${ABSOLUTE_IGN} \
     --dest-console tty0 \
     --network-keyfile static-ip.nmconnection \
-    -o netcup-$ARCH.iso $IMAGE
+    -o netcup-$ARCH.iso $IMAGE_ISO
 
 popd
