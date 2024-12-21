@@ -24,9 +24,10 @@ IGNITION_DEVICE_ARG=(--qemu-commandline="-fw_cfg name=opt/com.coreos/config,file
 chcon --verbose --type svirt_home_t ${ABSOLUTE_IGN}
 
 # perhaps you must ensure that pool server-f41 exists
+# I recommend using a plain bridge (br0) instead of an virtual routing bridge (virbr0)
 virt-install --connect="qemu:///system" --name="${VM_NAME}" --vcpus="${VCPUS}" --memory="${RAM_MB}" \
         --os-variant="fedora-coreos-$STREAM" --import --graphics=none \
         --disk="size=${DISK_GB},backing_store=${IMAGE},pool=server-f41" \
-        --network bridge=virbr0 "${IGNITION_DEVICE_ARG[@]}"
+        --network bridge=br0 "${IGNITION_DEVICE_ARG[@]}"
 
 popd

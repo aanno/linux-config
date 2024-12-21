@@ -48,10 +48,19 @@ nslookup example.org
 nslookup example.org 8.8.8.8
 ```
 
-Not solved. Work arounds:
+##### No DNS: virtual routing bridge (virbr0) case
+
+Not solved. Work-arounds:
 
 * provide DNS in /etc/resolv.conf (other than 127.0.0.53)
 * try to set dns in nm (see https://discussion.fedoraproject.org/t/dns-resolution-broken/67067)
+
+##### No DNS: plain bridge (br0) case
+
+* ensure that VM runs on br0
+  + virt-manager -> VM -> Information Icon -> NIC
+    - settings should be: Network source -> bridge, Device name -> br0
+* it will take a few seconds before ip is displayed on login terminal because of DHCP
 
 #### Links
 
