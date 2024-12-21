@@ -1,0 +1,25 @@
+# https://linux.fernandocejas.com/docs/how-to/set-static-ip-address
+[connection]
+id=wired
+uuid=fa19249d-d349-37ca-b115-b6a7b4fb8639
+type=ethernet
+autoconnect-priority=-999
+interface-name=enp3s0
+permissions=
+timestamp=1640800022
+
+[ethernet]
+mac-address-blacklist=
+
+[ipv4]
+address1=192.168.1.25/24,192.168.1.1
+dns=192.168.1.1;
+dns-search=
+method=manual
+
+[ipv6]
+addr-gen-mode=eui64
+dns-search=
+method=ignore
+
+[proxy]

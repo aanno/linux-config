@@ -1,0 +1,24 @@
+# old netcup - ipv4 seems to be dhcp
+[connection]
+id=ens3
+type=ethernet
+interface-name=ens3
+[ipv4]
+dns-search=
+method=auto
+[ipv6]
+# see https://developer.gnome.org/NetworkManager/stable/settings-ipv6.html
+# dns=fd00::...:6d8b
+dns=2a03:4000:0:1::e1e6
+# gateway=20...::6d8b
+# gateway=fd00::...:6d8b
+gateway=fe80::1
+addr-gen-mode=eui64
+# addr-gen-mode=stable-privacy
+address1=2a...::1
+address2=2a...::2
+address3=2a...::3
+#dns-search=
+method=manual
+# method=auto
+# method=disabled

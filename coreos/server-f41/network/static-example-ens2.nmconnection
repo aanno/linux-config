@@ -1,0 +1,12 @@
+# https://docs.fedoraproject.org/en-US/fedora-coreos/sysconfig-network-configuration/
+[connection]
+id=ens2
+type=ethernet
+interface-name=ens2
+
+[ipv4]
+address1=10.10.10.10/24,10.10.10.1
+dns=8.8.8.8;
+dns-search=
+may-fail=false
+method=manual

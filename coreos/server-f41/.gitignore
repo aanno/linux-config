@@ -2,3 +2,5 @@
 .env*
 *.qcow2
 /butane-embedded/*.pub
+*.iso
+*.iso.sig

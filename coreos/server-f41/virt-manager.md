@@ -1,8 +1,8 @@
 # Fedora CoreOS on kvm (virt-manager)
 
-## Setup network bridge (on br0)
+## Setup network bridge (on br0 or on virbr0)
 
-* https://linuxconfig.org/how-to-use-bridged-networking-with-libvirt-and-kvm [1], plain bridge
+* https://linuxconfig.org/how-to-use-bridged-networking-with-libvirt-and-kvm [1], plain bridge (recommended)
 * https://docs.fedoraproject.org/en-US/fedora-server/administration/virtual-routing-bridge/ [2], virtual routing bridge (NAT case)
 
 ### virt-manager part
@@ -75,13 +75,19 @@ netplan:
 * https://serverfault.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt
 * https://ostechnix.com/how-to-change-kvm-libvirt-default-storage-pool-location/
 
+## firewall
+
+With fedora (41) as host system, no firewall configuration change is required (at least for the br0 case)
+
+* https://libvirt.org/firewall.html
+
 ## setup CoreOS (on fedora)
 
 ```bash
 # an alternative would be to use coreos-installer container image
 sudo dnf install coreos-installer butane virt-manager virt-install
-export STREAM=stable
 mkdir -p .local/share/libvirt/images
+export STREAM=stable
 coreos-installer download -s "${STREAM}" -p qemu -f qcow2.xz --decompress -C ~/.local/share/libvirt/images/
 # copy ssh public key to embed in ign file
 ln -s ~/.ssh/id_ed25519.pub butane-embedded/
