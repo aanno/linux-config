@@ -53,4 +53,6 @@ sudo dnf install coreos-installer butane virt-manager virt-install
 export STREAM=stable
 mkdir -p .local/share/libvirt/images
 coreos-installer download -s "${STREAM}" -p qemu -f qcow2.xz --decompress -C ~/.local/share/libvirt/images/
+# copy ssh public key to embed in ign file
+ln -s ~/.ssh/id_ed25519.pub butane-embedded/
 ```

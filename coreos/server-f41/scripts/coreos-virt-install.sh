@@ -12,7 +12,7 @@ fi
 source .env.sh
 
 if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
-  butane --pretty --strict ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
+  butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
 fi
 
 ABSOLUTE_IGN=`readlink -f ${IGNITION_CONFIG}.ign`
