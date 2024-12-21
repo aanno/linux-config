@@ -1,0 +1,12 @@
+# /etc/NetworkManager/system-connections/bridge-slave-eno1.nmconnection 
+[connection]
+id=bridge-slave-eno1
+uuid=cb5105d8-3833-4e26-97c1-ef797166dc2e
+type=ethernet
+master=562e286c-cc2e-49d1-aeb1-462c493115d6
+slave-type=bridge
+
+[ethernet]
+mac-address=70:85:C2:A4:1B:9F
+
+[bridge-port]

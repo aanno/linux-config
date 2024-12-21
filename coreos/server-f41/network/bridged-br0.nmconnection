@@ -1,0 +1,20 @@
+# /etc/NetworkManager/system-connections/bridge-br0.nmconnection
+[connection]
+id=bridge-br0
+uuid=562e286c-cc2e-49d1-aeb1-462c493115d6
+type=bridge
+autoconnect=false
+interface-name=br0
+
+[ethernet]
+
+[bridge]
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=auto
+
+[proxy]

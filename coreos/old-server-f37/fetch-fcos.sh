@@ -1,5 +1,5 @@
 #!/bin/bash
-# download coreos and stre it in libvirt place
+# download coreos and store it in libvirt place
 # https://docs.fedoraproject.org/en-US/fedora-coreos/getting-started/
 # fcos 33: use coreos-install
 
