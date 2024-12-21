@@ -35,4 +35,8 @@ guestfish add $MOD_IMAGE : \
           unmount-all : \
           exit
 
+# qcow2 images are substantial smaller
+rm custom-$ARCH.qcow2
+qemu-img convert -O qcow2 $MOD_IMAGE custom-$ARCH.qcow2
+
 popd
