@@ -20,6 +20,17 @@ net-autostart bridged-network
 
 * depends on network config stack, could be { nm, netplan, or (static) stuff }
 * (TODO) network bridge is already defined in nm and must only be activated
+  + this seems to be the tricky part
+  + start `virt-manager` _after_ bridge is up
+
+Sometimes this is helpful:
+
+```bash
+sudo ip link add br0 type bridge
+sudo ip link set br0 up
+sudo ip link set eno1 master br0
+ip addr
+```
 
 #### Links
 
@@ -28,3 +39,13 @@ nm:
 
 netplan:
 * https://askubuntu.com/questions/1412503/setting-up-a-bridge-for-host-and-vm
+
+## setup CoreOS (on fedora)
+
+```bash
+# an alternative would be to use coreos-installer container image
+sudo dnf install coreos-installer butane virt-manager virt-install
+export STREAM=stable
+mkdir -p .local/share/libvirt/images
+coreos-installer download -s "${STREAM}" -p qemu -f qcow2.xz --decompress -C ~/.local/share/libvirt/images/
+```
