@@ -4,10 +4,15 @@
 
 ```bash
 # an alternative would be to use coreos-installer container image
-sudo dnf install coreos-installer butane
+sudo dnf install coreos-installer butane libguestfs virt-filesystems guestfs-tools
 export STREAM=stable
 coreos-installer download -s stable -p metal -f iso
 ```
+
+## Status
+
+* modified ISO does not boot
+* can't modify qcow2 as COREOS_BOOT_DEV is not detected
 
 ## Hardware
 
