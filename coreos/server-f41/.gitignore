@@ -4,3 +4,4 @@
 /butane-embedded/*.pub
 *.iso
 *.iso.sig
+/static-ip.nmconnection

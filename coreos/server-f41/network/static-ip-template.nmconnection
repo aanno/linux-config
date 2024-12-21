@@ -1,0 +1,21 @@
+[connection]
+id=${NET_DEV}
+type=ethernet
+interface-name=$NET_DEV
+uuid=$UUID
+[ipv4]
+# not set -> use DHCP
+dns-search=
+method=auto
+[ipv6]
+dns=$IPV6_DNS
+gateway=$IPV6_GATEWAY
+addr-gen-mode=eui64
+# addr-gen-mode=stable-privacy
+address1=$IPV6_ADDR1
+address2=$IPV6_ADDR2
+address3=$IPV6_ADDR3
+#dns-search=
+method=manual
+# method=auto
+# method=disabled

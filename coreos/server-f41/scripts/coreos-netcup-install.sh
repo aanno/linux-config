@@ -15,7 +15,14 @@ if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
   butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
 fi
 
+UUID=`uuidgen`
 ABSOLUTE_IGN=`readlink -f ${IGNITION_CONFIG}.ign`
+
+export UUID IPV4_ADDR IPV4_GATEWAY IPV6_ADDR1 IPV6_ADDR2 IPV6_ADDR3 IPV6_GATEWAY IPV6_DNS NET_DEV
+
+envsubst <network/static-ip-template.nmconnection >static-ip.nmconnection
+
+rm custom.iso || true
 
 coreos-installer iso customize \
     --dest-device /dev/vda \
