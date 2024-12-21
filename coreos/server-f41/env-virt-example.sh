@@ -1,4 +1,4 @@
-# copy this as `.env.sh` and adapt to your needs
+# copy this as `.env-virt.sh` and adapt to your needs
 
 # ~/.local/share/libvirt/images/fedora-coreos-41.20241122.3.0-qemu.x86_64.qcow2
 IGNITION_CONFIG="minimal"

@@ -5,11 +5,11 @@
 export GIT_ROOT=`git rev-parse --show-toplevel`
 pushd $GIT_ROOT/coreos/server-f41
 
-if [ ! -f .env.sh ]; then
-  echo "missing file .env.sh (template is env-example.sh)"
+if [ ! -f .env-virt.sh ]; then
+  echo "missing file .env-virt.sh (template is env-virt-example.sh)"
   exit -1
 fi
-source .env.sh
+source .env-virt.sh
 
 if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
   butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
