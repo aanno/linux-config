@@ -2,7 +2,8 @@
 
 ## Setup network bridge (on br0)
 
-* https://linuxconfig.org/how-to-use-bridged-networking-with-libvirt-and-kvm
+* https://linuxconfig.org/how-to-use-bridged-networking-with-libvirt-and-kvm [1], plain bridge
+* https://docs.fedoraproject.org/en-US/fedora-server/administration/virtual-routing-bridge/ [2], virtual routing bridge (NAT case)
 
 ### virt-manager part
 
@@ -22,6 +23,8 @@ net-autostart bridged-network
 * (TODO) network bridge is already defined in nm and must only be activated
   + this seems to be the tricky part
   + start `virt-manager` _after_ bridge is up
+* netfilter _must_ be disabled (but only for plain bridge?), see [1] for details
+* ip forwarding _must_ be enabled (but only for virtual (routing) bridge?), see [2] for details
 
 Sometimes this is helpful:
 
@@ -31,6 +34,24 @@ sudo ip link set br0 up
 sudo ip link set eno1 master br0
 ip addr
 ```
+
+#### Problem: Network is working but DNS not
+
+To test (https://discussion.fedoraproject.org/t/dns-not-resolving-on-fedora-server-39/96087):
+
+```bash
+resolvectl --no-pager status
+resolvectl --no-pager query example.org
+systemctl status systemd-resolved.service
+readlink -f /etc/resolv.conf
+nslookup example.org
+nslookup example.org 8.8.8.8
+```
+
+Not solved. Work arounds:
+
+* provide DNS in /etc/resolv.conf (other than 127.0.0.53)
+* try to set dns in nm (see https://discussion.fedoraproject.org/t/dns-resolution-broken/67067)
 
 #### Links
 
