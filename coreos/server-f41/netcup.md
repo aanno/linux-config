@@ -6,7 +6,11 @@
 # an alternative would be to use coreos-installer container image
 sudo dnf install coreos-installer butane libguestfs virt-filesystems guestfs-tools
 export STREAM=stable
-coreos-installer download -s stable -p metal -f iso
+# x86_64 or aarch64
+export ARCH=aarch64
+coreos-installer download -s $STREAM -a $ARCH -p metal -f iso
+# qcow2 not available as stream (and what is 4k.raw.xz ?)
+coreos-installer download -s $STREAM -a $ARCH -p metal -f raw.xz --decompress
 ```
 
 ## Status

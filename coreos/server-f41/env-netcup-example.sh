@@ -1,8 +1,11 @@
 # copy this as `.env-netcup.sh` and adapt to your needs
 
-IGNITION_CONFIG="minimal"
-IMAGE=`ls fedora-coreos-41.*-live.x86_64.iso`
 STREAM="stable"
+# x86_64 or aarch64
+ARCH=aarch64
+IGNITION_CONFIG="minimal"
+
+IMAGE=`ls fedora-coreos-41.*-live.$ARCH.iso`
 
 NET_DEV=enp7s0
 

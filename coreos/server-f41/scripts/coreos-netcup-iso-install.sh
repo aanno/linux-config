@@ -30,13 +30,13 @@ export UUID IPV4_ADDR IPV4_GATEWAY IPV6_ADDR1 IPV6_ADDR2 IPV6_ADDR3 IPV6_GATEWAY
 
 envsubst <network/static-ip-template.nmconnection >static-ip.nmconnection
 
-rm custom.iso || true
+rm netcup-$ARCH.iso || true
 
 coreos-installer iso customize \
     --dest-device /dev/vda \
     --dest-ignition ${ABSOLUTE_IGN} \
     --dest-console tty0 \
     --network-keyfile static-ip.nmconnection \
-    -o custom.iso $IMAGE
+    -o netcup-$ARCH.iso $IMAGE
 
 popd

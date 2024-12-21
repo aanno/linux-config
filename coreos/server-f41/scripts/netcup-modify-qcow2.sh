@@ -4,7 +4,7 @@
 
 set -eu
 
-MOD_IMAGE=custom.qcow2
+MOD_IMAGE=custom-$ARCH.raw
 
 export GIT_ROOT=`git rev-parse --show-toplevel`
 pushd $GIT_ROOT/coreos/server-f41

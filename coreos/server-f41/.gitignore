@@ -1,7 +1,14 @@
 *.ign
 .env*
 *.qcow2
-/butane-embedded/*.pub
+*.raw
+*.vhd
+*.tar
+*.pxe
+*.ova
+*.vmdk
+*.ociarchive
 *.iso
 *.iso.sig
+/butane-embedded/*.pub
 /static-ip.nmconnection
