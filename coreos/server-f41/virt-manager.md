@@ -40,6 +40,11 @@ nm:
 netplan:
 * https://askubuntu.com/questions/1412503/setting-up-a-bridge-for-host-and-vm
 
+## virt pools (places were VM images are stored)
+
+* https://serverfault.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt
+* https://ostechnix.com/how-to-change-kvm-libvirt-default-storage-pool-location/
+
 ## setup CoreOS (on fedora)
 
 ```bash
