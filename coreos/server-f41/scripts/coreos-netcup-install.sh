@@ -19,7 +19,7 @@ ABSOLUTE_IGN=`readlink -f ${IGNITION_CONFIG}.ign`
 
 coreos-installer iso customize \
     --dest-device /dev/vda \
-    --dest-ignition ${ABSOLUTE_IGN}.ign \
+    --dest-ignition ${ABSOLUTE_IGN} \
     --dest-console tty0 \
     --network-keyfile static-ip.nmconnection \
     -o custom.iso $IMAGE
