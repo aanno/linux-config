@@ -18,6 +18,36 @@ coreos-installer download -s $STREAM -a $ARCH -p metal -f raw.xz --decompress
 * modified ISO does not boot
 * can't modify qcow2 as COREOS_BOOT_DEV is not detected
 
+## Bare Metal Options
+
+* https://docs.fedoraproject.org/en-US/fedora-coreos/bare-metal
+
+### ISO
+
+_Not_ working for unknown reasons. (My tests have used script `coreos-netcup-iso-install.sh`.)
+
+### raw/qcow2 (Matthias' guestfish trick)
+
+*Working*, use script `netcup-modify-raw.sh`. The raw image is converted to qcow2 because that is much smaller.
+
+### PXE
+
+AFAIU, PXE needs a (second) server (matchbox?) that delivers the images. I'm not able to set this up at present.
+
+* [coreos download includes netboot images](https://fedoraproject.org/de/coreos/download?stream=stable)
+* [netboot quickstart](https://netboot.xyz/docs/quick-start/)
+  + [netboot images](https://netboot.xyz/downloads/)
+  + [netboot boot page](https://boot.netboot.xyz/)
+* [terraform module to setup some machine with matchbox based on Fedora CoreOS](https://github.com/ecky-l/fcos-pxe-bootstrapper)
+  + https://forum.netcup.de/administration-eines-server-vserver/vserver-server-kvm-server/p162206-server-per-pxe-pxelinux-booten/?highlight=coreos#post162206
+  + https://typhoon.psdn.io/ kubernetes
+* [ iPXE - open source boot firmware](https://ipxe.org/)
+  + https://github.com/ipxe/ipxe
+
+## RAM booting
+
+* https://docs.fedoraproject.org/en-US/fedora-coreos/live-booting/
+
 ## Hardware
 
 ### VPS 2000 ARM G11 SE NUE ADV24
