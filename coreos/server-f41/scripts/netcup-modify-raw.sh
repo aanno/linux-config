@@ -4,21 +4,22 @@
 
 set -eu
 
-MOD_IMAGE=custom-$ARCH.raw
-
-export GIT_ROOT=`git rev-parse --show-toplevel`
-pushd $GIT_ROOT/coreos/server-f41
-
 if [ ! -f .env-netcup.sh ]; then
   echo "missing file .env-netcup.sh (template is env-netcup-example.sh)"
   exit -1
 fi
 source .env-netcup.sh
 
+MOD_IMAGE=custom-$ARCH.raw
+
+export GIT_ROOT=`git rev-parse --show-toplevel`
+pushd $GIT_ROOT/coreos/server-f41
+
 if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
   butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
 fi
 
+rm "$MOD_IMAGE" || true
 cp "$IMAGE_RAW" "$MOD_IMAGE"
 
 # absolute path needed
@@ -36,7 +37,7 @@ guestfish add $MOD_IMAGE : \
           exit
 
 # qcow2 images are substantial smaller
-rm custom-$ARCH.qcow2
+rm custom-$ARCH.qcow2 || true
 qemu-img convert -O qcow2 $MOD_IMAGE custom-$ARCH.qcow2
 
 popd
