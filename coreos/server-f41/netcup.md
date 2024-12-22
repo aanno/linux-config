@@ -28,12 +28,20 @@ _Not_ working for unknown reasons. (My tests have used script `coreos-netcup-iso
 
 ### raw/qcow2 (Matthias' guestfish trick)
 
-*Working*, use script `netcup-modify-raw.sh`. The raw image is converted to qcow2 because that is much smaller.
+*Working*, use script `coreos-netcup-modify-raw.sh`. The raw image is converted to qcow2 because that is much smaller.
+
+* I encounter problems with ssh pub keys in a file. This currently does not work!
+  Workaround: Copy ssh pub key into butane file directly.
 
 ### PXE
 
 AFAIU, PXE needs a (second) server (matchbox?) that delivers the images. I'm not able to set this up at present.
 
+* [PXE boot testing on libvirt](https://dustymabe.com/2019/01/04/easy-pxe-boot-testing-with-only-http-using-ipxe-and-libvirt/)
+* [(ugly PXE support at netcup)](https://forum.netcup.de/administration-eines-server-vserver/vserver-server-kvm-server/p143388-server-per-pxe-pxelinux-booten/?highlight=pxe#post143388)
+* [PXELINUX (part of syslinux boot loader)](https://wiki.syslinux.org/wiki/index.php?title=PXELINUX)
+  + https://wiki.syslinux.org/wiki/index.php?title=Config
+* [coreos PXE](https://docs.fedoraproject.org/en-US/fedora-coreos/live-reference/)
 * [coreos download includes netboot images](https://fedoraproject.org/de/coreos/download?stream=stable)
 * [netboot quickstart](https://netboot.xyz/docs/quick-start/)
   + [netboot images](https://netboot.xyz/downloads/)
@@ -41,10 +49,13 @@ AFAIU, PXE needs a (second) server (matchbox?) that delivers the images. I'm not
 * [terraform module to setup some machine with matchbox based on Fedora CoreOS](https://github.com/ecky-l/fcos-pxe-bootstrapper)
   + https://forum.netcup.de/administration-eines-server-vserver/vserver-server-kvm-server/p162206-server-per-pxe-pxelinux-booten/?highlight=coreos#post162206
   + https://typhoon.psdn.io/ kubernetes
-* [ iPXE - open source boot firmware](https://ipxe.org/)
+* [iPXE - open source boot firmware](https://ipxe.org/) for flashing on network card
   + https://github.com/ipxe/ipxe
 
 ## RAM booting
+
+It seems to be possible to tweak the ISO case to do that. But after that you need to do a 'real' install _manually_. 
+Because of this, I haven't tried.
 
 * https://docs.fedoraproject.org/en-US/fedora-coreos/live-booting/
 

@@ -2,13 +2,8 @@
 # https://docs.fedoraproject.org/en-US/fedora-coreos/sysconfig-network-configuration/
 #
 # NOT WORKING! (at least on arm64)
-# tty0 error message:
-# BdsDxe: failed to load Boot004 "UEFI PXEv4 (MAC: )"
-#
-# Perhaps secure boot problem?
+# for unknown reasons (boot loop!)
 # https://github.com/canonical/lxd/issues/7191
-# boot with
-# security.secureboot=false
 
 export GIT_ROOT=`git rev-parse --show-toplevel`
 pushd $GIT_ROOT/coreos/server-f41
@@ -32,11 +27,13 @@ envsubst <network/static-ip-template.nmconnection >static-ip.nmconnection
 
 rm netcup-$ARCH.iso || true
 
+# network and console does not seem to need configuration
 coreos-installer iso customize \
     --dest-device /dev/vda \
     --dest-ignition ${ABSOLUTE_IGN} \
-    --dest-console tty0 \
-    --network-keyfile static-ip.nmconnection \
     -o netcup-$ARCH.iso $IMAGE_ISO
+
+#     --dest-console tty0 \
+#     --network-keyfile static-ip.nmconnection \
 
 popd
