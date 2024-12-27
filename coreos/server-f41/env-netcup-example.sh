@@ -9,6 +9,12 @@ IMAGE_ISO=`ls fedora-coreos-41.*-live.$ARCH.iso`
 IMAGE_RAW=`ls fedora-coreos-41.*-metal.$ARCH.raw`
 
 NET_DEV=enp7s0
+# /dev/sda or /dev/vda
+ROOT_DISK=/dev/sda
+# root partition size (at least 8GB probably more is better)
+ROOT_PART_SIZE=8000
+# backup partion size
+BACKUP_PART_SIZE=2000
 
 # not needed (dhcp)
 IPV4_ADDR=
