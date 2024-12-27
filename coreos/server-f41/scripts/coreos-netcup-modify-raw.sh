@@ -15,18 +15,22 @@ MOD_IMAGE=custom-$ARCH.raw
 export GIT_ROOT=`git rev-parse --show-toplevel`
 pushd $GIT_ROOT/coreos/server-f41
 
-if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
-  butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
-fi
+  pushd configs
+
+    if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
+      butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
+    fi
+
+  popd
+
+ABSOLUTE_IGN=`readlink -f configs/${IGNITION_CONFIG}.ign`
 
 rm "$MOD_IMAGE" || true
 cp "$IMAGE_RAW" "$MOD_IMAGE"
 
-# absolute path needed
-IGNITION_CONFIG=`readlink -f "${IGNITION_CONFIG}.ign"`
 COREOS_BOOT_DEV=$(virt-filesystems -a $MOD_IMAGE -l | grep boot | awk -F ' ' '{print $1}')
 
-cp "$IGNITION_CONFIG" config.ign
+cp "$ABSOLUTE_IGN" config.ign
 
 guestfish add $MOD_IMAGE : \
           run : \

@@ -11,11 +11,15 @@ if [ ! -f .env-virt.sh ]; then
 fi
 source .env-virt.sh
 
-if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
-  butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
-fi
+  pushd configs
 
-ABSOLUTE_IGN=`readlink -f ${IGNITION_CONFIG}.ign`
+    if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
+      butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
+    fi
+
+  popd
+
+ABSOLUTE_IGN=`readlink -f configs/${IGNITION_CONFIG}.ign`
 
 # For x86 / aarch64,
 IGNITION_DEVICE_ARG=(--qemu-commandline="-fw_cfg name=opt/com.coreos/config,file=$ABSOLUTE_IGN")

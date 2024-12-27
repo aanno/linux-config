@@ -14,12 +14,17 @@ if [ ! -f .env-netcup.sh ]; then
 fi
 source .env-netcup.sh
 
-if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
-  butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
-fi
+  pushd configs
+
+    if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
+      butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
+    fi
+
+  popd
+
+ABSOLUTE_IGN=`readlink -f configs/${IGNITION_CONFIG}.ign`
 
 UUID=`uuidgen`
-ABSOLUTE_IGN=`readlink -f ${IGNITION_CONFIG}.ign`
 
 export UUID IPV4_ADDR IPV4_GATEWAY IPV6_ADDR1 IPV6_ADDR2 IPV6_ADDR3 IPV6_GATEWAY IPV6_DNS NET_DEV
 
