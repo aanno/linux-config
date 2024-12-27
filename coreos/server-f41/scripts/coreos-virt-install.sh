@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+set -ehu -o pipefail
+
 # https://docs.fedoraproject.org/en-US/fedora-coreos/getting-started/
 
 export GIT_ROOT=`git rev-parse --show-toplevel`
@@ -13,8 +15,13 @@ source .env-virt.sh
 
   pushd configs
 
-    if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
+    if [[ ( ! -f "${IGNITION_CONFIG}.ign" ) || ( "${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign" ) ]]; then
       butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
+      if [ $? -ne 0 ]; then
+        rm ${IGNITION_CONFIG}.ign
+        echo "butane warnings or errors"
+        exit -1
+      fi
     fi
 
   popd
@@ -29,9 +36,15 @@ chcon --verbose --type svirt_home_t ${ABSOLUTE_IGN}
 
 # perhaps you must ensure that pool server-f41 exists
 # I recommend using a plain bridge (br0) instead of an virtual routing bridge (virbr0)
+# https://www.smoothnet.org/qemu-tpm/
+# swtpm at /usr/bin/swtpm does not support TPM 2
 virt-install --connect="qemu:///system" --name="${VM_NAME}" --vcpus="${VCPUS}" --memory="${RAM_MB}" \
         --os-variant="fedora-coreos-$STREAM" --import --graphics=none \
         --disk="size=${DISK_GB},backing_store=${IMAGE},pool=server-f41" \
-        --network bridge=br0 "${IGNITION_DEVICE_ARG[@]}"
+        --network bridge=br0 "${IGNITION_DEVICE_ARG[@]}" \
+        --tpm backend.type=emulator,backend.version=1.2,model=tpm-tis
+
+# Setup the correct SELinux label to allow access to the config
+chcon --verbose --type svirt_home_t ${VM_NAME}*.qcow2
 
 popd

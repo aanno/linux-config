@@ -1,7 +1,7 @@
 # https://coreos.github.io/butane/config-fcos-v1_6/
 variant: fcos
 # 1.6.0 is not supported for iso (from coreos-installer)
-version: 1.5.0
+version: 1.6.0
 passwd:
   users:
     - name: core

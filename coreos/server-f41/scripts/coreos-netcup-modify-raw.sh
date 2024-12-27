@@ -2,7 +2,7 @@
 # modify qcow2 image and include a ignition file
 # https://www.matthiaspreu.com/posts/fedora-coreos-embed-ignition-config/
 
-set -eu
+set -ehu -o pipefail
 
 if [ ! -f .env-netcup.sh ]; then
   echo "missing file .env-netcup.sh (template is env-netcup-example.sh)"
@@ -17,8 +17,13 @@ pushd $GIT_ROOT/coreos/server-f41
 
   pushd configs
 
-    if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
+    if [[ ( ! -f "${IGNITION_CONFIG}.ign" ) || ( "${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign" ) ]]; then
       butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
+      if [ $? -ne 0 ]; then
+        rm ${IGNITION_CONFIG}.ign
+        echo "butane warnings or errors"
+        exit -1
+      fi
     fi
 
   popd

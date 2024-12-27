@@ -10,6 +10,8 @@
 # boot with
 # security.secureboot=false
 
+set -ehu -o pipefail
+
 export GIT_ROOT=`git rev-parse --show-toplevel`
 pushd $GIT_ROOT/coreos/server-f41
 

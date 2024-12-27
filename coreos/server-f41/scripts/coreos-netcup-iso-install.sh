@@ -5,6 +5,8 @@
 # for unknown reasons (boot loop!)
 # https://github.com/canonical/lxd/issues/7191
 
+set -ehu -o pipefail
+
 export GIT_ROOT=`git rev-parse --show-toplevel`
 pushd $GIT_ROOT/coreos/server-f41
 
@@ -16,8 +18,13 @@ source .env-netcup.sh
 
   pushd configs
 
-    if [ ${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign ]; then
+    if [[ ( ! -f "${IGNITION_CONFIG}.ign" ) || ( "${IGNITION_CONFIG}.bu -nt ${IGNITION_CONFIG}.ign" ) ]]; then
       butane --pretty --strict --files-dir butane-embedded ${IGNITION_CONFIG}.bu >${IGNITION_CONFIG}.ign
+      if [ $? -ne 0 ]; then
+        rm ${IGNITION_CONFIG}.ign
+        echo "butane warnings or errors"
+        exit -1
+      fi
     fi
 
   popd
