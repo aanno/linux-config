@@ -384,16 +384,21 @@ storage:
       # device.
       wipe_table: false
       partitions:
-        - size_mib: 2000
+        - label: root
+          number: 4
+          resize: true
+        - label: backup
+          number: 5
+          size_mib: 2000
           # Start at 5G so that we leave enough space for the root partition.
           # See the important NOTE below about this.
           start_mib: 8000
-          label: backup
-        - size_mib: 0
+        - label: var
+          number: 6
+          size_mib: 0
           # We assign a descriptive label to the partition. This is important
           # for referring to it in a device-agnostic way in other parts of the
           # configuration.
-          label: var
   luks:
     - name: luks-backup
       label: luks-backup
