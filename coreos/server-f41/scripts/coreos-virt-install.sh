@@ -42,7 +42,7 @@ virt-install --connect="qemu:///system" --name="${VM_NAME}" --vcpus="${VCPUS}" -
         --os-variant="fedora-coreos-$STREAM" --import --graphics=none \
         --disk="size=${DISK_GB},backing_store=${IMAGE},pool=server-f41" \
         --network bridge=br0 "${IGNITION_DEVICE_ARG[@]}" \
-        --tpm backend.type=emulator,backend.version=1.2,model=tpm-tis
+        --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis
 
 # Setup the correct SELinux label to allow access to the config
 chcon --verbose --type svirt_home_t ${VM_NAME}*.qcow2
