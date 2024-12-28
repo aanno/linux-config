@@ -15,8 +15,8 @@ set -ehu -o pipefail
 export GIT_ROOT=`git rev-parse --show-toplevel`
 pushd $GIT_ROOT/coreos/server-f41
 
-IP_ADDR=`ip addr show  dev br0`
-IP_ADDR_INET=`echo -e "$IP_ADDR" | grep "inet "`
+IP_ADDR=`ip addr show  dev br0 || true`
+IP_ADDR_INET=`echo -e "$IP_ADDR" | grep "inet " || true`
 
 if [ -z "$IP_ADDR_INET" ]; then
 

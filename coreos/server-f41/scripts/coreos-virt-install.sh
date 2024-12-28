@@ -40,8 +40,8 @@ chcon --verbose --type svirt_home_t ${ABSOLUTE_IGN}
 # swtpm at /usr/bin/swtpm does not support TPM 2
 virt-install --connect="qemu:///system" --name="${VM_NAME}" --vcpus="${VCPUS}" --memory="${RAM_MB}" \
         --os-variant="fedora-coreos-$STREAM" --import --graphics=none \
-        --disk="size=${DISK_GB},backing_store=${IMAGE},pool=server-f41" \
-        --network bridge=br0 "${IGNITION_DEVICE_ARG[@]}" \
+        --disk="size=${DISK_GB},backing_store=${IMAGE},pool=server-f41,bus=virtio" \
+        --network bridge=br0,model=virtio "${IGNITION_DEVICE_ARG[@]}" \
         --tpm backend.type=emulator,backend.version=2.0,model=tpm-tis
 
 # Setup the correct SELinux label to allow access to the config
