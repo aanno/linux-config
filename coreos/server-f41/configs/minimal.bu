@@ -5,5 +5,5 @@ version: 1.6.0
 passwd:
   users:
     - name: core
-      ssh_authorized_keys:
+      ssh_authorized_keys_local:
         - id_ed25519.pub
