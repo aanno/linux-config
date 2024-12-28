@@ -45,6 +45,10 @@ Hence:
 * Partition #4 is coreos root (/)
 * After that all other partitions follow
 
+### Links
+
+* [resize fcos boot partition](https://www.aleskandro.com/posts/resize-boot-partition-fedora-coreos/)
+
 ## Mounts
 
 ```bash

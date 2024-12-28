@@ -11,5 +11,5 @@
 *.iso
 *.iso.sig
 /configs/butane-embedded/*.pub
-/configs/butane-embedded/*.bu
+/configs/*.bu
 /static-ip.nmconnection

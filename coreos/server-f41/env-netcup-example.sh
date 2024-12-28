@@ -12,8 +12,8 @@ NET_DEV=enp7s0
 # /dev/sda or /dev/vda
 ROOT_DISK=/dev/sda
 # root partition size (at least 8GB probably more is better)
-ROOT_PART_SIZE=8000
-# backup partion size
+ROOT_PART_SIZE=12000
+# backup partition size
 BACKUP_PART_SIZE=2000
 
 # not needed (dhcp)

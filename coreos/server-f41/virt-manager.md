@@ -1,5 +1,8 @@
 # Fedora CoreOS on kvm (virt-manager)
 
+* [SLES libvirt docs](https://documentation.suse.com/de-de/sles/15-SP6/html/SLES-all/cha-libvirt-config-virsh.html) extreme verbose, e.g. PCI and CPU passthrough
+* [virtio paravirtualized drivers for network and block devices (disks)](https://wiki.libvirt.org/Virtio.html)
+
 ## Setup network bridge (on br0 or on virbr0)
 
 * https://linuxconfig.org/how-to-use-bridged-networking-with-libvirt-and-kvm [1], plain bridge (recommended)
