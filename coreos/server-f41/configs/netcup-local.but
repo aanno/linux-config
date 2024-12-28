@@ -119,9 +119,9 @@ storage:
       contents:
         inline: |
           [connection]
-          id=enp1s0
+          id=${NET_DEV}
           type=ethernet
-          interface-name=enp1s0
+          interface-name=${NET_DEV}
           [ipv4]
           dns-search=
           method=auto
@@ -377,7 +377,7 @@ storage:
       hard: false
   disks:
     # libvirt: /dev/vda, netcup: /dev/sda
-    - device: /dev/vda
+    - device: ${ROOT_DISK}
       # The name of the primary block device. In virtio-based setups, this is
       # likely `/dev/vda`. Elsewhere, it's likely `/dev/sda`.
       # We do not want to wipe the partition table since this is the primary
@@ -389,10 +389,10 @@ storage:
           resize: true
         - label: backup
           number: 5
-          size_mib: 2000
+          size_mib: ${BACKUP_PART_SIZE}
           # Start at 5G so that we leave enough space for the root partition.
           # See the important NOTE below about this.
-          start_mib: 8000
+          start_mib: ${ROOT_PART_SIZE}
         - label: var
           number: 6
           size_mib: 0
