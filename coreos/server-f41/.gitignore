@@ -10,6 +10,7 @@
 *.ociarchive
 *.iso
 *.iso.sig
+*.luks
 /configs/butane-embedded/*.pub
 /configs/*.bu
 /static-ip.nmconnection

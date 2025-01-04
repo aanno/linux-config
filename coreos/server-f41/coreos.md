@@ -21,11 +21,27 @@
   + details: [firstboot support on read-only root file systems](https://github.com/coreos/ignition/issues/1049)
 * [some rules for running ignition more than once](https://docs.fedoraproject.org/en-US/fedora-coreos/live-booting/)
   + don't use 'wipe*'
-  + use LUKS only with 'key_file'
+  + use LUKS only with 'key_file' (no clevis nor tpm!)
   + don't use RAID
   + don't use append
   + When writing files in persistent storage, set overwrite to true to avoid Ignition failures
 * [Filesystem-Resuse Semantics](https://coreos.github.io/ignition/operator-notes/#filesystem-reuse-semantics)
+
+#### problems running ignition more than once
+
+At present LUKS hinders the second ignition with the following error:
+
+```bash
+Jan 04 19:28:45 ignition[1509]: Ignition failed: creating crypttab entries: adding luks related files: error creating /sysroot/etc/luks/luks-backup: error creating file "/sysroot/etc/luks/luks-backup": A file exists there already and overwrite is false
+Jan 04 19:31:08 systemd[1]: ignition-remount-sysroot.service: Failed with result 'exit-code'.
+Jan 04 19:31:08 systemd[1]: Failed to start ignition-remount-sysroot.service - Remount /sysroot read-write for Ignition.
+```
+
+In addition after this problem, the (installed) coreos is no longer useable:
+
+```bash
+Please enter passphrase for disk var (luks-var): (press TAB for no echo)
+```
 
 ## Partitions
 
@@ -114,7 +130,17 @@ Parameters:
 
 * [resize fcos boot partition](https://www.aleskandro.com/posts/resize-boot-partition-fedora-coreos/)
 
-## Mounts
+## LUKS
+
+### key_file
+
+```bash
+dd bs=512 count=4 if=/dev/random of=$DEST iflag=fullblock
+```
+
+* [How to enable LUKS disk encryption with keyfile on Linux](https://www.cyberciti.biz/hardware/cryptsetup-add-enable-luks-disk-encryption-keyfile-linux/)
+
+# Mounts
 
 ```bash
 # cat /etc/crypttab 
