@@ -65,6 +65,7 @@ Because of this, I haven't tried.
 
 net dev
 eth0 (enp7s0)
+vLAN (enp9s0)
 
 disk
 /dev/vda
@@ -73,3 +74,6 @@ with debian 12:
 /dev/vda2   /boot/efi       249556
 /dev/vda3   /boot           457816
 /dev/vda4   /               1056177868
+
+* no TPM
+  + [How to determine if computer has TPM](https://unix.stackexchange.com/questions/341629/how-to-determine-if-computer-has-tpm-trusted-platform-module-available)

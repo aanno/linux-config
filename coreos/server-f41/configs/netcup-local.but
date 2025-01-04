@@ -3,6 +3,7 @@ version: 1.6.0
 boot_device:
   luks:
     tpm2: true
+    discard: true
 passwd:
   users:
     - name: core
@@ -113,9 +114,14 @@ systemd:
         WantedBy=timers.target
 storage:
   files:
-    # local libvirt: enp1s0, netcup: ens3
+    - path: /etc/vconsole.conf
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: KEYMAP=de
     - path: /etc/NetworkManager/system-connections/enp1s0.nmconnection
       mode: 0600
+      overwrite: true
       contents:
         inline: |
           [connection]
@@ -144,10 +150,12 @@ storage:
           # method=disabled
     - path: /etc/hostname
       mode: 0644
+      overwrite: true
       contents:
         inline: netzgeneration
     - path: /etc/sysctl.d/10-network.conf
       mode: 0644
+      overwrite: true
       contents:
         inline: |
           # allow bridge
@@ -172,6 +180,7 @@ storage:
           net.ipv4.ip_unprivileged_port_start=80
     - path: /etc/sysctl.d/20-vm.conf
       mode: 0644
+      overwrite: true
       contents:
         inline: |
           # https://code.visualstudio.com/docs/setup/linux
@@ -252,6 +261,7 @@ storage:
           # End of file
     - path: /etc/wireguard/wg0.conf
       mode: 0600
+      overwrite: true
       contents:
         inline: |
           [Interface]
@@ -276,6 +286,7 @@ storage:
       user:
         name: core
       mode: 0744
+      overwrite: true
       contents:
         inline: |
           #!/bin/bash -x
@@ -289,6 +300,7 @@ storage:
       user:
         name: core
       mode: 0744
+      overwrite: true
       contents:
         inline: |
           #!/bin/bash -x
@@ -298,6 +310,7 @@ storage:
       user:
         name: core
       mode: 0744
+      overwrite: true
       contents:
         inline: |
           #!/bin/bash -x
@@ -305,16 +318,19 @@ storage:
           echo "$DATE: Hello weekly, $*" >>/var/home/core/cron.log
     - path: /etc/systemd/zram-generator.conf
       mode: 0644
+      overwrite: true
       contents:
         inline: |
           # This config file enables a /dev/zram0 device with the default settings
           [zram0]
     - path: /etc/zincati/config.d/51-rollout-wariness.toml
+      overwrite: true
       contents:
         inline: |
           [identity]
           rollout_wariness = 0.6
     - path: /etc/zincati/config.d/55-updates-strategy.toml
+      overwrite: true
       contents:
         inline: |
           [updates]
@@ -323,58 +339,6 @@ storage:
           days = [ "Sun", "Mon" ]
           start_time = "03:15"
           length_minutes = 60
-  links:
-    # probably unneeded
-    # TODO: ebtables stuff
-    - path: /etc/alternatives/iptables
-      target: /usr/sbin/iptables-nft
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/iptables-restore
-      target: /usr/sbin/iptables-nft-restore
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/iptables-save
-      target: /usr/sbin/iptables-nft-save
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/ip6tables
-      target: /usr/sbin/ip6tables-nft
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/ip6tables-restore
-      target: /usr/sbin/ip6tables-nft-restore
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/ip6tables-save
-      target: /usr/sbin/ip6tables-nft-save
-      overwrite: true
-      hard: false
-      # ebtables
-    - path: /etc/alternatives/ebtables
-      target: /usr/sbin/ebtables-nft
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/ebtables-restore
-      target: /usr/sbin/ebtables-nft-restore
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/ebtables-save
-      target: /usr/sbin/ebtables-nft-save
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/eb6tables
-      target: /usr/sbin/eb6tables-nft
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/eb6tables-restore
-      target: /usr/sbin/eb6tables-nft-restore
-      overwrite: true
-      hard: false
-    - path: /etc/alternatives/eb6tables-save
-      target: /usr/sbin/eb6tables-nft-save
-      overwrite: true
-      hard: false
   disks:
     # libvirt: /dev/vda, netcup: /dev/sda
     - device: ${ROOT_DISK}
@@ -387,12 +351,13 @@ storage:
         - label: root
           number: 4
           resize: true
+          size_mib: ${ROOT_PART_SIZE}
         - label: backup
           number: 5
           size_mib: ${BACKUP_PART_SIZE}
           # Start at 5G so that we leave enough space for the root partition.
           # See the important NOTE below about this.
-          start_mib: ${ROOT_PART_SIZE}
+          # start_mib: ${ROOT_PART_SIZE}
         - label: var
           number: 6
           size_mib: 0
@@ -403,11 +368,13 @@ storage:
     - name: luks-backup
       label: luks-backup
       device: /dev/disk/by-partlabel/backup
+      discard: true
       clevis:
         tpm2: true
     - name: luks-var
       label: luks-var
       device: /dev/disk/by-partlabel/var
+      discard: true
       clevis:
         tpm2: true
   filesystems:
@@ -415,10 +382,12 @@ storage:
       # device: /dev/disk/by-partlabel/backup
       device: /dev/mapper/luks-backup
       format: xfs
+      wipe_filesystem: false
       with_mount_unit: true
     - path: /var
       # device: /dev/disk/by-partlabel/var
       device: /dev/mapper/luks-var
+      wipe_filesystem: false
       # We can select the filesystem we'd like.
       format: xfs
       # Ask FCCT to generate a mount unit for us so that this filesystem gets

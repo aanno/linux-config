@@ -10,6 +10,7 @@
 
 ## Ignition
 
+* [butane spec](https://coreos.github.io/butane/specs/) fcos, flatcar, openshift
 * [ignition file spec](https://coreos.github.io/ignition/specs/)
 
 ### run Ignition more than once
@@ -20,13 +21,26 @@
   + details: [firstboot support on read-only root file systems](https://github.com/coreos/ignition/issues/1049)
 * [some rules for running ignition more than once](https://docs.fedoraproject.org/en-US/fedora-coreos/live-booting/)
   + don't use 'wipe*'
-  + use LUKS only with 'key_file' or 'tpm'
+  + use LUKS only with 'key_file'
   + don't use RAID
+  + don't use append
   + When writing files in persistent storage, set overwrite to true to avoid Ignition failures
+* [Filesystem-Resuse Semantics](https://coreos.github.io/ignition/operator-notes/#filesystem-reuse-semantics)
 
 ## Partitions
 
-The root device (mostly /dev/vda or /dev/sda):
+* [Storage](https://docs.fedoraproject.org/en-US/fedora-coreos/storage/)
+* [Identify and match existing partitions based on label](https://github.com/coreos/ignition/issues/1219)
+
+The root device is mostly /dev/vda or /dev/sda.
+
+* Partition #1 is bios-boot
+* Partition #2 is EFI
+* Partition #3 is boot (linux kernels, vmlinuz, initramfs)
+* Partition #4 is coreos root (/)
+* After that all other partitions follow
+
+### Example 2
 
 ```bash
 # gdisk -l /dev/vda
@@ -57,13 +71,44 @@ Number  Start (sector)    End (sector)  Size       Code  Name
    6        20480000        41940992   10.2 GiB    8300  var
 ```
 
-Hence:
+Parameters:
+1. ROOT_PART_SIZE=8000 (start_mib of backup)
+2. BACKUP_PART_SIZE=2000 (size_mib of backup)
 
-* Partition #1 is bios-boot
-* Partition #2 is EFI
-* Partition #3 is boot (linux kernels, vmlinuz, initramfs)
-* Partition #4 is coreos root (/)
-* After that all other partitions follow
+### Example 3
+
+```bash
+# gdisk -l /dev/vda
+GPT fdisk (gdisk) version 1.0.10
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR; using GPT.
+Disk /dev/vda: 41943040 sectors, 20.0 GiB
+Sector size (logical/physical): 512/512 bytes
+Disk identifier (GUID): 644DF9DD-13D7-496A-A3AB-15DF8E404C62
+Partition table holds up to 128 entries
+Main partition table begins at sector 2 and ends at sector 33
+First usable sector is 2048, last usable sector is 41940992
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 0 sectors (0 bytes)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            2048            4095   1024.0 KiB  EF02  BIOS-BOOT
+   2            4096          264191   127.0 MiB   EF00  EFI-SYSTEM
+   3          264192         1050623   384.0 MiB   8300  boot
+   4         1050624        25626623   11.7 GiB    8300  root
+   5        25626624        29722623   2.0 GiB     8300  backup
+   6        29722624        41940992   5.8 GiB     8300  var
+```
+
+Parameters:
+1. ROOT_PART_SIZE=12000 (size_mib of root)
+2. BACKUP_PART_SIZE=2000 (size_mib of backup)
 
 ### Links
 
