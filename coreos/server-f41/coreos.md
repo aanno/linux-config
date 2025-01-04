@@ -3,6 +3,26 @@
 * https://docs.fedoraproject.org/en-US/fedora-coreos/
 * [hint for 4k raw image](https://stevetech.me/posts/find-4k-native-ssds)
   + https://en.wikipedia.org/wiki/Advanced_Format#4K_native
+* [download for stable stream](https://fedoraproject.org/de/coreos/download?stream=stable&arch=x86_64#download_section)
+* [internals](https://github.com/coreos/fedora-coreos-tracker/blob/main/internals/README-internals.md)
+* [internals about initramfs](https://github.com/coreos/fedora-coreos-tracker/blob/main/internals/README-initramfs.md)
+
+
+## Ignition
+
+* [ignition file spec](https://coreos.github.io/ignition/specs/)
+
+### run Ignition more than once
+
+* force Ignition
+  + recreate `/boot/ignition.firstboot` file or
+  + start with kernel parameter `ignition.firstboot`
+  + details: [firstboot support on read-only root file systems](https://github.com/coreos/ignition/issues/1049)
+* [some rules for running ignition more than once](https://docs.fedoraproject.org/en-US/fedora-coreos/live-booting/)
+  + don't use 'wipe*'
+  + use LUKS only with 'key_file' or 'tpm'
+  + don't use RAID
+  + When writing files in persistent storage, set overwrite to true to avoid Ignition failures
 
 ## Partitions
 
@@ -71,3 +91,12 @@ Hence:
 * root (/) fs is mapped several times, formatted as xfs and _encrypted_
 * /boot fs is formatted as ext4 and _not_ encrypted
 * other partitions are encrypted _if defined as LUKS_
+
+## Wireguard
+
+* [wg-easy](https://github.com/wg-easy/wg-easy) one-stop solution for wireguard in container
+
+## Starting containers with systemd
+
+* [podman-systemd.unit](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html)
+* [running containers](https://docs.fedoraproject.org/en-US/fedora-coreos/running-containers/)
