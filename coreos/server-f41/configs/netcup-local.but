@@ -119,15 +119,16 @@ systemd:
 storage:
   files:
     # luks also creates some files in /etc/luks
+    # even when you have a backup
     # don't try to enable a second ignition with:
     #- path: /etc/luks/luks-backup
     #  overwrite: true
     #  contents:
-    #    inline: ''
+    #    local: luks-backup
     #- path: /etc/luks/luks-var
     #  overwrite: true
     #  contents:
-    #    inline: ''
+    #    local: luks-var
     - path: /etc/vconsole.conf
       mode: 0644
       overwrite: true

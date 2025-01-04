@@ -43,6 +43,12 @@ In addition after this problem, the (installed) coreos is no longer useable:
 Please enter passphrase for disk var (luks-var): (press TAB for no echo)
 ```
 
+Even if you've got a backup of the /etc/luks/* file, providing them leads to
+
+```bash
+an 04 19:56:31 ignition[1539]: Ignition failed: creating crypttab entries: adding luks related files: error creating /sysroot/etc/luks/luks-backup: error creating file "/sysroot/etc/luks/luks-backup": A file exists there already and overwrite is false
+```
+
 ## Partitions
 
 * [Storage](https://docs.fedoraproject.org/en-US/fedora-coreos/storage/)
