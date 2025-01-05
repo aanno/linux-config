@@ -25,7 +25,7 @@
   + don't use RAID
   + don't use append
   + When writing files in persistent storage, set overwrite to true to avoid Ignition failures
-* [Filesystem-Resuse Semantics](https://coreos.github.io/ignition/operator-notes/#filesystem-reuse-semantics)
+* [Filesystem-Reuse Semantics](https://coreos.github.io/ignition/operator-notes/#filesystem-reuse-semantics)
 
 #### problems running ignition more than once
 
