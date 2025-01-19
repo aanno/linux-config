@@ -56,6 +56,8 @@ Even if you've got a backup of the /etc/luks/* file, providing them leads to
 an 04 19:56:31 ignition[1539]: Ignition failed: creating crypttab entries: adding luks related files: error creating /sysroot/etc/luks/luks-backup: error creating file "/sysroot/etc/luks/luks-backup": A file exists there already and overwrite is false
 ```
 
+* [second ignition and filesystem reuse-semantics: LUKS breaks reuse](https://github.com/coreos/fedora-coreos-tracker/issues/1858)
+
 ## Partitions
 
 * [Storage](https://docs.fedoraproject.org/en-US/fedora-coreos/storage/)

@@ -8,16 +8,32 @@ boot_device:
 passwd:
   users:
     - name: core
-      # password_hash: $6$sk8W$GyFsy5z0g51.4Z0AzMX9rQY1Jyep5Q43q1yKGR3kQGxWlejat6ITgA6azd2Z/eZ8MG38gkmk3gQXz912MBGrs0
       ssh_authorized_keys_local:
         - id_ed25519.pub
+        - nc-id1-ed25519.pub
     - name: tpasch
-      # password_hash: $6$skjWSkjs982kj2$yrsYzN1AArd06/46ZKIHIkeinGl2olsSTb41k7LNENMIywVHePcVCzgSe/flXhgHj7uY/rZgqgLzgx0Ob7vVq/
       ssh_authorized_keys_local:
         - id_ed25519.pub
-    - name: xpasch
+        - nc-id2-ed25519.pub
+      groups:
+        - wheel
+        - sudo
+        - systemd-journal
+    - name: ppasch
+      ssh_authorized_keys_local:
+        - nc-id3-ed25519.pub
+    - name: nc
       ssh_authorized_keys_local:
         - id_ed25519.pub
+        - nc-id4-ed25519.pub
+    - name: lastexit
+      ssh_authorized_keys_local:
+        - nc-id5-ed25519.pub
+      groups:
+        - adm
+        - wheel
+        - sudo
+        - systemd-journal
 # allow passwd login
 # https://discussion.fedoraproject.org/t/best-way-to-enable-password-auth-on-ssh/17731/4
 # minutely, hourly, daily, monthly,
@@ -274,29 +290,6 @@ storage:
           *                hard    nofile          65000
 
           # End of file
-    - path: /etc/wireguard/wg0.conf
-      mode: 0600
-      overwrite: true
-      contents:
-        inline: |
-          [Interface]
-          # https://simpledns.plus/private-ipv6
-          Address = 192.168.159.1/24,fdab:ec02:68de:3f47::1/64
-          PrivateKey = yO6VWeg9x/hEA3/e/Obfh5qWx0/s0PkGlI0GhtZ3EVs=
-          ListenPort = 51820
-
-          PostUp = iptables-nft -A FORWARD -i wg0 -j ACCEPT; iptables-nft -t nat -A POSTROUTING -o enp1s0 -j MASQUERADE; ip6tables-nft -A FORWARD -i wg0 -j ACCEPT; ip6tables-nft -t nat -A POSTROUTING -o enp1s0 -j MASQUERADE
-          PostDown = iptables-nft -D FORWARD -i wg0 -j ACCEPT; iptables-nft -t nat -D POSTROUTING -o enp1s0 -j MASQUERADE; ip6tables-nft -D FORWARD -i wg0 -j ACCEPT; ip6tables-nft -t nat -D POSTROUTING -o enp1s0 -j MASQUERADE
-
-          [Peer]
-          PublicKey = 0VR1TY2uJignKcMLKSZnWDEE7kLTiVESwDN+Qtr+h30=
-          PresharedKey = eNatQ21xnWXyMRYz75EVl93lKrLwm71csbIdH2fEgzc=
-          AllowedIPs = 192.168.159.0/24,fdab:ec02:68de:3f47::/64
-
-          [Peer]
-          PublicKey = GZetWiYtanijNBjLBuUiAUqRrZg5UET0US/dWSy+VA4=
-          PresharedKey = jyloWYz4YMGcIH4m/mqkaPue0t+1CO0xXPL4MHueLz4=
-          AllowedIPs = 192.168.159.0/24,fdab:ec02:68de:3f47::/64
     - path: /var/home/core/cron/onstart.sh
       user:
         name: core

@@ -8,6 +8,7 @@ sudo dnf install coreos-installer butane libguestfs virt-filesystems guestfs-too
 export STREAM=stable
 # x86_64 or aarch64
 export ARCH=aarch64
+# as iso install is not working, the following is obsolete
 coreos-installer download -s $STREAM -a $ARCH -p metal -f iso
 # qcow2 not available as stream (and what is 4k.raw.xz ?)
 coreos-installer download -s $STREAM -a $ARCH -p metal -f raw.xz --decompress
