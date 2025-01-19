@@ -23,6 +23,12 @@ source .env-virt.sh
 source scripts/but-to-ign.sh
 export IGNITION_CONFIG NET_DEV ROOT_DISK ROOT_PART_SIZE BACKUP_PART_SIZE
 
+UUID=`uuidgen`
+
+export UUID IPV4_ADDR IPV4_GATEWAY IPV6_ADDR1 IPV6_ADDR2 IPV6_ADDR3 IPV6_ADDR4 IPV6_ADDR5 IPV6_ADDR6 IPV6_GATEWAY IPV6_DNS NET_DEV
+
+envsubst <network/static-ip-template.nmconnection >configs/butane-embedded/static-ip.nmconnection
+
 but_to_ign
 
 ABSOLUTE_IGN=`readlink -f configs/${IGNITION_CONFIG}.ign`
