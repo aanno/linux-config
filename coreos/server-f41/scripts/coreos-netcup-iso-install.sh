@@ -25,9 +25,9 @@ ABSOLUTE_IGN=`readlink -f configs/${IGNITION_CONFIG}.ign`
 
 UUID=`uuidgen`
 
-export UUID IPV4_ADDR IPV4_GATEWAY IPV6_ADDR1 IPV6_ADDR2 IPV6_ADDR3 IPV6_GATEWAY IPV6_DNS NET_DEV
+export UUID IPV4_ADDR IPV4_GATEWAY IPV6_ADDR1 IPV6_ADDR2 IPV6_ADDR3 IPV6_ADDR4 IPV6_ADDR5 IPV6_ADDR6 IPV6_GATEWAY IPV6_DNS NET_DEV
 
-envsubst <network/static-ip-template.nmconnection >static-ip.nmconnection
+envsubst <network/static-ip-template.nmconnection >configs/butane-embedded/static-ip.nmconnection
 
 rm netcup-$ARCH.iso || true
 
@@ -38,6 +38,6 @@ coreos-installer iso customize \
     -o netcup-$ARCH.iso $IMAGE_ISO
 
 #     --dest-console tty0 \
-#     --network-keyfile static-ip.nmconnection \
+#     --network-keyfile configs/butane-embedded/static-ip.nmconnection \
 
 popd
