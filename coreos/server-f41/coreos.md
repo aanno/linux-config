@@ -7,6 +7,13 @@
 * [internals](https://github.com/coreos/fedora-coreos-tracker/blob/main/internals/README-internals.md)
 * [internals about initramfs](https://github.com/coreos/fedora-coreos-tracker/blob/main/internals/README-initramfs.md)
 
+## gotchas
+
+* problem with letsencrypt certificate (amce)
+  + disable ipv6 (if not setup properly): https://www.cyberciti.biz/faq/how-to-temporarily-disable-ipv6-in-linux/
+* firewalld is active on default
+  + disable firewall: `sudo systemctl stop firewalld`
+* reset aio: https://github.com/nextcloud/all-in-one#how-to-properly-reset-the-instance
 
 ## Ignition
 
@@ -61,6 +68,37 @@ The root device is mostly /dev/vda or /dev/sda.
 * Partition #3 is boot (linux kernels, vmlinuz, initramfs)
 * Partition #4 is coreos root (/)
 * After that all other partitions follow
+
+### Example 1
+
+netcup VPS 2000 ARM G11 SE NUE ADV24 with minimal configuration:
+
+```bash
+$ sudo gdisk -l /dev/vda
+GPT fdisk (gdisk) version 1.0.10
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR; using GPT.
+Disk /dev/vda: 2147483648 sectors, 1024.0 GiB
+Sector size (logical/physical): 512/512 bytes
+Disk identifier (GUID): F58D9859-CEAF-4E78-A8AE-B057FF98E8F5
+Partition table holds up to 128 entries
+Main partition table begins at sector 2 and ends at sector 33
+First usable sector is 2048, last usable sector is 2147483614
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 0 sectors (0 bytes)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            2048            4095   1024.0 KiB  8301  reserved
+   2            4096          264191   127.0 MiB   EF00  EFI-SYSTEM
+   3          264192         1050623   384.0 MiB   8300  boot
+   4         1050624      2147483614   1023.5 GiB  8300  root
+```
 
 ### Example 2
 
