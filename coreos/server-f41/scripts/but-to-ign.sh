@@ -3,6 +3,9 @@
 but_to_ign() {
   pushd configs
 
+    # hack for preserving $i
+    export var1='$var1'
+
     if [[ ( ! -f "${IGNITION_CONFIG}.bu" ) || ( "${IGNITION_CONFIG}.but -nt ${IGNITION_CONFIG}.bu" ) ]]; then
       envsubst <${IGNITION_CONFIG}.but >${IGNITION_CONFIG}.bu
       if [ $? -ne 0 ]; then

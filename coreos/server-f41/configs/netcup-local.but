@@ -276,10 +276,11 @@ storage:
           #!/bin/bash -x
           DATE=`date -Iseconds`
           echo "$DATE: Hello onstart, $*" >>/var/home/core/cron.log
-          for i in fail2ban nano podman-compose qemu-guest-agent redhat-lsb-core tree tmux wireguard-tools; do
-            sudo rpm-ostree install $i --allow-inactive $i || true
+          for var1 in fail2ban nano podman-compose qemu-guest-agent redhat-lsb-core tree tmux wireguard-tools; do
+            sudo rpm-ostree install --allow-inactive $var1 || true
           done
           # TODO aanno: reboot if something has really been installed (systemctl reboot)
+          # TODO aanno: $var1 always is replaced with empty string (only hacked)
     - path: /var/home/core/cron/daily.sh
       user:
         name: core
