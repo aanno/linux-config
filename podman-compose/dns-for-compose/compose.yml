@@ -2,9 +2,10 @@ services:
   coredns:
     image: docker.io/coredns/coredns
     dns: 10.89.4.1
-    ports:
-      - 53/udp
-      - 53/tcp
+    # It is not needed to expose the DNS server - it is local to the dnsexample network
+    # ports:
+    #   - 53/udp
+    #   - 53/tcp
     volumes:
       - ./coredns:/etc/coredns:z,ro
     networks:

@@ -3,6 +3,17 @@
 This is an example how to set up coredns as an DNS server for pods within podman compose.
 coredns is setup to use the (normal, forwarding) DNS server of podman
 
+## How does it work
+
+This is a tricky setup that does _not_ require normal compose containers (except coredns) 
+to configure anything for DNS **but still uses coredns for resolution**.
+
+* network is created with (upstream) dns set to 10.89.4.4
+* upstream dns is the coredns container
+* the coredns container forwards (unknown) requests to gateway
+* in podman gateway also serves as (forwarding) dns server
+* no idea why we don't loop between coredns and gateway
+
 ## network
 
 ```bash
