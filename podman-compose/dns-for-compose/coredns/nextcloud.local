@@ -1,0 +1,6 @@
+nextcloud.local.            IN  SOA     dns.nextcloud.local. robbmanes.nextcloud.local. 2015082541 7200 3600 1209600 3600
+nextcloud.local.            IN  A       192.168.10.139
+gateway.nextcloud.local.    IN  A       192.168.10.2
+dns.nextcloud.local.        IN  A       192.168.10.139
+host.nextcloud.local.       IN  A       192.168.1.111
+server.nextcloud.local.     IN  CNAME   host.nextcloud.local

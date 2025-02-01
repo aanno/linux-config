@@ -1,0 +1,6 @@
+nextcloud.breitbandig.de.            IN  SOA    dns.nextcloud.breitbandig.de. robbmanes.dns.nextcloud.breitbandig.de. 2015082541 7200 3600 1209600 3600
+gateway.nextcloud.breitbandig.de.    IN  A      152.53.117.0
+dns.nextcloud.breitbandig.de.        IN  A      152.53.117.0
+host.nextcloud.breitbandig.de.       IN  A      152.53.117.0
+server.nextcloud.breitbandig.de.     IN  CNAME  host.example.com
+breitbandig.de                       IN  CNAME  server.breitbandig.de

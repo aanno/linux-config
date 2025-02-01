@@ -1,5 +1,0 @@
-.:53 {
-    forward . 10.89.4.1
-    log
-    errors
-}
