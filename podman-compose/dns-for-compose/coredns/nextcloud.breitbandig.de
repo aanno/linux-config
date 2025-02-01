@@ -2,5 +2,5 @@ nextcloud.breitbandig.de.            IN  SOA    dns.nextcloud.breitbandig.de. ro
 gateway.nextcloud.breitbandig.de.    IN  A      152.53.117.0
 dns.nextcloud.breitbandig.de.        IN  A      152.53.117.0
 host.nextcloud.breitbandig.de.       IN  A      152.53.117.0
-server.nextcloud.breitbandig.de.     IN  CNAME  host.example.com
-breitbandig.de                       IN  CNAME  server.breitbandig.de
+server.nextcloud.breitbandig.de.     IN  CNAME  host.nextcloud.breitbandig.de.
+nextcloud.breitbandig.de.            IN  CNAME  server.nextcloud.breitbandig.de.

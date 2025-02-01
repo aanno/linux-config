@@ -2,4 +2,4 @@ example.com.            IN          SOA dns.example.com. robbmanes.example.com. 
 gateway.example.com.    IN  A       192.168.1.1
 dns.example.com.        IN  A       192.168.1.2
 host.example.com.       IN  A       192.168.1.3
-server.example.com.     IN  CNAME   host.example.com
+server.example.com.     IN  CNAME   host.example.com.
