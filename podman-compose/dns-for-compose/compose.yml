@@ -1,0 +1,29 @@
+services:
+  coredns:
+    image: docker.io/coredns/coredns
+    ports:
+      - 53/udp
+      - 53/tcp
+    volumes:
+      - ./Corefile:/etc/Corefile:z,ro
+    networks:
+      dnsexample:
+        ipv4_address: 10.89.4.4
+    command: -conf /etc/Corefile
+  fedora:
+    image: docker.io/fedora
+    dns: 10.89.4.4
+    # dns: none
+    volumes:
+      - ./resolv.conf:/etc/resolv.conf:z,ro
+    depends_on: 
+      - coredns
+    networks:
+      dnsexample:
+        # ipv4_address: 10.89.4.5
+    command: ["sleep", "10000"]
+
+networks:
+  dnsexample: 
+    external: true
+
