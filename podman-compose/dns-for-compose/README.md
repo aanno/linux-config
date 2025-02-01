@@ -6,6 +6,10 @@ coredns is setup to use the (normal, forwarding) DNS server of podman
 ## network
 
 ```bash
+podman network create --subnet 10.89.4.0/24 --gateway 10.89.4.1 --dns 10.89.4.4 --driver bridge dnsexample
+```
+
+```bash
 $ podman network inspect dnsexample
 [
      {
@@ -29,9 +33,6 @@ $ podman network inspect dnsexample
           "containers": {}
      }
 ]
-```
-
-```bash
 ```
 
 ## Links

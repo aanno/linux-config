@@ -1,6 +1,7 @@
 services:
   coredns:
     image: docker.io/coredns/coredns
+    dns: 10.89.4.1
     ports:
       - 53/udp
       - 53/tcp
@@ -12,10 +13,10 @@ services:
     command: -conf /etc/coredns/Corefile
   fedora:
     image: docker.io/fedora
-    dns: 10.89.4.4
+    # dns: 10.89.4.4
     # dns: none
-    volumes:
-      - ./resolv.conf:/etc/resolv.conf:z,ro
+    # volumes:
+    #   - ./resolv.conf:/etc/resolv.conf:z,ro
     depends_on: 
       - coredns
     networks:
@@ -23,6 +24,8 @@ services:
         # ipv4_address: 10.89.4.5
     command: ["sleep", "10000"]
 
+# create with:
+# podman network create --subnet 10.89.4.0/24 --gateway 10.89.4.1 --dns 10.89.4.4 --driver bridge dnsexample
 networks:
   dnsexample: 
     external: true
