@@ -1,0 +1,12 @@
+{
+  debug
+}
+
+https://breitbandig.de:443 {
+  # https://caddy.community/t/how-to-configure-custom-ssl-certificates/20680
+  tls /certs-extern/cert.pem /certs-extern/privkey.pem
+  # https://caddyserver.com/docs/caddyfile/directives/root
+  root * /srv
+  file_server
+}
+

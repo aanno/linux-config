@@ -1,0 +1,27 @@
+service:
+  caddy2:
+    image: docker.io/library/caddy:latest
+    restart: unless-stopped
+    container_name: caddy2
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 9080:80
+      - 9443:443
+      - 9443:443/udp
+    # does not work with host network_mode
+    # networks:
+    #   - nextcloud_frontend
+    # extra_hosts:
+      # - $AIO_DOMAIN:host-gateway
+    volumes:
+      - ./backup:/mnt/backup:z
+      - ./caddy_certs:/certs:z
+      - ./caddy_config:/config:z
+      - ./caddy_data:/data:z
+      - ./caddy_sites:/srv:z
+      # this is what 'configs' would do (tp)
+      # - ./caddy/Caddyfile:/Caddyfile:ro,z
+      # https://hub.docker.com/_/caddy
+      - ./caddy:/etc/caddy:ro,z
+      - /var/home/nc/certbot/cbconfig/live/netzgeneration.com:/certs-extern:ro,z
