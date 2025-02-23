@@ -1,4 +1,4 @@
-service:
+services:
   caddy2:
     image: docker.io/library/caddy:latest
     restart: unless-stopped
@@ -24,4 +24,4 @@ service:
       # - ./caddy/Caddyfile:/Caddyfile:ro,z
       # https://hub.docker.com/_/caddy
       - ./caddy:/etc/caddy:ro,z
-      - /var/home/nc/certbot/cbconfig/live/netzgeneration.com:/certs-extern:ro,z
+      # - /var/home/nc/certbot/cbconfig/live/netzgeneration.com:/certs-extern:ro,z
