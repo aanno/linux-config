@@ -16,12 +16,13 @@ services:
     # image: docker.io/go-gost/gost:latest
     image: docker.io/aanno/gost:$GOST_VERSION
     # command: -C /config/config.txt
+    command: -C /etc/gost/gost.yml
     # not with podman rootless
     # otherwise very difficult to get IP (or use localhost)
-    # network_mode: "host"
-    ports:
-      - $REMOTE_PROXY_PORT:$REMOTE_PROXY_PORT
-      - $REMOTE_SOCKS_PORT:$REMOTE_SOCKS_PORT
+    network_mode: "host"
+    #ports:
+    #  - $REMOTE_PROXY_PORT:$REMOTE_PROXY_PORT
+    #  - $REMOTE_SOCKS_PORT:$REMOTE_SOCKS_PORT
     dns:
       # https://de.getflix.com.au/setup/dns-servers/
       # Deutschland - Frankfurt - no vpn
