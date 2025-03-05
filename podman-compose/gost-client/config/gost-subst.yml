@@ -2,14 +2,14 @@
 # https://gost.run/en/reference/configuration/file/
 services:
 - name: proxy-http
-  addr: ":8080"
+  addr: ":$REMOTE_PROXY_PORT"
   handler:
     type: http
     chain: chain-1
   listener:
     type: tcp
 - name: proxy-socks5
-  addr: ":1080"
+  addr: ":$REMOTE_SOCKS_PORT"
   handler:
     type: socks5
     chain: chain-0

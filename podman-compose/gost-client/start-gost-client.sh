@@ -12,7 +12,7 @@ podman-compose up -d
 sleep 2
 # test
 curl -v --proxy-user ${REMOTE_PROXY_USER}:${REMOTE_PROXY_PW} --proxy "http://${REMOTE_PROXY}" https://www.google.de
-curl -v --proxy-user ${REMOTE_PROXY_USER}:${REMOTE_PROXY_PW} --proxy "socks5h://${REMOTE_PROXY}" https://www.google.de
+curl -v --proxy-user ${REMOTE_PROXY_USER}:${REMOTE_PROXY_PW} --proxy "socks5h://${REMOTE_SOCKS}" https://www.google.de
 # curl -v --proxy-user ${REMOTE_PROXY_USER}:${REMOTE_PROXY_PW} --socks5 "http://${REMOTE_SOCKS}" https://www.google.de
 curl -v --proxy-user ${REMOTE_PROXY_USER}:${REMOTE_PROXY_PW} --socks5-hostname "${REMOTE_SOCKS}" https://www.google.de
 
