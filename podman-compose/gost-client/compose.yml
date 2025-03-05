@@ -17,10 +17,10 @@ services:
     command: -C /etc/gost/gost.yml
     # not with podman rootless
     # otherwise very difficult to get IP (or use localhost)
-    network_mode: "host"
-    #ports:
-    #  - $REMOTE_PROXY_PORT:$REMOTE_PROXY_PORT
-    #  - $REMOTE_SOCKS_PORT:$REMOTE_SOCKS_PORT
+    # network_mode: "host"
+    ports:
+      - $REMOTE_PROXY_PORT:$REMOTE_PROXY_PORT
+      - $REMOTE_SOCKS_PORT:$REMOTE_SOCKS_PORT
     dns:
       # https://de.getflix.com.au/setup/dns-servers/
       # Deutschland - Frankfurt - no vpn
@@ -29,8 +29,12 @@ services:
       - 212.71.249.225
       # Dänemark - with vpn
       # - 82.103.129.240
-
+    networks:
+      - gost-proxy
     restart: unless-stopped
     volumes:
       - ./config/gost.yml:/etc/gost/gost.yml:z,ro
       - ./config:/config:z,ro
+
+networks:
+  gost-proxy:

@@ -22,7 +22,7 @@ chains:
   - name: hop-0
     nodes:
     - name: node-0
-      addr: $REMOTE_SOCKS
+      addr: gost-proxy-server:$REMOTE_SOCKS_PORT
       connector:
         type: socks5
         auth:
@@ -38,7 +38,7 @@ chains:
   - name: hop-1
     nodes:
     - name: node-1
-      addr: $REMOTE_PROXY
+      addr: gost-proxy-server:$REMOTE_PROXY_PORT
       connector:
         type: http
         auth:
