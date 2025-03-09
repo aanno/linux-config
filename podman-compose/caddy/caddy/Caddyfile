@@ -3,8 +3,17 @@
 }
 
 https://breitbandig.de:443 {
+  tls {
+    dns netcup {
+      customer_number {env.NETCUP_CUSTOMER_NUMBER}
+      api_key {env.NETCUP_API_KEY}
+      api_password {env.NETCUP_API_PASSWORD}
+    }
+  }
+
   # https://caddy.community/t/how-to-configure-custom-ssl-certificates/20680
-  tls /certs/cert.pem /certs/privkey.pem
+  # tls /certs/cert.pem /certs/privkey.pem
+
   # https://caddyserver.com/docs/caddyfile/directives/root
   root * /srv
   file_server

@@ -1,10 +1,11 @@
 services:
   caddy2:
-    image: docker.io/library/caddy:latest
+    # image: docker.io/library/caddy:latest
+    build: ./caddy_build
     restart: unless-stopped
     container_name: caddy2
-    cap_add:
-      - NET_ADMIN
+    # cap_add:
+    #  - NET_ADMIN
     ports:
       - 9080:80
       - 9443:443

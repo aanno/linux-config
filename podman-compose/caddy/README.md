@@ -3,6 +3,7 @@
 * [caddy container](https://hub.docker.com/_/caddy)
 * [Caddyfile](https://caddyserver.com/docs/caddyfile)
 * [Automatic Https](https://caddyserver.com/docs/automatic-https)
+* [xcaddy](https://github.com/caddyserver/xcaddy) build caddy with custom modules
 
 ## Directives
 
