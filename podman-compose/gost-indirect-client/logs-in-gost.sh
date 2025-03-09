@@ -6,4 +6,4 @@ REMOTE_SOCKS="${REMOTE_SOCKS_HOST}:${REMOTE_SOCKS_PORT}"
 export REMOTE_PROXY REMOTE_SOCKS REMOTE_PROXY_PORT REMOTE_SOCKS_PORT REMOTE_PROXY_USER REMOTE_PROXY_PW
 
 # podman compose logs gost-proxy-server $*
-podman logs -f gost-proxy-server $*
+podman logs gost-proxy-server $*

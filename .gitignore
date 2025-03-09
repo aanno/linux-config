@@ -5,6 +5,7 @@ scripts/*
 passfile
 !scripts/*.sh
 .env
+.env*
 !*-subst.*
 gost.yml
 htpasswd

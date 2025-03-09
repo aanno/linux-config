@@ -1,66 +1,34 @@
 # https://gost.run/en/getting-started/configuration-overview/
 # https://gost.run/en/reference/configuration/file/
 services:
-- name: proxy-http
-  addr: ":$REMOTE_PROXY_PORT"
-  handler:
-    type: http
-    chain: chain-1
-  listener:
-    type: tcp
 - name: proxy-socks5
-  addr: ":$REMOTE_SOCKS_PORT"
+  addr: ":1080"
   handler:
     type: socks5
-    chain: chain-0
   listener:
     type: tcp
-
-chains:
-- name: chain-0
-  hops:
-  - name: hop-0
-    nodes:
-    - name: node-0
-      addr: gost-proxy-server:$REMOTE_SOCKS_PORT
-      connector:
-        type: socks5
-        auth:
-          username: $REMOTE_PROXY_USER
-          password: $REMOTE_PROXY_PW
-      dialer:
-        type: tcp
-        auth:
-          username: $REMOTE_PROXY_USER
-          password: $REMOTE_PROXY_PW
-- name: chain-1
-  hops:
-  - name: hop-1
-    nodes:
-    - name: node-1
-      addr: gost-proxy-server:$REMOTE_PROXY_PORT
-      connector:
-        type: http
-        auth:
-          username: $REMOTE_PROXY_USER
-          password: $REMOTE_PROXY_PW
-      dialer:
-        type: tcp
-        auth:
-          username: $REMOTE_PROXY_USER
-          password: $REMOTE_PROXY_PW
+    auther: auther-0
+- name: proxy-http
+  addr: ":8080"
+  handler:
+    type: http
+  listener:
+    type: tcp
+    auther: auther-0
 
 authers:
 - name: auther-0
   auths:
-  - username: user1
-    password: pass1
-  - username: user2
-    password: pass2
+  - username: ${REMOTE_PROXY_USER1}
+    password: ${REMOTE_PROXY_PW1}
+  - username: ${REMOTE_PROXY_USER2}
+    password: ${REMOTE_PROXY_PW2}
+  - username: ${REMOTE_PROXY_USER3}
+    password: ${REMOTE_PROXY_PW3}
 
 log:
   output: stderr
-  level: debug
+  level: info
   format: json
   rotation:
     maxSize: 100
