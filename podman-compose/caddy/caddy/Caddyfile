@@ -3,12 +3,16 @@
 }
 
 https://breitbandig.de:443 {
+  # https://github.com/caddy-dns/netcup
   tls {
     dns netcup {
       customer_number {env.NETCUP_CUSTOMER_NUMBER}
       api_key {env.NETCUP_API_KEY}
       api_password {env.NETCUP_API_PASSWORD}
     }
+    propagation_timeout 900s
+    propagation_delay 600s
+    resolvers 1.1.1.1
   }
 
   # https://caddy.community/t/how-to-configure-custom-ssl-certificates/20680
