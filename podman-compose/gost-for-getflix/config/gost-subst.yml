@@ -8,7 +8,7 @@ services:
   listener:
     type: tcp
 - name: proxy-http
-  addr: ":8080"
+  addr: ":8008"
   handler:
     type: http
   listener:
