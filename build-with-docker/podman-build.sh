@@ -22,7 +22,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.linphone.fedora40;
+  -f Containerfile.owntone.fedora41;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt

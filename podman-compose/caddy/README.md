@@ -1,5 +1,7 @@
 # Caddy
 
+Under construction and _not_ working.
+
 * [caddy container](https://hub.docker.com/_/caddy)
 * [Caddyfile](https://caddyserver.com/docs/caddyfile)
 * [Automatic Https](https://caddyserver.com/docs/automatic-https)

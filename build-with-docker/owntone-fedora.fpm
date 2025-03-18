@@ -1,6 +1,6 @@
 --verbose
 -s tar
--t deb
+-t rpm
 --name owntone-server
 --license GPL-2.0
 --version 28.12

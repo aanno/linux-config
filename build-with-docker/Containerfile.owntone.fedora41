@@ -1,4 +1,4 @@
-from docker.io/library/fedora:38
+from docker.io/library/fedora:41
 
 RUN set -ex;\
   mkdir /opt/owntone || true; \
@@ -17,7 +17,7 @@ RUN set -ex;\
   # java-11-openjdk-headless gnutls-devel protobuf-c-devel libspotify-devel \
   # libwebsockets-devel pulseaudio-libs-devel openssl-devel \
   git automake autoconf gettext-devel gperf gawk libtool bison flex \
-  sqlite-devel libconfuse-devel libunistring-devel mxml-devel libevent-devel \
+  sqlite-devel libconfuse-devel libunistring-devel libxml2-devel mxml-devel libevent-devel \
   avahi-devel libgcrypt-devel zlib-devel alsa-lib-devel ffmpeg-devel \
   libplist-devel libsodium-devel json-c-devel libwebsockets-devel \
   libcurl-devel protobuf-c-devel; \
