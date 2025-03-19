@@ -22,7 +22,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.owntone.fedora41;
+  -f Containerfile.spotifyd.fedora41;
 tar cvfz owntone.tar.gz ./opt/
 
 # rm -rf ./opt
@@ -38,7 +38,7 @@ tar cvfz owntone.tar.gz ./opt/
 # fpm galera-4-26.4.18.tgz
 
 # only owntone on fedora
-rm -f *.rpm *.deb
+# rm -f *.rpm *.deb
 # cp -f owntone-fedora.fpm .fpm
 # sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 # dnf install ./owntone-server-2*.rpm

@@ -1,15 +1,24 @@
 from docker.io/library/fedora:41
 
+# error: failed to run custom build command for `jack-sys v0.5.1`
+# related to portaudio_backend?
+
 RUN set -ex;\
   mkdir /opt/owntone || true; \
   cd; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  export FEATURES="--no-default-features --all-features --features pulseaudio_backend,portaudio_backend,alsa_backend,dbus_mpris"; \
+  export CARGO_HOME=/root/.cargo; \
   dnf -y install \
+  pipewire-devel pipewire-pulseaudio  dbus-devel \
+  pipewire-jack-audio-connection-kit-devel portaudio-devel \
   git cargo rust alsa-lib-devel openssl-devel pkgconf-pkg-config; \
   git clone https://github.com/Spotifyd/spotifyd.git; \
   cd spotifyd; \
-  cargo build --release; \
-  cp -r target/release/ /opt/owntone/;
+  cargo build $FEATURES --release; \
+  cargo install $FEATURES --path . --locked; \
+  echo not using cp -r target/release/spotifyd ~/.cargo /opt/owntone/; \
+  cp -r target/release/spotifyd /opt/owntone/;
   
 # CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
 # ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]

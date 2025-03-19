@@ -4,7 +4,7 @@ RUN set -ex;\
   mkdir /opt/owntone || true; \
   cd; \
   export DEBIAN_FRONTEND=noninteractive; \
-  export FEATURES="--no-default-features --all-features --features pulseaudio_backend,portaudio_backend,alsa_backend,dbus_keyring,dbus_mpris"; \
+  export FEATURES="--no-default-features --all-features --features pulseaudio_backend,portaudio_backend,alsa_backend,dbus_mpris"; \
   export CARGO_HOME=/root/.cargo; \
   export RUSTUP_HOME=/root/.rustup; \
   ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime; \
