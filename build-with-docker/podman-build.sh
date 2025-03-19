@@ -37,3 +37,9 @@ tar cvfz owntone.tar.gz ./opt/
 # cp galera-4.fpm .fpm
 # fpm galera-4-26.4.18.tgz
 
+# only owntone on fedora
+rm -f *.rpm *.deb
+# cp -f owntone-fedora.fpm .fpm
+# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+# dnf install ./owntone-server-2*.rpm
+

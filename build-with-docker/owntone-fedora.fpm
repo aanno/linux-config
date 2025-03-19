@@ -11,30 +11,22 @@
 --rpm-autoreq
 --rpm-autoreqprov
 --maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
---depends libavahi-client3
---depends libgcrypt20
---depends zlib1g
---depends libwebsockets19t64
---depends libpulse0
---depends libgnutls30t64
---depends libavformat60
---depends libavformat-extra60
---depends libavcodec60
---depends libavcodec-extra60
---depends libavutil58
---depends libavfilter9
---depends libavfilter-extra9
---depends libconfuse2
---depends libunistring5
---depends libsqlite3-0
---depends libswscale7
---depends libasound2t64
+--depends libgcrypt
+--depends zlib
+--depends libwebsockets
+--depends pulseaudio-libs
+--depends gnutls
+--depends libconfuse
+--depends libunistring
+--depends libsqlite3x
 --depends libxml2
---depends libevent-2.1-7t64
---depends libplist-2.0-4
---depends libsodium23
---depends libjson-c5
---depends libcurl4t64
---depends libprotobuf-c1
+--depends libevent
+--depends libplist
+--depends libsodium
+--depends json-c
+--depends libcurl
+--depends protobuf-c
+--depends avahi
+--depends ffmpeg-libs
 
 owntone.tar.gz
