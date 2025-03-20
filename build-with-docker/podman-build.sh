@@ -26,10 +26,12 @@ podman build --pull -t owntone \
 
 # all except ..
 # tar cvfz owntone.tar.gz ./opt/
-# gmrender
+# ... gmrender
 cd opt
 tar cvfz ../gmrender.tar.gz ./usr
 cd ..
+cp gmrender-fedora.fpm .fpm
+sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
 # rm -rf ./opt
 # podman rmi localhost/owntone

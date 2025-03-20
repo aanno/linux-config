@@ -1,0 +1,24 @@
+--verbose
+-s tar
+-t rpm
+--name gmrender-resurrect
+--license GPL-2.0
+--version 0.3
+--architecture x86_64
+--description "Resource efficient UPnP/DLNA renderer, optimal for Raspberry Pi, CuBox or a general MediaServer"
+--url "https://github.com/hzeller/gmrender-resurrect"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16"
+--depends gstreamer1-plugins-base
+--depends gstreamer1-plugins-good
+--depends gstreamer1-plugins-bad-freeworld
+--depends gstreamer1-plugins-ugly
+--depends gstreamer1-plugin-libav
+--depends libupnp
+--depends pipewire-pulseaudio
+--depends pipewire-gstreamer
+--depends gstreamer1
+
+gmrender.tar.gz
