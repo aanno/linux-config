@@ -22,8 +22,14 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.spotifyd.fedora41;
-tar cvfz owntone.tar.gz ./opt/
+  -f Containerfile.gmrender.fedora41;
+
+# all except ..
+# tar cvfz owntone.tar.gz ./opt/
+# gmrender
+cd opt
+tar cvfz ../gmrender.tar.gz ./usr
+cd ..
 
 # rm -rf ./opt
 # podman rmi localhost/owntone

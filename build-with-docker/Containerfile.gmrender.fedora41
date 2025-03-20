@@ -1,0 +1,31 @@
+from docker.io/library/fedora:41
+
+# https://github.com/hzeller/gmrender-resurrect/blob/master/INSTALL.md
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  git automake autoconf gettext libtool pkg-config \
+  gstreamer1-devel  gstreamer1-plugins-base  gstreamer1-plugins-good \
+  gstreamer1-plugins-bad-freeworld gstreamer1-plugins-ugly gstreamer1-plugin-libav \
+  libupnp-devel pipewire-pulseaudio pipewire-gstreamer pipewire-devel; \
+  git clone https://github.com/hzeller/gmrender-resurrect.git; \
+  cd gmrender-resurrect; \
+  ./autogen.sh; \
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var; \
+  make; \
+  make install; \
+  mkdir -p /opt/usr/bin; \
+  cp /usr/bin/gmed* /opt/usr/bin/; \
+  mkdir -p /opt/usr/share; \
+  cp -r /usr/share/gmediarender /opt/usr/share; 
+  
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+
