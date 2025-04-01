@@ -1,0 +1,55 @@
+from docker.io/library/fedora:41
+
+# https://github.com/badaix/snapcast/blob/develop/doc/build.md
+
+RUN set -ex;\
+  mkdir -p /opt/owntone /opt/usr/share/snapserver/snapweb /opt/usr/share/man/man1 \
+    /opt/usr/share/pixmaps /opt//usr/share/snapserver/plug-ins \
+    /opt/usr/bin /opt/etc/snapserver || true; \
+  cd; \
+  export CMAKE_INSTALL_PREFIX=/usr; \
+  export CMAKE_INSTALL_FULL_SYSCONFDIR=/etc; \
+  export CMAKE_INSTALL_FULL_LOCALSTATEDIR=/var; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  git @development-tools cmake \
+  openssl-devel \
+  pipewire-devel pipewire-pulseaudio  dbus-devel \
+  pipewire-jack-audio-connection-kit-devel portaudio-devel \
+  alsa-lib-devel avahi-devel gcc-c++ libatomic libvorbis-devel \
+  opus-devel pulseaudio-libs-devel\
+  flac-devel soxr-devel libstdc++-static expat-devel boost-devel; \
+  git clone https://github.com/badaix/snapcast.git; \
+  cd snapcast; \
+  mkdir build; \
+  cd build; \
+  cmake .. -DBUILD_CLIENT=ON -DBUILD_SERVER=ON -DBUILD_WITH_PULSE=ON \
+    -DBUILD_WITH_JACK=OFF -DCMAKE_INSTALL_FULL_SYSCONFDIR=/etc; \
+  cmake --build .; \
+  cmake --install .; \
+  cp /usr/bin/snapserver /opt/usr/bin/; \
+  cp /usr/share/man/man1/snapserver.1 /opt/usr/share/man/man1/snapserver.1; \
+  cp -r /usr/share/snapserver /opt/usr/share/; \
+  cp /usr/etc/snapserver.conf /opt/etc/snapserver.conf; \
+  cp -r /usr/etc/snapserver/certs /opt/etc/snapserver/certs; \
+  cp /usr/bin/snapclient /opt/usr/bin/; \
+  cp /usr/share/man/man1/snapclient.1 /opt/usr/share/man/man1/snapclient.1; \
+  cp /usr/share/pixmaps/snapcast.svg /opt/usr/share/pixmaps/;
+
+# https://cmake.org/cmake/help/latest/variable/CMAKE_INSTALL_PREFIX.html
+# https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html
+
+# pipewire-plugin-jack ?
+# /usr/lib64/pipewire-0.3/jack/
+# https://github.com/supercollider/supercollider/issues/5678
+# -DJACK_LINK_LIBRARIES=/usr/lib64/pipewire-0.3/jack/libjack.so
+# -DJACK_LIBRARY=/usr/lib64/pipewire-0.3/jack/libjack.so
+# https://github.com/badaix/snapcast/issues/1363
+
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+

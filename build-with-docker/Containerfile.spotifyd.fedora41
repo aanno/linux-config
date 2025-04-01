@@ -19,7 +19,8 @@ RUN set -ex;\
   cargo install $FEATURES --path . --locked; \
   echo not using cp -r target/release/spotifyd ~/.cargo /opt/owntone/; \
   cp -r target/release/spotifyd /opt/owntone/;
-  
+
+# pipewire-plugin-jack ?
 # CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
 # ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
 

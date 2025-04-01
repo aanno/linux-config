@@ -22,16 +22,16 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.gmrender.fedora41;
+  -f Containerfile.snapcast.fedora41;
 
 # all except ..
-# tar cvfz owntone.tar.gz ./opt/
+tar cvfz owntone.tar.gz ./opt/
 # ... gmrender
-cd opt
-tar cvfz ../gmrender.tar.gz ./usr
-cd ..
-cp gmrender-fedora.fpm .fpm
-sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+# cd opt
+# tar cvfz ../gmrender.tar.gz ./usr
+# cd ..
+# cp gmrender-fedora.fpm .fpm
+# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
 # rm -rf ./opt
 # podman rmi localhost/owntone
