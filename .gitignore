@@ -1,6 +1,7 @@
 *.orig
 ._*
 /build-with-docker/spotifyd
+/build-with-docker/snapweb.zip*
 scripts/*
 passfile
 !scripts/*.sh
