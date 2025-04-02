@@ -1,0 +1,42 @@
+--verbose
+-s tar
+-t rpm
+--name snapcast
+--license GPL-3.0
+--version 0.31.0
+--architecture x86_64
+--description "Snapcast is a multiroom client-server audio player, where all clients are time synchronized with the server to play perfectly synced audio."
+--url "https://github.com/badaix/snapcast"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16"
+--depends avahi-libs
+--depends alsa-lib
+--depends pulseaudio-libs
+--depends openssl-libs
+--depends libvorbis
+--depends libogg
+--depends flac-libs
+--depends opus
+--depends soxr
+--depends libstdc++
+--depends glibc
+--depends libgcc
+--depends dbus-libs
+--depends pulseaudio-libs
+--depends zlib-ng-compat
+--depends libgomp
+--depends systemd-libs
+--depends libsndfile
+--depends libxcb
+--depends libasyncns
+--depends libcap
+--depends gsm
+--depends mpg123-libs
+--depends lame-libs
+--depends libXau
+--depends pipewire-jack-audio-connection-kit-libs
+--depends expat
+
+snapcast.tar.gz

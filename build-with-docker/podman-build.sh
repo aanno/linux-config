@@ -33,6 +33,13 @@ tar cvfz owntone.tar.gz ./opt/
 # cp gmrender-fedora.fpm .fpm
 # sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
+# ... snapcast
+cd opt
+tar cvfz ../snapcast.tar.gz ./usr
+cd ..
+cp snapcast-fedora.fpm .fpm
+sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+
 # rm -rf ./opt
 # podman rmi localhost/owntone
 
