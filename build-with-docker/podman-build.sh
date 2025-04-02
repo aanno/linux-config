@@ -35,7 +35,7 @@ tar cvfz owntone.tar.gz ./opt/
 
 # ... snapcast
 cd opt
-tar cvfz ../snapcast.tar.gz ./usr
+tar cvfz ../snapcast.tar.gz ./usr ./etc
 cd ..
 cp snapcast-fedora.fpm .fpm
 sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
