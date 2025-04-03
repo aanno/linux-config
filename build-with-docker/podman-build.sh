@@ -25,7 +25,7 @@ podman build --pull -t owntone \
   -f Containerfile.snapcast.fedora41;
 
 # all except ..
-tar cvfz owntone.tar.gz ./opt/
+# tar cvfz owntone.tar.gz ./opt/
 # ... gmrender
 # cd opt
 # tar cvfz ../gmrender.tar.gz ./usr
