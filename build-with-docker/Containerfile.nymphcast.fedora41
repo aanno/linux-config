@@ -1,4 +1,4 @@
-from docker.io/library/fedora:35
+from docker.io/library/fedora:41
 
 RUN set -ex;\
   mkdir /opt/owntone || true; \
@@ -10,7 +10,7 @@ RUN set -ex;\
   dnf -y install \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
   dnf -y install \
-    git tree gcc-c++ gcc make poco-devel \
+    git tree gcc-c++ gcc make poco-devel freetype-devel  ftgl-devel \
     SDL2-devel SDL2_image-devel ffmpeg-devel libatomic \
     qt5-qtbase-devel; \
   export DESTDIR=/; \
@@ -18,7 +18,7 @@ RUN set -ex;\
   git clone --depth 10 https://github.com/MayaPosch/NymphRPC; \
   cd NymphRPC; \
   make lib; \
-  cp lib/* /opt/owntone/lib; \
+  cp -r lib/* /opt/owntone/lib; \
   cp src/*.h /opt/owntone/include/nymph; \
   cd /opt/owntone/lib; \
   ln -s libnymphrpc.so.0.1 libnymphrpc.so; \
