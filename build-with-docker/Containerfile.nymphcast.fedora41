@@ -28,6 +28,8 @@ RUN set -ex;\
   cd NymphCast/src/server; \
   ln -s /opt/owntone/include/nymph .; \
   ln -s /usr/include/ffmpeg/* .; \
+  echo "pwd: /root/NymphCast/src/server"; \
+  ln -s /root/NymphCast/src/client_lib/nymphcast_client.h .; \
   make; \
   make install; \
   make install-systemd; \

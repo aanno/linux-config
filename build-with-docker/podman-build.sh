@@ -24,7 +24,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.nymphcast.fedora41;
+  -f Containerfile.linphone.fedora42;
 
 # all except ..
 tar cvfz owntone.tar.gz ./opt/
