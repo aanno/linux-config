@@ -7,12 +7,24 @@ services:
     type: socks5
   listener:
     type: tcp
+  resolver: resolve-0
 - name: proxy-http
   addr: ":8080"
   handler:
     type: http
   listener:
     type: tcp
+  resolver: resolve-0
+
+resolvers:
+- name: resolve-0
+  nameservers:
+  - addr: 54.93.169.181
+    ttl: 180s
+    only: ipv4
+  - addr: 212.71.249.225
+    ttl: 180s
+    only: ipv4
 
 log:
   output: stderr
