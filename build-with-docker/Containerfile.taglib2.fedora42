@@ -1,0 +1,161 @@
+from docker.io/library/fedora:42
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install patch cmake tree; \
+  # https://github.com/taglib/taglib/blob/master/INSTALL.md \
+  dnf -y install automake gcc gcc-c++ boost-devel check-devel glibc-devel openssl-devel \
+    git cppunit-devel utf8cpp-devel  zlib-ng-compat-devel  wavpack-devel  libvorbis-devel \
+    libmp4v2-devel libogg-devel flac-devel libaiff-devel pkgconf  pkgconf-pkg-config \
+    speex-devel libmpcdec-devel opus-devel ; \
+  mkdir /opt/owntone/make-it-longer || true; \
+  cd /opt/owntone/make-it-longer; \
+  git clone --depth 10 https://github.com/taglib/taglib.git; \
+  cd taglib; \
+  cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=on -DBUILD_BINDINGS=on -DTAGLIB_INSTALL_SUFFIX=-2 .; \
+  make; \
+  make install; \
+  make check; \
+  # tree /usr >usr.log; \
+  tar cvfJ taglib-2.tar.xz /usr/include/taglib-2 /usr/bin/taglib-2* /usr/lib64/libtag* \
+    /usr/lib64/cmake/taglib-2 /usr/lib64/pkgconfig/taglib-2.pc ;
+
+# - Install configuration: "Release"
+# -- Installing: /usr/bin/taglib-2-config
+# -- Installing: /usr/lib64/pkgconfig/taglib-2.pc
+# -- Installing: /usr/lib64/libtag-2.so.2.1.0
+# -- Installing: /usr/lib64/libtag-2.so.2
+# -- Installing: /usr/lib64/libtag-2.so
+# -- Installing: /usr/include/taglib-2/tag.h
+# -- Installing: /usr/include/taglib-2/fileref.h
+# -- Installing: /usr/include/taglib-2/audioproperties.h
+# -- Installing: /usr/include/taglib-2/taglib_export.h
+# -- Installing: /usr/include/taglib-2/taglib_config.h
+# -- Installing: /usr/include/taglib-2/taglib.h
+# -- Installing: /usr/include/taglib-2/tstring.h
+# -- Installing: /usr/include/taglib-2/tlist.h
+# -- Installing: /usr/include/taglib-2/tlist.tcc
+# -- Installing: /usr/include/taglib-2/tstringlist.h
+# -- Installing: /usr/include/taglib-2/tbytevector.h
+# -- Installing: /usr/include/taglib-2/tbytevectorlist.h
+# -- Installing: /usr/include/taglib-2/tvariant.h
+# -- Installing: /usr/include/taglib-2/tbytevectorstream.h
+# -- Installing: /usr/include/taglib-2/tiostream.h
+# -- Installing: /usr/include/taglib-2/tfile.h
+# -- Installing: /usr/include/taglib-2/tfilestream.h
+# -- Installing: /usr/include/taglib-2/tmap.h
+# -- Installing: /usr/include/taglib-2/tmap.tcc
+# -- Installing: /usr/include/taglib-2/tpicturetype.h
+# -- Installing: /usr/include/taglib-2/tpropertymap.h
+# -- Installing: /usr/include/taglib-2/tdebuglistener.h
+# -- Installing: /usr/include/taglib-2/tversionnumber.h
+# -- Installing: /usr/include/taglib-2/mpegfile.h
+# -- Installing: /usr/include/taglib-2/mpegproperties.h
+# -- Installing: /usr/include/taglib-2/mpegheader.h
+# -- Installing: /usr/include/taglib-2/xingheader.h
+# -- Installing: /usr/include/taglib-2/id3v1tag.h
+# -- Installing: /usr/include/taglib-2/id3v1genres.h
+# -- Installing: /usr/include/taglib-2/id3v2.h
+# -- Installing: /usr/include/taglib-2/id3v2extendedheader.h
+# -- Installing: /usr/include/taglib-2/id3v2frame.h
+# -- Installing: /usr/include/taglib-2/id3v2header.h
+# -- Installing: /usr/include/taglib-2/id3v2synchdata.h
+# -- Installing: /usr/include/taglib-2/id3v2footer.h
+# -- Installing: /usr/include/taglib-2/id3v2framefactory.h
+# -- Installing: /usr/include/taglib-2/id3v2tag.h
+# -- Installing: /usr/include/taglib-2/attachedpictureframe.h
+# -- Installing: /usr/include/taglib-2/commentsframe.h
+# -- Installing: /usr/include/taglib-2/eventtimingcodesframe.h
+# -- Installing: /usr/include/taglib-2/generalencapsulatedobjectframe.h
+# -- Installing: /usr/include/taglib-2/ownershipframe.h
+# -- Installing: /usr/include/taglib-2/popularimeterframe.h
+# -- Installing: /usr/include/taglib-2/privateframe.h
+# -- Installing: /usr/include/taglib-2/relativevolumeframe.h
+# -- Installing: /usr/include/taglib-2/synchronizedlyricsframe.h
+# -- Installing: /usr/include/taglib-2/textidentificationframe.h
+# -- Installing: /usr/include/taglib-2/uniquefileidentifierframe.h
+# -- Installing: /usr/include/taglib-2/unknownframe.h
+# -- Installing: /usr/include/taglib-2/unsynchronizedlyricsframe.h
+# -- Installing: /usr/include/taglib-2/urllinkframe.h
+# -- Installing: /usr/include/taglib-2/chapterframe.h
+# -- Installing: /usr/include/taglib-2/tableofcontentsframe.h
+# -- Installing: /usr/include/taglib-2/podcastframe.h
+# -- Installing: /usr/include/taglib-2/oggfile.h
+# -- Installing: /usr/include/taglib-2/oggpage.h
+# -- Installing: /usr/include/taglib-2/oggpageheader.h
+# -- Installing: /usr/include/taglib-2/xiphcomment.h
+# -- Installing: /usr/include/taglib-2/vorbisfile.h
+# -- Installing: /usr/include/taglib-2/vorbisproperties.h
+# -- Installing: /usr/include/taglib-2/oggflacfile.h
+# -- Installing: /usr/include/taglib-2/speexfile.h
+# -- Installing: /usr/include/taglib-2/speexproperties.h
+# -- Installing: /usr/include/taglib-2/opusfile.h
+# -- Installing: /usr/include/taglib-2/opusproperties.h
+# -- Installing: /usr/include/taglib-2/flacfile.h
+# -- Installing: /usr/include/taglib-2/flacpicture.h
+# -- Installing: /usr/include/taglib-2/flacproperties.h
+# -- Installing: /usr/include/taglib-2/flacmetadatablock.h
+# -- Installing: /usr/include/taglib-2/apefile.h
+# -- Installing: /usr/include/taglib-2/apeproperties.h
+# -- Installing: /usr/include/taglib-2/apetag.h
+# -- Installing: /usr/include/taglib-2/apefooter.h
+# -- Installing: /usr/include/taglib-2/apeitem.h
+# -- Installing: /usr/include/taglib-2/mpcfile.h
+# -- Installing: /usr/include/taglib-2/mpcproperties.h
+# -- Installing: /usr/include/taglib-2/wavpackfile.h
+# -- Installing: /usr/include/taglib-2/wavpackproperties.h
+# -- Installing: /usr/include/taglib-2/trueaudiofile.h
+# -- Installing: /usr/include/taglib-2/trueaudioproperties.h
+# -- Installing: /usr/include/taglib-2/rifffile.h
+# -- Installing: /usr/include/taglib-2/aifffile.h
+# -- Installing: /usr/include/taglib-2/aiffproperties.h
+# -- Installing: /usr/include/taglib-2/wavfile.h
+# -- Installing: /usr/include/taglib-2/wavproperties.h
+# -- Installing: /usr/include/taglib-2/infotag.h
+# -- Installing: /usr/include/taglib-2/asffile.h
+# -- Installing: /usr/include/taglib-2/asfproperties.h
+# -- Installing: /usr/include/taglib-2/asftag.h
+# -- Installing: /usr/include/taglib-2/asfattribute.h
+# -- Installing: /usr/include/taglib-2/asfpicture.h
+# -- Installing: /usr/include/taglib-2/mp4file.h
+# -- Installing: /usr/include/taglib-2/mp4atom.h
+# -- Installing: /usr/include/taglib-2/mp4tag.h
+# -- Installing: /usr/include/taglib-2/mp4item.h
+# -- Installing: /usr/include/taglib-2/mp4properties.h
+# -- Installing: /usr/include/taglib-2/mp4coverart.h
+# -- Installing: /usr/include/taglib-2/mp4itemfactory.h
+# -- Installing: /usr/include/taglib-2/modfilebase.h
+# -- Installing: /usr/include/taglib-2/modfile.h
+# -- Installing: /usr/include/taglib-2/modtag.h
+# -- Installing: /usr/include/taglib-2/modproperties.h
+# -- Installing: /usr/include/taglib-2/itfile.h
+# -- Installing: /usr/include/taglib-2/itproperties.h
+# -- Installing: /usr/include/taglib-2/s3mfile.h
+# -- Installing: /usr/include/taglib-2/s3mproperties.h
+# -- Installing: /usr/include/taglib-2/xmfile.h
+# -- Installing: /usr/include/taglib-2/xmproperties.h
+# -- Installing: /usr/include/taglib-2/dsffile.h
+# -- Installing: /usr/include/taglib-2/dsfproperties.h
+# -- Installing: /usr/include/taglib-2/dsdifffile.h
+# -- Installing: /usr/include/taglib-2/dsdiffproperties.h
+# -- Installing: /usr/include/taglib-2/dsdiffdiintag.h
+# -- Installing: /usr/include/taglib-2/shortenfile.h
+# -- Installing: /usr/include/taglib-2/shortenproperties.h
+# -- Installing: /usr/include/taglib-2/shortentag.h
+# -- Installing: /usr/lib64/cmake/taglib-2/taglib-targets.cmake
+# -- Installing: /usr/lib64/cmake/taglib-2/taglib-targets-release.cmake
+# -- Installing: /usr/lib64/cmake/taglib-2/taglib-config.cmake
+# -- Installing: /usr/lib64/cmake/taglib-2/taglib-config-version.cmake
+# -- Installing: /usr/lib64/libtag_c-2.so.2.1.0
+# -- Installing: /usr/lib64/libtag_c-2.so.2
+# -- Set non-toolchain portion of runtime path of "/usr/lib64/libtag_c-2.so.2.1.0" to ""
+# -- Installing: /usr/lib64/libtag_c-2.so
+# -- Installing: /usr/include/taglib-2/tag_c.h
+# -- Installing: /usr/lib64/pkgconfig/taglib-2_c.pc
+
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+
