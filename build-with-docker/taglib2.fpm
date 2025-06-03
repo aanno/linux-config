@@ -1,0 +1,18 @@
+--verbose
+-s tar
+-t rpm
+--name taglib-2
+--license LGPL/MPL
+--version 2.1
+--architecture x86_64
+--description "TagLib Audio Meta-Data Library"
+--url "https://taglib.org/"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16.0"
+--depends libstdc++
+--depends zlib
+--depends libgcc
+
+taglib-2.tar.xz

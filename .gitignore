@@ -25,6 +25,7 @@ docker-compose/wordpress/wp/
 .rustup/
 opt/
 *.tar.gz
+*.tar.xz
 *.deb
 *.rpm
 var/
