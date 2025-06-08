@@ -1,4 +1,4 @@
-from docker.io/library/fedora:41
+from docker.io/library/fedora:42
 
 RUN set -ex;\
   mkdir /opt/owntone || true; \
@@ -18,10 +18,11 @@ RUN set -ex;\
   # libwebsockets-devel pulseaudio-libs-devel openssl-devel \
   git automake autoconf gettext-devel gperf gawk libtool bison flex \
   sqlite-devel libconfuse-devel libunistring-devel libxml2-devel mxml-devel libevent-devel \
-  fahi-devel libgcrypt-devel zlib-devel alsa-lib-devel ffmpeg-devel \
+  libgcrypt-devel zlib-ng-devel alsa-lib-devel ffmpeg-devel \
   libplist-devel libsodium-devel json-c-devel libwebsockets-devel \
   libcurl-devel protobuf-c-devel; \
-  git clone https://github.com/owntone/owntone-server.git; \
+  # git clone https://github.com/owntone/owntone-server.git; \
+  git clone -b bug/1897-fix-for-auto-umount https://github.com/aanno/owntone-server.git; \
   cd owntone-server; \
   # ./scripts/antlr35_install.sh; \
   autoreconf -i; \

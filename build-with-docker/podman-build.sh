@@ -24,15 +24,15 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.taglib2.fedora42;
+  -f Containerfile.owntone.fedora42;
 
 # all except ..
-# tar cvfz owntone.tar.gz ./opt/
+tar cvfz owntone.tar.gz ./opt/
 
 # ... taglib-2
 
-cp opt/owntone/make-it-longer/taglib/taglib-2.tar.xz .
-# tar tvfJ opt/owntone/make-it-longer/taglib/taglib-2.tar.xz 
+# cp opt/owntone/make-it-longer/taglib/taglib-2.tar.xz .
+## tar tvfJ opt/owntone/make-it-longer/taglib/taglib-2.tar.xz
 
 # ... gmrender
 # cd opt
