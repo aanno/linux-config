@@ -24,9 +24,15 @@ RUN set -ex;\
   #   /usr/bin/ld: /usr/lib64/libcurl.so.4: undefined reference to `ldap_sasl_bind@OPENLDAP_2.200'
   dnf -y install git cmake meson pkgconf-pkg-config libmicrohttpd-devel \
     libcurl-devel gcc-c++ expat-devel jsoncpp-devel libmpdclient-devel ; \
+  # stuff needed for sc2mpd (no meson so far)
+  dnf -y install automake autoconf gettext-devel gawk \
+    libsamplerate-devel zlib-devel alsa-lib-devel pipewire-pulseaudio pipewire-devel \
+    flac-devel ; \
+  # replace full libcurl with minimal
   dnf install -y --allowerasing libcurl-minimal; \
   mkdir /opt/owntone/make-it-longer || true; \
   cd /opt/owntone/make-it-longer; \
+  # https://www.lesbonscomptes.com/upmpdcli/pages/upmpdcli-manual.html#UPMPDCLI-BUILDING
   # https://framagit.org/medoc92/npupnp
   # https://www.lesbonscomptes.com/upmpdcli/npupnp-doc/libnpupnp.html
   git clone --depth 10 https://framagit.org/medoc92/npupnp.git ; \
@@ -47,6 +53,17 @@ RUN set -ex;\
   meson setup -Dprefix=/usr builddir . ; \
   meson compile -C builddir ; \
   meson install -C builddir ; \
+  cd /opt/owntone/make-it-longer; \
+  # https://framagit.org/medoc92/sc2mpd
+  # https://www.lesbonscomptes.com/upmpdcli/pages/upmpdcli-manual.html#UPMPDCLI-SONGCAST
+  git clone --depth 10 https://framagit.org/medoc92/sc2mpd.git ; \
+  cd sc2mpd ; \
+  autoreconf -i; \
+  ./configure --help; \
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-flac --enable-wavsc2; \
+  # unable to build without openhome
+  # make; \
+  # make install; \
   # https://framagit.org/medoc92/upmpdcli/-/blob/master/rpm/upmpdcli.spec?ref_type=heads
   tar cvfJ upmpdcli-1.9.3.tar.xz /usr/include/npupnp /usr/lib64/pkgconfig/libnpupnp.pc \
     /usr/lib64/libnpupnp.* /usr/share/upmpdcli \
@@ -54,6 +71,17 @@ RUN set -ex;\
     /usr/bin/upmpdcli \
     /usr/share/man/man1/upmpdcli.1 /usr/share/man/man5/upmpdcli.conf.5 \
     /usr/include/libupnpp /etc/upmpdcli.conf-dist;
+
+# --with-openhome=topOpenhomeDir
+#                         Set the path for the directory where ohNet,
+#                         ohNetGenerated, ohdevtools, ohTopology and
+#                         ohSongcast were extracted and built
+# https://github.com/openhome?q=&type=all&language=&sort=
+# https://github.com/openhome/ohTopology
+# https://github.com/openhome/ohdevtools
+# https://github.com/openhome/ohNet
+# https://github.com/openhome/ohNetGenerated
+# https://github.com/openhome/ohSongcast
 
 # Installing libnpupnp.so.13.3.1 to /usr/lib64
 # Installing /opt/owntone/make-it-longer/npupnp/inc/netif.h to /usr/include/npupnp
