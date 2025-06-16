@@ -27,7 +27,11 @@ podman build --pull -t owntone \
   -f Containerfile.upmpdcli.fedora42;
 
 # all except ..
-tar cvfz owntone.tar.gz ./opt/
+# tar cvfz owntone.tar.gz ./opt/
+
+# ... upmpdcli
+
+cp opt/owntone/make-it-longer/upmpdcli/upmpdcli-1.9.3.tar.xz .
 
 # ... taglib-2
 

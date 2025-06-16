@@ -1,0 +1,23 @@
+--verbose
+-s tar
+-t rpm
+--name upmpdcli
+--license GPLv2+
+--version 1.9.3
+--architecture x86_64
+--description "UPnP Media Renderer front-end to MPD, the Music Player Daemon"
+--url "https://framagit.org/medoc92/upmpdcli/"
+--rpm-autoprov
+--no-rpm-autoreq
+--no-rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16"
+--depends libstdc++
+--depends glibc
+--depends libgcc
+--depends expat
+--depends libmicrohttpd
+--depends libcurl
+--depends jsoncpp
+--depends libmpdclient
+
+upmpdcli-1.9.3.tar.xz
