@@ -19,7 +19,7 @@ RUN set -ex;\
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
   dnf -y install git gcc-c++ rsync python3-devel python3-setuptools \
      dotnet-sdk-9.0 java-21-openjdk-devel pkgconf-pkg-config cmake \
-     python3-requests python3-boto3 which tree ; \
+     python3-requests python3-boto3 waf which tree ; \
   # on linux the openhome stuff uses donnet under ~/.dotnet
   mkdir -p ~/.dotnet; \
   ln -s /usr/sbin/dotnet ~/.dotnet/dotnet || true; \
@@ -42,7 +42,7 @@ RUN set -ex;\
   make prefix=/usr ; \
   make prefix=/usr ohNetCore proxies devices TestFramework ohNet.net.dll ; \
   # install : install-pkgconf install-libs install-includes
-  sudo make prefix=/usr install-libs install-includes \
+  sudo make prefix=/usr install-libs install-includes ; \
   # sudo make install ; \
 # uset4=yes -> no ?
 # + sudo make install
@@ -62,18 +62,43 @@ RUN set -ex;\
 # make: [Common.mak:1388: Generated/Devices.mak] Error 127 (ignored)
 # Attention: a makefile has been re-generated.
 # make: *** No rule to make target 'tt', needed by 'install-pkgconf'.  Stop.
-  cd /opt/owntone/make-it-longer; \
+  cd /opt/owntone/make-it-longer ; \
   git clone --depth 10 https://github.com/openhome/ohNetGenerated.git ; \
   cd ohNet ; \
   ./go fetch --all || true ; \
   make prefix=/usr ; \
-  make prefix=/usr JavaAll;
-  sudo make prefix=/usr install uset4=no ;
+  # make prefix=/usr JavaAll; \
+  # make: *** No rule to make target 'JavaAll'.  Stop.
+  # sudo make prefix=/usr uset4=no install ; \
+  sudo make prefix=/usr install-libs install-includes ; \
+  # https://github.com/openhome/ohNetmon
+  cd /opt/owntone/make-it-longer ; \
+  git clone --depth 10 https://github.com/openhome/ohNetmon.git ; \
+  cd ohNetmon ; \
+  # https://waf.io/
+  waf configure --dest-platform=Linux-x86 --ohnet=../ohNet ; \
+  # cd ohNetmon
+  # ./waf configure --dest-platform=Linux-x86 --ohnet=../ohNet
+  # File "/opt/owntone/make-it-longer/ohNetmon/./waf", line 166
+  #   #BZh91AY&Sbdÿÿÿÿÿÿÿÿÿÿÿ
+  #
+  # --ohnet=... [--debug]
+  waf build ; \
+  waf install prefix=/usr ;
+  # make prefix=/usr ; \
+  # make prefix=/usr JavaAll;
+  # sudo make prefix=/usr install uset4=no ; \
 
 # $ ls opt/owntone/make-it-longer/ohNet/Build/Obj/Posix/Release/*.so*
 # opt/owntone/make-it-longer/ohNet/Build/Obj/Posix/Release/libohNet.so
 # ls opt/owntone/make-it-longer/ohNet/Build/Include/OpenHome/
 
+# g++ -pthread    -pthread -shared -shared-libgcc -Wl,-soname,libohNet.so -oBuild/Obj/Posix/Release/libohNet.so
+
+# mkdir -p /usr/lib/ohNet
+# rsync -u Build/Obj/Posix/Release/* /usr/lib/ohNet
+# mkdir -p /usr/include/ohNet
+# rsync -u -r Build/Include/* /usr/include/ohNet
 
 # --with-openhome=topOpenhomeDir
 #                         Set the path for the directory where ohNet,
