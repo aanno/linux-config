@@ -19,7 +19,7 @@ RUN set -ex;\
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
   dnf -y install git gcc-c++ rsync python3-devel python3-setuptools \
      dotnet-sdk-9.0 java-21-openjdk-devel pkgconf-pkg-config cmake \
-     python3-requests python3-boto3 waf which tree ; \
+     python3-requests python3-boto3 waf which tree file nano ; \
   # on linux the openhome stuff uses donnet under ~/.dotnet
   mkdir -p ~/.dotnet; \
   ln -s /usr/sbin/dotnet ~/.dotnet/dotnet || true; \
@@ -67,12 +67,12 @@ RUN set -ex;\
   # https://github.com/openhome/ohNetGenerated/issues/9
   git clone --depth 10 https://github.com/openhome/ohNetGenerated.git ; \
   cd ohNetGenerated ; \
-  ./go fetch --all || true ; \
-  make prefix=/usr ; \
+  #./go fetch --all || true ; \
+  # make prefix=/usr ; \
   # make prefix=/usr JavaAll; \
   # make: *** No rule to make target 'JavaAll'.  Stop.
   # sudo make prefix=/usr uset4=no install ; \
-  sudo make prefix=/usr install-libs install-includes ; \
+  # sudo make prefix=/usr install-libs install-includes ; \
   # https://github.com/openhome/ohNetmon
   # https://github.com/openhome/ohNetmon/issues/3
   cd /opt/owntone/make-it-longer ; \
@@ -112,8 +112,24 @@ RUN set -ex;\
   cd /opt/owntone/make-it-longer ; \
   git clone --depth 10 https://github.com/openhome/ohSongcast.git ; \
   cd ohSongcast ; \
-  make prefix=/usr release=1 ; \
-  make prefix=/usr install ;
+  # make prefix=/usr release=1 ; \
+  # make prefix=/usr install ; \
+  cd /opt/owntone/make-it-longer ;
+
+# rm /usr/lib/ohNet/*.o
+
+# ohNetGenerated
+# go anpassen
+# mkdir -p dependencies/Linux-x64/ohNet-Linux-x64-Release/lib
+# ln -s /usr/lib/ohNet/libohNetCore.a dependencies/Linux-x64/ohNet-Linux-x64-Release/lib
+# mkdir -p dependencies/Linux-x64/ohNet-Linux-x64-Release/include
+# ln -s /usr/include/ohNet dependencies/Linux-x64/ohNet-Linux-x64-Release/include/
+# case problem
+# ln -s /usr/include/ohNet dependencies/Linux-x64/ohNet-Linux-x64-Release/include/ohnet
+# ln -s /usr/lib/ohNet/ohNet.net.dll dependencies/Linux-x64/ohNet-Linux-x64-Release/lib
+# csharp = true in Makefile (TODO)
+# bundle_binaries.py: print() and tf.close()
+# tar tvfz ./Build/Bundles/ohNetGenerated-Linux-x64-Release.tar.gz
 
 # $ ls opt/owntone/make-it-longer/ohNet/Build/Obj/Posix/Release/*.so*
 # opt/owntone/make-it-longer/ohNet/Build/Obj/Posix/Release/libohNet.so
