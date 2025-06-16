@@ -63,8 +63,10 @@ RUN set -ex;\
 # Attention: a makefile has been re-generated.
 # make: *** No rule to make target 'tt', needed by 'install-pkgconf'.  Stop.
   cd /opt/owntone/make-it-longer ; \
+  # https://github.com/openhome/ohNetGenerated
+  # https://github.com/openhome/ohNetGenerated/issues/9
   git clone --depth 10 https://github.com/openhome/ohNetGenerated.git ; \
-  cd ohNet ; \
+  cd ohNetGenerated ; \
   ./go fetch --all || true ; \
   make prefix=/usr ; \
   # make prefix=/usr JavaAll; \
@@ -72,22 +74,46 @@ RUN set -ex;\
   # sudo make prefix=/usr uset4=no install ; \
   sudo make prefix=/usr install-libs install-includes ; \
   # https://github.com/openhome/ohNetmon
+  # https://github.com/openhome/ohNetmon/issues/3
   cd /opt/owntone/make-it-longer ; \
-  git clone --depth 10 https://github.com/openhome/ohNetmon.git ; \
+  git clone --depth 10 -b ohNetmon_1.0.33 https://github.com/openhome/ohNetmon.git ; \
   cd ohNetmon ; \
   # https://waf.io/
-  waf configure --dest-platform=Linux-x86 --ohnet=../ohNet ; \
+  # https://waf.io/book/
+  # ./waf configure --dest-platform=Linux-x86 --ohnet=../ohNet ; \
+  # waf configure --dest-platform=Linux-x86 --ohnet=../ohNet ; \
+  # File "/opt/owntone/make-it-longer/ohNetmon/wscript", line 136
+  # print 'bundle binaries'
+  # ^^^^^^^^^^^^^^^^^^^^^^^
+  # SyntaxError: Missing parentheses in call to 'print'. Did you mean print(...)?
+  #
   # cd ohNetmon
   # ./waf configure --dest-platform=Linux-x86 --ohnet=../ohNet
   # File "/opt/owntone/make-it-longer/ohNetmon/./waf", line 166
   #   #BZh91AY&Sbdÿÿÿÿÿÿÿÿÿÿÿ
   #
   # --ohnet=... [--debug]
-  waf build ; \
-  waf install prefix=/usr ;
+  # ./waf build ; \
+  # ./waf install --prefix=/usr ; \
   # make prefix=/usr ; \
   # make prefix=/usr JavaAll;
   # sudo make prefix=/usr install uset4=no ; \
+  #
+  # https://github.com/openhome/ohTopology
+  # https://github.com/openhome/ohTopology/issues/9
+  cd /opt/owntone/make-it-longer ; \
+  git clone --depth 10 https://github.com/openhome/ohTopology.git ; \
+  cd ohTopology ; \
+  # ./waf configure --dest-platform=Linux-x86 --ohnet=../ohNet
+  # ./waf build ; \
+  # ./waf install --prefix=/usr ; \
+  #
+  # https://github.com/openhome/ohSongcast
+  cd /opt/owntone/make-it-longer ; \
+  git clone --depth 10 https://github.com/openhome/ohSongcast.git ; \
+  cd ohSongcast ; \
+  make prefix=/usr release=1 ; \
+  make prefix=/usr install ;
 
 # $ ls opt/owntone/make-it-longer/ohNet/Build/Obj/Posix/Release/*.so*
 # opt/owntone/make-it-longer/ohNet/Build/Obj/Posix/Release/libohNet.so
