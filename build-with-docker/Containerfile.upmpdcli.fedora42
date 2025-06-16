@@ -1,0 +1,293 @@
+from docker.io/library/fedora:42
+
+#  CPackRPM: source dir path '/opt/owntone/mariadb-server' is shorter than
+#  debuginfo sources dir path '/usr/src/debug/MariaDB-/src_0'! Source dir path
+#  must be longer than debuginfo sources dir path.  Set
+#  CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX variable to a shorter value or make
+#  source dir path longer.  Required for debuginfo packaging.  See
+#  documentation of CPACK_RPM_DEBUGINFO_PACKAGE variable for details.
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  # https://docs.fedoraproject.org/en-US/quick-docs/rpmfusion-setup/
+  # https://docs.fedoraproject.org/en-US/quick-docs/adding-or-removing-software-repositories-in-fedora/
+  sudo dnf install -y \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  sudo dnf install -y \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  # known NOT to work: 
+  # ffmpeg-devel
+  # openldap-devel
+  #   /usr/bin/ld: /usr/lib64/libcurl.so.4: undefined reference to `ldap_free_urldesc@OPENLDAP_2.200'
+  #   /usr/bin/ld: /usr/lib64/libcurl.so.4: undefined reference to `ldap_sasl_bind@OPENLDAP_2.200'
+  dnf -y install git cmake meson pkgconf-pkg-config libmicrohttpd-devel \
+    libcurl-devel gcc-c++ expat-devel jsoncpp-devel libmpdclient-devel ; \
+  dnf install -y --allowerasing libcurl-minimal; \
+  mkdir /opt/owntone/make-it-longer || true; \
+  cd /opt/owntone/make-it-longer; \
+  # https://framagit.org/medoc92/npupnp
+  # https://www.lesbonscomptes.com/upmpdcli/npupnp-doc/libnpupnp.html
+  git clone --depth 10 https://framagit.org/medoc92/npupnp.git ; \
+  cd npupnp ; \
+  meson setup -Dprefix=/usr builddir . ; \
+  meson compile -C builddir ; \
+  meson install -C builddir ; \
+  #cd builddir ; \
+  #ninja; \
+  #sudo ninja install;
+  cd /opt/owntone/make-it-longer; \
+  # https://framagit.org/medoc92/upmpdcli
+  # https://www.lesbonscomptes.com/upmpdcli/
+  git clone --depth 10 https://framagit.org/medoc92/upmpdcli.git ; \
+  cd upmpdcli ; \
+  meson setup -Dprefix=/usr builddir . ; \
+  meson compile -C builddir ; \
+  meson install -C builddir ;
+
+# Installing libnpupnp.so.13.3.1 to /usr/lib64
+# Installing /opt/owntone/make-it-longer/npupnp/inc/netif.h to /usr/include/npupnp
+# Installing /opt/owntone/make-it-longer/npupnp/inc/upnpdebug.h to /usr/include/npupnp
+# Installing /opt/owntone/make-it-longer/npupnp/inc/upnpdescription.h to /usr/include/npupnp
+# Installing /opt/owntone/make-it-longer/npupnp/inc/UpnpGlobal.h to /usr/include/npupnp
+# Installing /opt/owntone/make-it-longer/npupnp/inc/upnp.h to /usr/include/npupnp
+# Installing /opt/owntone/make-it-longer/npupnp/inc/upnptools.h to /usr/include/npupnp
+# Installing /opt/owntone/make-it-longer/npupnp/builddir/inc/upnpconfig.h to /usr/include/npupnp
+# Installing /opt/owntone/make-it-longer/npupnp/builddir/meson-private/libnpupnp.pc to /usr/lib64/pkgconfig
+# Installing symlink pointing to libnpupnp.so.13.3.1 to /usr/lib64/libnpupnp.so.13
+# Installing symlink pointing to libnpupnp.so.13 to /usr/lib64/libnpupnp.so
+
+# Without further configuration, upmpdcli is build against () libupnpp:
+#
+# Run-time dependency libupnpp found: NO (tried pkgconfig and cmake)
+# Looking for a fallback subproject for the dependency libupnpp
+# Executing subproject libupnpp 
+
+# Installing subdir /opt/owntone/make-it-longer/upmpdcli/rdpl2stream to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/AUTHORS to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/AsfPlaylistDecoder.py to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/AsxPlaylistDecoder.py to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/CONTRIBUTORS to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/COPYING to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/M3uPlaylistDecoder.py to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/PlsPlaylistDecoder.py to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/README to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/RamPlaylistDecoder.py to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/StreamDecoder.py to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/UrlInfo.py to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/XspfPlaylistDecoder.py to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/common.py to /usr/share/upmpdcli/rdpl2stream
+# Installing /opt/owntone/make-it-longer/upmpdcli/rdpl2stream/fetchStream.py to /usr/share/upmpdcli/rdpl2stream
+# Installing subdir /opt/owntone/make-it-longer/upmpdcli/samplescripts to /usr/share/upmpdcli/src_scripts
+# Installing /opt/owntone/make-it-longer/upmpdcli/samplescripts/Analog-Input to /usr/share/upmpdcli/src_scripts
+# Installing subdir /opt/owntone/make-it-longer/upmpdcli/src/radio_scripts to /usr/share/upmpdcli/radio_scripts
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/radio_scripts/mother-earth-meta.py to /usr/share/upmpdcli/radio_scripts
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/radio_scripts/npo-dynamic-art.py to /usr/share/upmpdcli/radio_scripts
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/radio_scripts/npo-funx-dynamic-art.py to /usr/share/upmpdcli/radio_scripts
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/radio_scripts/radio-france-meta.py to /usr/share/upmpdcli/radio_scripts
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/radio_scripts/radio-paradise-get-art.sh to /usr/share/upmpdcli/radio_scripts
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/radio_scripts/radio-paradise-get-flac.py to /usr/share/upmpdcli/radio_scripts
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/radio_scripts/radio-paradise-meta.py to /usr/share/upmpdcli/radio_scripts
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/radio_scripts/radiolist.conf to /usr/share/upmpdcli/radio_scripts
+# Installing subdir /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins to /usr/share/upmpdcli/cdplugins
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/bbc/bbc-app.py to /usr/share/upmpdcli/cdplugins/bbc
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/hra/hra-app.py to /usr/share/upmpdcli/cdplugins/hra
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/hra/hraapi.py to /usr/share/upmpdcli/cdplugins/hra
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/hra/session.py to /usr/share/upmpdcli/cdplugins/hra
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/codec.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/constants.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/element_type.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/identifier_util.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/item_identifier.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/item_identifier_key.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/mother-earth-radio-app.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/radio_station_entry.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/radio_stations.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/tag_type.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/mother-earth-radio/upnp_util.py to /usr/share/upmpdcli/cdplugins/mother-earth-radio
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/pycommon/cmdtalk.py to /usr/share/upmpdcli/cdplugins/pycommon
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/pycommon/cmdtalkplugin.py to /usr/share/upmpdcli/cdplugins/pycommon
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/pycommon/conftree.py to /usr/share/upmpdcli/cdplugins/pycommon
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/pycommon/routing.py to /usr/share/upmpdcli/cdplugins/pycommon
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/pycommon/upmpdmeta.py to /usr/share/upmpdcli/cdplugins/pycommon
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/pycommon/upmplgmodels.py to /usr/share/upmpdcli/cdplugins/pycommon
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/pycommon/upmplgutils.py to /usr/share/upmpdcli/cdplugins/pycommon
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/pycommon/upradioconf.py to /usr/share/upmpdcli/cdplugins/pycommon
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/pycommon/xbmcplug.py to /usr/share/upmpdcli/cdplugins/pycommon
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/qobuz/__init__.py to /usr/share/upmpdcli/cdplugins/qobuz
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/qobuz/qobuz-app.py to /usr/share/upmpdcli/cdplugins/qobuz
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/qobuz/session.py to /usr/share/upmpdcli/cdplugins/qobuz
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/qobuz/api/__init__.py to /usr/share/upmpdcli/cdplugins/qobuz/api
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/qobuz/api/raw.py to /usr/share/upmpdcli/cdplugins/qobuz/api
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/qobuz/api/spoofbuz.py to /usr/share/upmpdcli/cdplugins/qobuz/api
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-browser/radio-browser-app.py to /usr/share/upmpdcli/cdplugins/radio-browser
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/codec.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/constants.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/element_type.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/identifier_util.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/item_identifier.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/item_identifier_key.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/radio-paradise-app.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/radio_station_entry.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/radio_stations.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/tag_type.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/radio-paradise/upnp_util.py to /usr/share/upmpdcli/cdplugins/radio-paradise
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/TODO.md to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/album_util.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/art_retriever.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/cache_actions.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/cache_manager_provider.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/cache_type.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/caching.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/codec.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/codec_delimiter_style.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/config.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/connector_provider.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/constants.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/element_type.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/entry_creator.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/identifier_util.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/item_identifier.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/item_identifier_key.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/msgproc_provider.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/option_key.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/option_util.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/persistence.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/persistence_constants.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/radio_entry_type.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/release.md to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/request_cache.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/retrieved_art.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/search_type.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/subsonic-app.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/subsonic_init.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/subsonic_init_provider.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/subsonic_util.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/tag_type.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/upnp_util.py to /usr/share/upmpdcli/cdplugins/subsonic
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/images/static/unknown-artist.svg to /usr/share/upmpdcli/cdplugins/subsonic/images/static
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/subsonic/images/static/unknown-cover.svg to /usr/share/upmpdcli/cdplugins/subsonic/images/static
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/TODO.md to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/album_adapter.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/album_sort_criteria.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/artist_sort_criteria.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/codec.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/config.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/constants.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/context.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/context_key.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/element_type.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/get_credentials.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/identifier_util.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/item_identifier.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/item_identifier_key.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/lafv_matcher.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/msgproc_provider.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/option_key.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/persistence.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/played_album.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/played_track.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/played_track_adapter.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/played_track_request.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/release.md to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/search_type.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/streaming_info.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/tag_type.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/tidal-app.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/tidal_page_definition.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/tidal_track_adapter.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/tidal_util.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/tile_image.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/tile_type.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/track_adapter.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/tidal/upnp_util.py to /usr/share/upmpdcli/cdplugins/tidal
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/upradios/upradios-app.py to /usr/share/upmpdcli/cdplugins/upradios
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/bottle.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/minimconfig.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/minimtagfixer.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/rclconfig-fields to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/rclconfig-mimeconf to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/rclconfig-mimemap to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/rwlock.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprcl-app.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprclfolders.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprclhttp.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprclindex.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprclinit.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprclplaylists.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprclsearch.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprcltags.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprcltagscreate.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprcluntagged.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/uprclutils.py to /usr/share/upmpdcli/cdplugins/uprcl
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/bottle/static/style.css to /usr/share/upmpdcli/cdplugins/uprcl/bottle/static
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/bottle/views/footer.tpl to /usr/share/upmpdcli/cdplugins/uprcl/bottle/views
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/bottle/views/header.tpl to /usr/share/upmpdcli/cdplugins/uprcl/bottle/views
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/cdplugins/uprcl/bottle/views/main.tpl to /usr/share/upmpdcli/cdplugins/uprcl/bottle/views
+# Installing subprojects/libupnpp/libupnpp.so.1.0.3 to /usr/lib64
+# Installing upmpdcli to /usr/bin
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/base64.hxx to /usr/include/libupnpp
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/log.h to /usr/include/libupnpp
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/log.hxx to /usr/include/libupnpp
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/soaphelp.hxx to /usr/include/libupnpp
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/upnpavutils.hxx to /usr/include/libupnpp
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/upnperrcodes.hxx to /usr/include/libupnpp
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/upnppexports.hxx to /usr/include/libupnpp
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/upnpplib.hxx to /usr/include/libupnpp
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/upnpputils.hxx to /usr/include/libupnpp
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/device/device.hxx to /usr/include/libupnpp/device
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/device/service.hxx to /usr/include/libupnpp/device
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/device/vdir.hxx to /usr/include/libupnpp/device
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/avtransport.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/cdircontent.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/cdirectory.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/conman.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/description.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/device.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/discovery.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/linnsongcast.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/mediarenderer.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/mediaserver.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/ohinfo.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/ohplaylist.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/ohproduct.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/ohradio.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/ohreceiver.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/ohsender.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/ohtime.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/ohvolume.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/renderingcontrol.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/service.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/subprojects/libupnpp/libupnpp/control/typedservice.hxx to /usr/include/libupnpp/control
+# Installing /opt/owntone/make-it-longer/upmpdcli/man/upmpdcli.1 to /usr/share/man/man1
+# Installing /opt/owntone/make-it-longer/upmpdcli/man/upmpdcli.conf.5 to /usr/share/man/man5
+# Installing /opt/owntone/make-it-longer/upmpdcli/builddir/meson-private/libupnpp.pc to /usr/lib64/pkgconfig
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/AVTransport.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/ConnectionManager.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/OHCredentials.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/OHInfo.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/OHPlaylist.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/OHProduct.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/OHRadio.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/OHReceiver.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/OHTime.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/OHVolume.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/RenderingControl.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/description.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/icon.png to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/ContentDirectory.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/mediaserver/MS-description.xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/presentation.html to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/protocolinfo.txt to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/upmpdcli.conf-dist to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/upmpdcli.conf-xml to /usr/share/upmpdcli
+# Installing /opt/owntone/make-it-longer/upmpdcli/src/upmpdcli.conf-dist to /etc
+# Installing symlink pointing to libupnpp.so.1.0.3 to /usr/lib64/libupnpp.so.17
+# Installing symlink pointing to libupnpp.so.17 to /usr/lib64/libupnpp.so
+# Running custom install script '/opt/owntone/make-it-longer/upmpdcli/tools/installconfig.sh'
+
+
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
+

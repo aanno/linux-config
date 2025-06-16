@@ -24,7 +24,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.owntone.fedora42;
+  -f Containerfile.upmpdcli.fedora42;
 
 # all except ..
 tar cvfz owntone.tar.gz ./opt/
