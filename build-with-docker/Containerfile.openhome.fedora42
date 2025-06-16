@@ -1,0 +1,90 @@
+from docker.io/library/fedora:42
+
+#  CPackRPM: source dir path '/opt/owntone/mariadb-server' is shorter than
+#  debuginfo sources dir path '/usr/src/debug/MariaDB-/src_0'! Source dir path
+#  must be longer than debuginfo sources dir path.  Set
+#  CPACK_RPM_BUILD_SOURCE_DIRS_PREFIX variable to a shorter value or make
+#  source dir path longer.  Required for debuginfo packaging.  See
+#  documentation of CPACK_RPM_DEBUGINFO_PACKAGE variable for details.
+
+RUN set -ex;\
+  mkdir /opt/owntone || true; \
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  # https://docs.fedoraproject.org/en-US/quick-docs/rpmfusion-setup/
+  # https://docs.fedoraproject.org/en-US/quick-docs/adding-or-removing-software-repositories-in-fedora/
+  sudo dnf install -y \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  sudo dnf install -y \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install git gcc-c++ rsync python3-devel python3-setuptools \
+     dotnet-sdk-9.0 java-21-openjdk-devel pkgconf-pkg-config cmake \
+     python3-requests python3-boto3 which tree ; \
+  # on linux the openhome stuff uses donnet under ~/.dotnet
+  mkdir -p ~/.dotnet; \
+  ln -s /usr/sbin/dotnet ~/.dotnet/dotnet || true; \
+  mkdir /opt/owntone/make-it-longer || true; \
+  cd /opt/owntone/make-it-longer; \
+  # http://openhome.org/pages/develop/source.html
+  git clone --depth 10 https://github.com/openhome/ohdevtools.git ; \
+  cd ohdevtools ; \
+  # https://github.com/openhome/ohNet/blob/master/INSTALL.txt
+  # experimental: https://github.com/openhome/ohNet/blob/master/CMakeLists.txt
+  # On Linux:
+  #   .NET 6.0+ (optional, required for changes to service descriptions)
+  #   Java (optional, required for building Java bindings)
+  cd /opt/owntone/make-it-longer; \
+  git clone --depth 10 https://github.com/openhome/ohNet.git ; \
+  cd ohNet ; \
+  # ERROR: No AWS credentials, and unable to fetch them (need connection to Linn HQ network)
+  ./go fetch --all || true ; \
+  which dotnet ; \
+  make prefix=/usr ; \
+  make prefix=/usr ohNetCore proxies devices TestFramework ohNet.net.dll ; \
+  # install : install-pkgconf install-libs install-includes
+  sudo make prefix=/usr install-libs install-includes \
+  # sudo make install ; \
+# uset4=yes -> no ?
+# + sudo make install
+# CROSS_COMPILE: 
+# Machine reported by compiler is: x86_64-redhat-linux
+# Machine reported by uname is: Linux
+# PLATFORM: 
+# Building for system Linux and architecture x64
+# mkdir -p Generated
+# o Generated/Proxies.mak OpenHome/Net/T4/Templates/CpUpnpMakeProxies.tt -a xml:OpenHome/Net/Service/Services.xml
+# make: o: No such file or directory
+# make: [Common.mak:1383: Generated/Proxies.mak] Error 127 (ignored)
+# Attention: a makefile has been re-generated.
+# mkdir -p Generated
+# o Generated/Devices.mak OpenHome/Net/T4/Templates/DvUpnpMakeDevices.tt -a xml:OpenHome/Net/Service/Services.xml
+# make: o: No such file or directory
+# make: [Common.mak:1388: Generated/Devices.mak] Error 127 (ignored)
+# Attention: a makefile has been re-generated.
+# make: *** No rule to make target 'tt', needed by 'install-pkgconf'.  Stop.
+  cd /opt/owntone/make-it-longer; \
+  git clone --depth 10 https://github.com/openhome/ohNetGenerated.git ; \
+  cd ohNet ; \
+  ./go fetch --all || true ; \
+  make prefix=/usr ; \
+  make prefix=/usr JavaAll;
+  sudo make prefix=/usr install uset4=no ;
+
+# $ ls opt/owntone/make-it-longer/ohNet/Build/Obj/Posix/Release/*.so*
+# opt/owntone/make-it-longer/ohNet/Build/Obj/Posix/Release/libohNet.so
+# ls opt/owntone/make-it-longer/ohNet/Build/Include/OpenHome/
+
+
+# --with-openhome=topOpenhomeDir
+#                         Set the path for the directory where ohNet,
+#                         ohNetGenerated, ohdevtools, ohTopology and
+#                         ohSongcast were extracted and built
+# https://github.com/openhome?q=&type=all&language=&sort=
+# https://github.com/openhome/ohTopology
+# https://github.com/openhome/ohdevtools
+# https://github.com/openhome/ohNet
+# https://github.com/openhome/ohNetGenerated
+# https://github.com/openhome/ohSongcast
+
+# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
+# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
