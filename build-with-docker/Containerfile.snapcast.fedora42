@@ -24,7 +24,7 @@ RUN set -ex;\
   opus-devel pulseaudio-libs-devel\
   flac-devel soxr-devel libstdc++-static expat-devel boost-devel; \
   # git clone https://github.com/badaix/snapcast.git; \
-  git clone --depth 10 -b fix/1363-jack-on-fedora https://github.com/aanno/snapcast.git
+  git clone --depth 10 -b fix/1363-jack-on-fedora https://github.com/aanno/snapcast.git ; \
   cd snapcast; \
   mkdir build; \
   cd build; \
