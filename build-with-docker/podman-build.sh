@@ -24,7 +24,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.openhome.fedora42;
+  -f Containerfile.snapcast.fedora42;
 
 # all except ..
 # tar cvfz owntone.tar.gz ./opt/
@@ -46,16 +46,16 @@ podman build --pull -t owntone \
 # sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
 # ... snapcast
-# wget https://github.com/badaix/snapweb/releases/download/v0.8.0/snapweb.zip
-# pushd opt
-#   pushd usr/share/snapserver/snapweb/
-#     unzip -o ../../../../../snapweb.zip 
-#   popd
-# tar cvfz ../snapcast.tar.gz ./usr ./etc
-# cd ..
-# cp snapcast-fedora.fpm .fpm
-# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
-# popd
+wget https://github.com/badaix/snapweb/releases/download/v0.8.0/snapweb.zip
+pushd opt
+  pushd usr/share/snapserver/snapweb/
+    unzip -o ../../../../../snapweb.zip 
+  popd
+  tar cvfz ../snapcast.tar.gz ./usr ./etc
+  cd ..
+  cp snapcast-fedora.fpm .fpm
+  sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+popd
 
 # rm -rf ./opt
 # podman rmi localhost/owntone

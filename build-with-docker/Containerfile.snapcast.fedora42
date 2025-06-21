@@ -1,4 +1,4 @@
-from docker.io/library/fedora:41
+from docker.io/library/fedora:42
 
 # https://github.com/badaix/snapcast/blob/develop/doc/build.md
 
@@ -23,12 +23,13 @@ RUN set -ex;\
   alsa-lib-devel avahi-devel gcc-c++ libatomic libvorbis-devel \
   opus-devel pulseaudio-libs-devel\
   flac-devel soxr-devel libstdc++-static expat-devel boost-devel; \
-  git clone https://github.com/badaix/snapcast.git; \
+  # git clone https://github.com/badaix/snapcast.git; \
+  git clone --depth 10 -b fix/1363-jack-on-fedora https://github.com/aanno/snapcast.git
   cd snapcast; \
   mkdir build; \
   cd build; \
   cmake .. -DBUILD_CLIENT=ON -DBUILD_SERVER=ON -DBUILD_WITH_PULSE=ON \
-    -DBUILD_WITH_JACK=OFF -DCMAKE_INSTALL_FULL_SYSCONFDIR=/etc; \
+    -DBUILD_WITH_JACK=ON -DCMAKE_INSTALL_FULL_SYSCONFDIR=/etc; \
   cmake --build .; \
   cmake --install .; \
   cp /usr/bin/snapserver /opt/usr/bin/; \
