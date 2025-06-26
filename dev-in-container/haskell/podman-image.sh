@@ -3,18 +3,22 @@
 set -xe
 
 # https://stackoverflow.com/questions/30646943/how-to-avahi-browse-from-a-docker-container
-CWD=`pwd`/../../build-with-docker
+# CWD=`pwd`/../../build-with-docker
+# TODO
+CWD=/var/home/tpasch/scm/linux-config/build-with-docker
 REALCWD=`pwd`
+
+cp $HOME/.gitconfig .
 
 #rm -rf ./opt || true
 #rm *.gz *.tgz || true
 #podman rmi localhost/owntone || true
 
-mkdir -p $CWD/opt/owntone \
+mkdir -p \
   $CWD/var/lib/apt $CWD/var/cache/apt \
   $CWD/var/lib/dnf $CWD/var/cache/dnf \
   $CWD/.cargo $CWD/.rustup;
-rm -rf $CWD/opt/owntone/* || true;
+# rm -rf $CWD/opt/owntone/* || true;
 # https://github.com/containers/podman/issues/24934
 # --userns=keep-id:uid=1000,gid=1000 \
 podman build \
@@ -27,5 +31,7 @@ podman build \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
   -v $REALCWD:/build:z \
-  -v $HOME/.ghcup:/home/vscode/.ghcup \
-  -v $HOME/.stack:/home/vscode/.stack
+  -v $HOME/.ghcup:/home/vscode/.ghcup:z \
+  -v $HOME/.stack:/home/vscode/.stack:z \
+  -v $HOME/.cabal:/home/vscode/.cabal:z
+

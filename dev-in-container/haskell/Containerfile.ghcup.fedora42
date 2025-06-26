@@ -5,22 +5,24 @@ RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -u 1000 vscode
 RUN set -ex;\
   cd; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
-  dnf -y install patch cmake tree; \
+  # dnf -y install patch cmake tree; \
   # https://github.com/taglib/taglib/blob/master/INSTALL.md \
   # dnf -y install automake gcc gcc-c++ boost-devel check-devel glibc-devel openssl-devel \
   #  git cppunit-devel utf8cpp-devel  zlib-ng-compat-devel  wavpack-devel  libvorbis-devel \
   #  libmp4v2-devel libogg-devel flac-devel libaiff-devel pkgconf  pkgconf-pkg-config \
   #  speex-devel libmpcdec-devel opus-devel ; \
-  dnf -y install @development-tools pkgconf pkgconf-pkg-config \
+  dnf -y install @development-tools pkgconf pkgconf-pkg-config patch \
     which tree procs nano top git openssh-server openssh file iproute \
     gcc gcc-c++ gmp gmp-devel make ncurses ncurses-compat-libs xz perl; \
-  mkdir -p /home/vscode /workspaces/ghc ; \
+  mkdir -p /home/vscode ; \
+  chown -R 1000:1000 /home/vscode ; \
   # chown -R vscode:users /build; \
-  chmod a+x /build/*.sh
+  chmod a+x /build/*.sh ; \
+  id
 
 USER vscode
 WORKDIR /workspaces/ghc
-
+COPY .bashrc .gitconfig /home/vscode/
 
 RUN \
   cd ; \
@@ -38,5 +40,6 @@ RUN \
   # curl -sSL https://get.haskellstack.org/ | sh ; \
   cat /build/stack.sh | sh ; \
   #git clone --depth 10 https://github.com/taglib/taglib.git; \
-  ls 
+  ls ; \
+  id
 
