@@ -1,3 +1,6 @@
+/dev-in-container/haskell/.gitconfig
+/dev-in-container/haskell/ghcup.sh
+/dev-in-container/haskell/stack.sh
 *.orig
 ._*
 /build-with-docker/spotifyd
