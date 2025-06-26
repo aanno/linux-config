@@ -1,0 +1,29 @@
+from docker.io/library/fedora:42
+
+RUN set -ex;\
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install patch cmake tree; \
+  # https://github.com/taglib/taglib/blob/master/INSTALL.md \
+  # dnf -y install automake gcc gcc-c++ boost-devel check-devel glibc-devel openssl-devel \
+  #  git cppunit-devel utf8cpp-devel  zlib-ng-compat-devel  wavpack-devel  libvorbis-devel \
+  #  libmp4v2-devel libogg-devel flac-devel libaiff-devel pkgconf  pkgconf-pkg-config \
+  #  speex-devel libmpcdec-devel opus-devel ; \
+  dnf -y install @development-tools pkgconf pkgconf-pkg-config \
+    which tree procs nano top git openssh-server openssh file iproute \
+    gcc gcc-c++ gmp gmp-devel make ncurses ncurses-compat-libs xz perl; \
+  mkdir dev; \
+  cd dev; \
+  # https://www.haskell.org/ghcup/
+  # https://stackoverflow.com/questions/72952659/how-to-do-unattended-haskell-installation
+  # curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh ; \
+  # sudo apt install -y build-essential curl libffi-dev libffi8ubuntu1 libgmp-dev libgmp10 libncurses-dev libncurses5 libtinfo5; \
+  curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org \
+    | BOOTSTRAP_HASKELL_NONINTERACTIVE=1 BOOTSTRAP_HASKELL_GHC_VERSION=latest BOOTSTRAP_HASKELL_CABAL_VERSION=latest \
+    BOOTSTRAP_HASKELL_INSTALL_STACK=1 BOOTSTRAP_HASKELL_INSTALL_HLS=1 BOOTSTRAP_HASKELL_ADJUST_BASHRC=P \
+    sh ; \
+  # https://docs.haskellstack.org/en/stable/
+  curl -sSL https://get.haskellstack.org/ | sh ; \
+  #git clone --depth 10 https://github.com/taglib/taglib.git; \
+  ls 
+
