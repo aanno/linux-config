@@ -1,5 +1,7 @@
 from docker.io/library/fedora:42
 
+RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -u 1000 vscode
+
 RUN set -ex;\
   cd; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
@@ -12,18 +14,29 @@ RUN set -ex;\
   dnf -y install @development-tools pkgconf pkgconf-pkg-config \
     which tree procs nano top git openssh-server openssh file iproute \
     gcc gcc-c++ gmp gmp-devel make ncurses ncurses-compat-libs xz perl; \
-  mkdir dev; \
-  cd dev; \
+  mkdir -p /home/vscode /workspaces/ghc ; \
+  # chown -R vscode:users /build; \
+  chmod a+x /build/*.sh
+
+USER vscode
+WORKDIR /workspaces/ghc
+
+
+RUN \
+  cd ; \
+  pwd ; \
   # https://www.haskell.org/ghcup/
   # https://stackoverflow.com/questions/72952659/how-to-do-unattended-haskell-installation
   # curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh ; \
   # sudo apt install -y build-essential curl libffi-dev libffi8ubuntu1 libgmp-dev libgmp10 libncurses-dev libncurses5 libtinfo5; \
-  curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org \
+  # curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org \
+  cat /build/ghcup.sh \
     | BOOTSTRAP_HASKELL_NONINTERACTIVE=1 BOOTSTRAP_HASKELL_GHC_VERSION=latest BOOTSTRAP_HASKELL_CABAL_VERSION=latest \
     BOOTSTRAP_HASKELL_INSTALL_STACK=1 BOOTSTRAP_HASKELL_INSTALL_HLS=1 BOOTSTRAP_HASKELL_ADJUST_BASHRC=P \
     sh ; \
   # https://docs.haskellstack.org/en/stable/
-  curl -sSL https://get.haskellstack.org/ | sh ; \
+  # curl -sSL https://get.haskellstack.org/ | sh ; \
+  cat /build/stack.sh | sh ; \
   #git clone --depth 10 https://github.com/taglib/taglib.git; \
   ls 
 
