@@ -30,6 +30,9 @@ podman run --rm -it \
   -v $HOME/.stack:/home/vscode/.stack:z \
   -v $HOME/.cabal:/home/vscode/.cabal:z \
   -v $REALCWD:/workspaces/ghc:z \
+  -v $REALCWD/config.yaml:/home/vscode/.stack/config.yaml:z \
+  -v $REALCWD/cabal/config:/home/vscode/.cabal/config:z \
+  -v $REALCWD/ghcup/env:/home/vscode/.ghcup/env:z \
   localhost/ghc \
   /bin/bash;
 

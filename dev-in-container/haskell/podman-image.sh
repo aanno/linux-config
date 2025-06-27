@@ -37,7 +37,8 @@ podman build \
   -v $HOME/.stack:/home/vscode/.stack:z \
   -v $HOME/.cabal:/home/vscode/.cabal:z \
   -v $REALCWD/config.yaml:/home/vscode/.stack/config.yaml:z \
-  -v $REALCWD/config:/home/vscode/.cabal/config:z
+  -v $REALCWD/cabal/config:/home/vscode/.cabal/config:z \
+  -v $REALCWD/ghcup/env:/home/vscode/.ghcup/env:z
 
 
 
