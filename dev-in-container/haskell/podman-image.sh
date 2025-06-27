@@ -7,6 +7,7 @@ set -xe
 # TODO
 CWD=/var/home/tpasch/scm/linux-config/build-with-docker
 REALCWD=`pwd`
+USERID=1001
 
 cp $HOME/.gitconfig .
 
@@ -27,7 +28,6 @@ podman build \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
   -v $CWD/var/lib/dnf:/var/lib/dnf:z \
   -v $CWD/var/cache/dnf:/var/cache/dnf:z \
-  -v $CWD/opt/owntone:/opt/owntone:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
   -v $REALCWD:/build:z \

@@ -7,6 +7,7 @@ set -xe
 # TODO
 CWD=/var/home/tpasch/scm/linux-config/build-with-docker
 REALCWD=`pwd`
+USERID=1001
 
 #rm -rf ./opt || true
 #rm *.gz *.tgz || true
@@ -18,12 +19,11 @@ mkdir -p \
   $CWD/.cargo $CWD/.rustup;
 # rm -rf $CWD/opt/owntone/* || true;
 podman run --rm -it \
-  --userns=keep-id:uid=1000,gid=1000 \
+  --userns=keep-id:uid=$USERID,gid=$USERID \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
   -v $CWD/var/lib/dnf:/var/lib/dnf:z \
   -v $CWD/var/cache/dnf:/var/cache/dnf:z \
-  -v $CWD/opt/owntone:/opt/owntone:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
   -v $HOME/.ghcup:/home/vscode/.ghcup:z \

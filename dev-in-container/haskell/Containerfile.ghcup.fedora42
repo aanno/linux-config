@@ -1,6 +1,7 @@
 from docker.io/library/fedora:42
 
-RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -u 1000 vscode
+ENV userid=1001
+RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -u $userid vscode
 
 RUN set -ex;\
   cd; \
@@ -15,7 +16,7 @@ RUN set -ex;\
     which tree procs nano top git openssh-server openssh file iproute \
     gcc gcc-c++ gmp gmp-devel make ncurses ncurses-compat-libs xz perl; \
   mkdir -p /home/vscode ; \
-  chown -R 1000:1000 /home/vscode ; \
+  # chown -R $userid:$userid /home/vscode ; \
   # chown -R vscode:users /build; \
   chmod a+x /build/*.sh ; \
   id
