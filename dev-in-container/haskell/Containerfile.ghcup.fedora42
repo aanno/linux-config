@@ -1,7 +1,7 @@
 from docker.io/library/fedora:42
 
 ENV userid=1001
-RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -u $userid vscode
+RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -p vscode -u $userid vscode
 
 RUN set -ex;\
   cd; \
@@ -13,12 +13,14 @@ RUN set -ex;\
   #  libmp4v2-devel libogg-devel flac-devel libaiff-devel pkgconf  pkgconf-pkg-config \
   #  speex-devel libmpcdec-devel opus-devel ; \
   dnf -y install @development-tools pkgconf pkgconf-pkg-config patch \
-    which tree procs nano top git openssh-server openssh file iproute \
+    which tree procs nano top git openssh-server openssh file iproute strace \
     gcc gcc-c++ gmp gmp-devel make ncurses ncurses-compat-libs xz perl; \
   mkdir -p /home/vscode ; \
-  # chown -R $userid:$userid /home/vscode ; \
+  chown $userid:$userid /home/vscode ; \
   # chown -R vscode:users /build; \
   chmod a+x /build/*.sh ; \
+  echo "vscode:vscode" | chpasswd ; \
+  echo "root:root" | chpasswd ; \
   id
 
 USER vscode

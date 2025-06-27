@@ -10,6 +10,8 @@ REALCWD=`pwd`
 USERID=1001
 
 cp $HOME/.gitconfig .
+cp $HOME/.cabal/config .
+cp $HOME/.stack/config.yaml .
 
 #rm -rf ./opt || true
 #rm *.gz *.tgz || true
@@ -33,5 +35,9 @@ podman build \
   -v $REALCWD:/build:z \
   -v $HOME/.ghcup:/home/vscode/.ghcup:z \
   -v $HOME/.stack:/home/vscode/.stack:z \
-  -v $HOME/.cabal:/home/vscode/.cabal:z
+  -v $HOME/.cabal:/home/vscode/.cabal:z \
+  -v $REALCWD/config.yaml:/home/vscode/.stack/config.yaml:z \
+  -v $REALCWD/config:/home/vscode/.cabal/config:z
+
+
 
