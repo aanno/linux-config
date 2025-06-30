@@ -5,9 +5,11 @@ set -xe
 # https://stackoverflow.com/questions/30646943/how-to-avahi-browse-from-a-docker-container
 # CWD=`pwd`/../../build-with-docker
 # TODO
-CWD=/var/home/tpasch/scm/linux-config/build-with-docker
+# CWD=/var/home/tpasch/scm/linux-config/build-with-docker
+CWD=/home/tpasch/dev/scm/aanno/github/linux-config
 REALCWD=`pwd`
-USERID=1001
+# USERID=1001
+USERID=1000
 
 cp $HOME/.gitconfig .
 cp $HOME/.cabal/config .
