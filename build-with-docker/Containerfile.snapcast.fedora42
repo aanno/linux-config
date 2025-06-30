@@ -24,12 +24,13 @@ RUN set -ex;\
   opus-devel pulseaudio-libs-devel\
   flac-devel soxr-devel libstdc++-static expat-devel boost-devel; \
   # git clone https://github.com/badaix/snapcast.git; \
-  git clone --depth 10 -b feature/1371-server-pipewire-support https://github.com/aanno/snapcast.git ; \
+  # git clone --depth 10 -b feature/1371-server-pipewire-support https://github.com/aanno/snapcast.git ; \
+  git clone --depth 10 -b feature/client-pipewire-support https://github.com/aanno/snapcast.git ; \
   cd snapcast; \
   mkdir build; \
   cd build; \
   cmake .. -DBUILD_CLIENT=ON -DBUILD_SERVER=ON -DBUILD_WITH_PULSE=ON \
-    -DBUILD_WITH_JACK=ON -DBUILD_WITH_PIPEWIRE=ON -DCMAKE_INSTALL_FULL_SYSCONFDIR=/etc; \
+    -DBUILD_WITH_JACK=OFF -DBUILD_WITH_PIPEWIRE=ON -DCMAKE_INSTALL_FULL_SYSCONFDIR=/etc; \
   cmake --build .; \
   cmake --install .; \
   cp /usr/bin/snapserver /opt/usr/bin/; \
