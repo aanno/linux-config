@@ -1,6 +1,7 @@
 from docker.io/library/fedora:42
 
-ENV userid=1001
+# ENV userid=1001
+ENV userid=1000
 RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -p vscode -u $userid vscode
 
 RUN set -ex;\
@@ -14,6 +15,7 @@ RUN set -ex;\
   #  speex-devel libmpcdec-devel opus-devel ; \
   dnf -y install @development-tools pkgconf pkgconf-pkg-config patch \
     which tree procs nano top git openssh-server openssh file iproute strace \
+    gawk \
     gcc gcc-c++ gmp gmp-devel make ncurses ncurses-compat-libs xz perl; \
   mkdir -p /home/vscode ; \
   chown $userid:$userid /home/vscode ; \

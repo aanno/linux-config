@@ -10,10 +10,13 @@ CWD=/home/tpasch/dev/scm/aanno/github/linux-config
 REALCWD=`pwd`
 # USERID=1001
 USERID=1000
+# GHCHOME=$HOME
+# .ghcup .stack .cabal are placed special here
+GHCHOME=/stratis/home/tpasch/dev
 
 cp $HOME/.gitconfig .
-cp $HOME/.cabal/config .
-cp $HOME/.stack/config.yaml .
+cp $GHCHOME/.cabal/config .
+cp $GHCHOME/.stack/config.yaml .
 
 #rm -rf ./opt || true
 #rm *.gz *.tgz || true
@@ -35,9 +38,9 @@ podman build \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
   -v $REALCWD:/build:z \
-  -v $HOME/.ghcup:/home/vscode/.ghcup:z \
-  -v $HOME/.stack:/home/vscode/.stack:z \
-  -v $HOME/.cabal:/home/vscode/.cabal:z \
+  -v $GHCHOME/.ghcup:/home/vscode/.ghcup:z \
+  -v $GHCHOME/.stack:/home/vscode/.stack:z \
+  -v $GHCHOME/.cabal:/home/vscode/.cabal:z \
   -v $REALCWD/config.yaml:/home/vscode/.stack/config.yaml:z \
   -v $REALCWD/cabal/config:/home/vscode/.cabal/config:z \
   -v $REALCWD/ghcup/env:/home/vscode/.ghcup/env:z
