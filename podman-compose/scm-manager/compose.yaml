@@ -1,0 +1,23 @@
+services:
+  scm-manager:
+    # image: docker.io/scmmanager/scm-manager:3.8.0-alpine
+    build: .
+    container_name: scm-manager
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      # if the ssh plugin is used
+      - "2222:2222"
+    volumes:
+      #- scm-manager:/var/lib/scm
+      - ./scm-manager:/var/lib/scm:z
+
+#volumes:
+#  scmhome: { }
+
+# scm-manager  | Set http address binding to 0.0.0.0
+# scm-manager  | Set http port to 8080
+# scm-manager  | Set webapp war file to /opt/scm-server/var/webapp/scm-webapp.war
+# scm-manager  | Set webapp temp directory to /var/cache/scm/work/webapp
+# scm-manager  | Set webapp max form content size to 200000
+# scm-manager  | Set webapp max form keys to 1000
