@@ -1,0 +1,24 @@
+services:
+  music-assistant-server:
+    # <<< Desired release version here (or use beta to get the latest beta version)
+    image: ghcr.io/music-assistant/server:latest 
+    container_name: music-assistant-server
+    restart: unless-stopped
+    # Network mode must be set to host for MA to work correctly
+    network_mode: host
+    volumes:
+      # - ${USERDIR:-$HOME}/docker/music-assistant-server/data:/data/
+      # - /home/tpasch/mnt/musik:/data:ro,z
+      - ./music-assistant:/data:z
+      - /home/tpasch/owntone-test/music:/data/music1:ro,z
+    # privileged caps (and security-opt) needed to mount smb folders within the container
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+    security_opt:
+      # - apparmor:unconfined
+      - label=disable
+    environment:
+      # Provide logging level as environment variable.
+      # default=info, possible=(critical, error, warning, info, debug)
+      - LOG_LEVEL=debug
