@@ -1,6 +1,11 @@
 /dev-in-container/haskell/.gitconfig
 /dev-in-container/haskell/ghcup.sh
 /dev-in-container/haskell/stack.sh
+/dev-in-container/haskell/config
+/dev-in-container/haskell/config.yaml
+/podman-compose/music-assistant/music-assistant/
+/podman-compose/scm-manager/scm-manager/
+/.devcontainer
 *.orig
 ._*
 /build-with-docker/spotifyd
