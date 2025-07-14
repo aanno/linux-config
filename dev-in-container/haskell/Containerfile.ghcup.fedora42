@@ -4,6 +4,8 @@ from docker.io/library/fedora:42
 ENV userid=1000
 RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -p vscode -u $userid vscode
 
+COPY .bashrc .gitconfig /home/vscode/
+
 RUN set -ex;\
   cd; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
@@ -15,10 +17,10 @@ RUN set -ex;\
   #  speex-devel libmpcdec-devel opus-devel ; \
   dnf -y install @development-tools pkgconf pkgconf-pkg-config patch \
     which tree procs nano top git openssh-server openssh file iproute strace \
-    gawk \
+    gawk ux ripgrep yq jq python3-pip \
     gcc gcc-c++ gmp gmp-devel make ncurses ncurses-compat-libs xz perl; \
   mkdir -p /home/vscode ; \
-  chown $userid:$userid /home/vscode ; \
+  chown -R $userid:$userid /home/vscode ; \
   # chown -R vscode:users /build; \
   chmod a+x /build/*.sh ; \
   echo "vscode:vscode" | chpasswd ; \
@@ -27,11 +29,13 @@ RUN set -ex;\
 
 USER vscode
 WORKDIR /workspaces/ghc
-COPY .bashrc .gitconfig /home/vscode/
 
 RUN \
   cd ; \
   pwd ; \
+  curl https://get.volta.sh | bash ; \
+  volta install node ; \
+  volta install pnpm ; \
   # https://www.haskell.org/ghcup/
   # https://stackoverflow.com/questions/72952659/how-to-do-unattended-haskell-installation
   # curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh ; \
