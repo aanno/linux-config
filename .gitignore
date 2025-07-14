@@ -3,6 +3,8 @@
 /dev-in-container/haskell/stack.sh
 /dev-in-container/haskell/config
 /dev-in-container/haskell/config.yaml
+/dev-in-container/rust/rustup.sh
+/dev-in-container/rust/.gitconfig
 /podman-compose/music-assistant/music-assistant/
 /podman-compose/scm-manager/scm-manager/
 /.devcontainer

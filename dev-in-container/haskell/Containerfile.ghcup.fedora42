@@ -17,7 +17,7 @@ RUN set -ex;\
   #  speex-devel libmpcdec-devel opus-devel ; \
   dnf -y install @development-tools pkgconf pkgconf-pkg-config patch \
     which tree procs nano top git openssh-server openssh file iproute strace \
-    gawk ux ripgrep yq jq python3-pip \
+    gawk uv ripgrep ugrep agyq jq python3-pip \
     gcc gcc-c++ gmp gmp-devel make ncurses ncurses-compat-libs xz perl; \
   mkdir -p /home/vscode ; \
   chown -R $userid:$userid /home/vscode ; \

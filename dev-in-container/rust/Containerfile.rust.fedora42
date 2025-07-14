@@ -1,0 +1,39 @@
+from docker.io/library/fedora:42
+
+# ENV userid=1001
+ENV userid=1000
+RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -p vscode -u $userid vscode
+
+COPY .bashrc .gitconfig /home/vscode/
+
+RUN set -ex;\
+  cd; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  # dnf -y install patch cmake tree; \
+  # https://github.com/taglib/taglib/blob/master/INSTALL.md \
+  # dnf -y install automake gcc gcc-c++ boost-devel check-devel glibc-devel openssl-devel \
+  #  git cppunit-devel utf8cpp-devel  zlib-ng-compat-devel  wavpack-devel  libvorbis-devel \
+  #  libmp4v2-devel libogg-devel flac-devel libaiff-devel pkgconf  pkgconf-pkg-config \
+  #  speex-devel libmpcdec-devel opus-devel ; \
+  dnf -y install @development-tools pkgconf pkgconf-pkg-config patch \
+    which tree procs nano top git file iproute strace \
+    gawk uv ripgrep ugrep ag yq jq python3-pip \
+    make ; \
+  ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime; \
+  mkdir -p /home/vscode ; \
+  chown -R $userid:$userid /home/vscode ; \
+  chmod a+x /build/*.sh ; \
+  echo "vscode:vscode" | chpasswd ; \
+  echo "root:root" | chpasswd ; \
+  id
+
+USER vscode
+WORKDIR /workspaces/rust
+
+RUN \
+  cd ; \
+  pwd ; \
+  /build/rustup.sh -y ; \
+  ls ; \
+  id
+
