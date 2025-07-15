@@ -20,7 +20,8 @@ RUN set -ex;\
     gawk uv ripgrep ugrep ag yq jq python3-pip \
     gcc gcc-c++ gmp gmp-devel make ncurses ncurses-compat-libs xz perl; \
   mkdir -p /home/vscode ; \
-  chown -R $userid:$userid /home/vscode ; \
+  cd /home/vscode ; \
+  chown $userid:$userid /home/vscode .gitconfig .bashrc .volta ; \
   # chown -R vscode:users /build; \
   chmod a+x /build/*.sh ; \
   echo "vscode:vscode" | chpasswd ; \

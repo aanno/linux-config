@@ -21,7 +21,8 @@ RUN set -ex;\
     make ; \
   ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime; \
   mkdir -p /home/vscode ; \
-  chown -R $userid:$userid /home/vscode ; \
+  cd /home/vscode ; \
+  chown $userid:$userid /home/vscode .gitconfig .bashrc .volta ; \
   chmod a+x /build/*.sh ; \
   echo "vscode:vscode" | chpasswd ; \
   echo "root:root" | chpasswd ; \

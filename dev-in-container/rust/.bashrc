@@ -24,6 +24,9 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
 export CARGO_HOME=/home/vscode/.cargo; \
 export RUSTUP_HOME=/home/vscode/.rustup; \
 # export PATH="$CARGO_HOME/bin:$RUSTUP_HOME/bin:$PATH"
