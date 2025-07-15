@@ -31,6 +31,6 @@ export RUSTUP_HOME=/home/vscode/.rustup; \
 if [ -f "$HOME/.cargo/env" ]; then
   source "$HOME/.cargo/env"
 fi
-if [ -f ".venv/bin/activate" ]; then
-  source ".venv/bin/activate"
+if [ -f "$HOME/.venv/bin/activate" ]; then
+  source "$HOME/.venv/bin/activate"
 fi
