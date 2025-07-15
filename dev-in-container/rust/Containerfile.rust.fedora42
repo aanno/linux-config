@@ -41,6 +41,7 @@ RUN \
   volta install pnpm ; \
   /build/rustup.sh -y ; \
   rustup update ; \
+  sed -i '/\. "\$HOME\/\.cargo\/env"/d' ~/.bashrc ; \
   source ~/.bashrc ; \
   ls ; \
   id
