@@ -17,7 +17,7 @@ RUN set -ex;\
   #  speex-devel libmpcdec-devel opus-devel ; \
   dnf -y install @development-tools pkgconf pkgconf-pkg-config patch \
     which tree procs nano top git file iproute strace \
-    gawk uv ripgrep ugrep ag yq jq python3-pip \
+    gawk uv ripgrep ugrep ag yq jq \
     make ; \
   ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime; \
   mkdir -p /home/vscode ; \
@@ -33,7 +33,13 @@ WORKDIR /workspaces/rust
 RUN \
   cd ; \
   pwd ; \
+  bash /build/volta.sh; \
+  # https://pdm-project.org/en/latest/ \
+  # python3 /build/install-pdm.py ; \
+  volta install node ; \
+  volta install pnpm ; \
   /build/rustup.sh -y ; \
+  rustup update ; \
   ls ; \
   id
 
