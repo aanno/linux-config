@@ -36,10 +36,12 @@ RUN \
   bash /build/volta.sh; \
   # https://pdm-project.org/en/latest/ \
   # python3 /build/install-pdm.py ; \
+  source ~/.bashrc ; \
   volta install node ; \
   volta install pnpm ; \
   /build/rustup.sh -y ; \
   rustup update ; \
+  source ~/.bashrc ; \
   ls ; \
   id
 

@@ -26,4 +26,11 @@ unset rc
 
 export CARGO_HOME=/home/vscode/.cargo; \
 export RUSTUP_HOME=/home/vscode/.rustup; \
-export PATH="$CARGO_HOME/bin:$RUSTUP_HOME/bin:$PATH"
+# export PATH="$CARGO_HOME/bin:$RUSTUP_HOME/bin:$PATH"
+
+if [ -f "$HOME/.cargo/env" ]; then
+  source "$HOME/.cargo/env"
+fi
+if [ -f ".venv/bin/activate" ]; then
+  source ".venv/bin/activate"
+fi

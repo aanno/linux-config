@@ -5,6 +5,8 @@
 /dev-in-container/haskell/config.yaml
 /dev-in-container/rust/rustup.sh
 /dev-in-container/rust/.gitconfig
+/dev-in-container/rust/install-pdm.py
+/dev-in-container/rust/volta.sh
 /podman-compose/music-assistant/music-assistant/
 /podman-compose/scm-manager/scm-manager/
 /.devcontainer
