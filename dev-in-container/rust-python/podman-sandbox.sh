@@ -12,6 +12,7 @@ REALCWD=`pwd`
 USERID=1000
 
 mkdir -p \
+  $VENV/lib $VENV/include \
   $CWD/var/lib/apt $CWD/var/cache/apt \
   $CWD/var/lib/dnf $CWD/var/cache/dnf \
   $CWD/.cargo $CWD/.rustup;
@@ -27,7 +28,8 @@ podman run --rm -it \
   -v $PNPM_CACHE_DIR:/pnpm:z \
   -v $PIP_CACHE_DIR:/pip:z \
   -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
-  -v $VENV:/home/vscode/.venv:z \
+  -v $VENV/lib:/home/vscode/.venv/lib:z \
+  -v $VENV/include:/home/vscode/.venv/include:z \
   -v $REALCWD:/build:z \
   localhost/rust-python \
   /bin/bash;
