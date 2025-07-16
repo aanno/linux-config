@@ -1,0 +1,39 @@
+FROM localhost/rust
+
+USER root
+
+RUN set -ex;\
+  cd; \
+  dnf -y install maturin python3-devel python3-pip \
+    python-setuptools-wheel python3-setuptools_scm+toml python3-setuptools_scm+rich \
+    python3-setuptools-rust  python3-types-setuptools \
+    patchelf libpq;
+
+USER vscode
+
+ENV SHELL=/bin/bash
+
+RUN set -ex; \
+  cd ; \
+  pwd ; \
+  export PIP_CACHE_DIR=/pip ; \
+  echo "export PIP_CACHE_DIR=/pip" >>$HOME/.bashrc ; \
+  source $HOME/.bashrc ; \
+  python3 -m venv .venv || true ; \
+  source .venv/bin/activate ; \
+  ~/.volta/bin/pnpm set -g store-dir /pnpm ; \
+  ~/.volta/bin/pnpm setup ; \
+  source $HOME/.bashrc ; \
+  # ~/.volta/bin/pnpm install -g @anthropic-ai/claude-code ; \
+  pip install --upgrade pip ; \
+  pip install pre-commit maturin psycopg "psycopg[pool]" pgvector \
+    "sentence-transformers" ; \
+  # caches are not mounted on build (tp) \
+  # rm -r /pnpm/* /pip/* || true ; \
+  sed -i '/\. "\$HOME\/\.cargo\/env"/d' ~/.bashrc ; \
+  source $HOME/.bashrc ;
+
+  # must run later
+  # ~/.local/bin/pre-commit install ; \
+
+WORKDIR /workspaces/rust
