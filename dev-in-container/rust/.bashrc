@@ -24,8 +24,6 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
 
 export CARGO_HOME=/home/vscode/.cargo; \
 export RUSTUP_HOME=/home/vscode/.rustup; \
@@ -37,3 +35,19 @@ fi
 if [ -f "$HOME/.venv/bin/activate" ]; then
   source "$HOME/.venv/bin/activate"
 fi
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+export PIP_CACHE_DIR=/pip
+
+# pnpm
+export PNPM_HOME="/home/vscode/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+export COVERAGE_PROCESS_START=/workspaces/rust/.coveragerc
+
+# huggingface
+export HF_HOME=/hf

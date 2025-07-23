@@ -34,6 +34,7 @@ podman build \
   -v $PNPM_CACHE_DIR:/pnpm:z \
   -v $PIP_CACHE_DIR:/pip:z \
   -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
+  -v $HF_HOME:/hf:z \
   -v $VENV/lib:/home/vscode/.venv/lib:z \
   -v $VENV/include:/home/vscode/.venv/include:z \
   -v $REALCWD:/build:z ;

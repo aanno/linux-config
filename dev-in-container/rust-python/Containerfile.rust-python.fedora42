@@ -2,13 +2,16 @@ FROM localhost/rust
 
 USER root
 
+COPY run-once.sh /home/vscode/
+
 RUN set -ex;\
   cd; \
   dnf -y install maturin python3-devel python3-pip \
-    python-setuptools-wheel python3-setuptools_scm+toml python3-setuptools_scm+rich \
-    python3-setuptools-rust  python3-types-setuptools \
     patchelf libpq; \
-  chown $userid:$userid /home/vscode/.venv ;
+  chown $userid:$userid /home/vscode/.venv /home/vscode/run-once.sh;
+
+#   python-setuptools-wheel python3-setuptools_scm+toml python3-setuptools_scm+rich \
+#   python3-setuptools-rust  python3-types-setuptools \
 
 USER vscode
 
@@ -23,7 +26,7 @@ RUN set -ex; \
   source /home/vscode/.bashrc ; \
   python3 -m venv .venv || true ; \
   source .venv/bin/activate ; \
-  echo "source ~/.venv/bin/activate" >>/home/vscode/.bashrc ; \
+  # echo "source ~/.venv/bin/activate" >>/home/vscode/.bashrc ; \
   ~/.volta/bin/pnpm set -g store-dir /pnpm ; \
   ~/.volta/bin/pnpm setup ; \
   source /home/vscode/.bashrc ; \

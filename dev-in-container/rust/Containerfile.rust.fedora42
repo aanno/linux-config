@@ -23,6 +23,7 @@ RUN set -ex;\
   mkdir -p /home/vscode ; \
   cd /home/vscode ; \
   chown $userid:$userid /home/vscode .gitconfig .bashrc .volta ; \
+  # chown -R $userid:$userid .volta ; \
   chmod a+x /build/*.sh ; \
   echo "vscode:vscode" | chpasswd ; \
   echo "root:root" | chpasswd ; \

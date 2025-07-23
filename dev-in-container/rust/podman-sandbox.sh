@@ -25,6 +25,7 @@ podman run --rm -it \
   -v $PNPM_CACHE_DIR:/pnpm:z \
   -v $PIP_CACHE_DIR:/pip:z \
   -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
+  -v $HF_HOME:/hf:z \
   -v $REALCWD:/build:z \
   localhost/rust \
   /bin/bash;
