@@ -19,6 +19,7 @@ mkdir -p \
 
 podman run --rm -it \
   --userns=keep-id:uid=$USERID,gid=$USERID \
+  --device nvidia.com/gpu=all \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
   -v $CWD/var/lib/dnf:/var/lib/dnf:z \

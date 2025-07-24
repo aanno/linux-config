@@ -51,3 +51,6 @@ export COVERAGE_PROCESS_START=/workspaces/rust/.coveragerc
 
 # huggingface
 export HF_HOME=/hf
+
+# workspace
+export WORKSPACE=/workspaces/rust
