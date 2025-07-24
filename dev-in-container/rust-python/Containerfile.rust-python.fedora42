@@ -12,7 +12,8 @@ RUN set -ex;\
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
   dnf -y install maturin python3-devel python3-pip \
     patchelf libpq \
-    xorg-x11-drv-nvidia-libs  xorg-x11-drv-nvidia-cuda ; \
+    xorg-x11-drv-nvidia-libs xorg-x11-drv-nvidia-cuda
+    --setopt=install_weak_deps=False ; \
   chown $userid:$userid /home/vscode/.venv /home/vscode/run-once.sh;
 
 #   python-setuptools-wheel python3-setuptools_scm+toml python3-setuptools_scm+rich \
