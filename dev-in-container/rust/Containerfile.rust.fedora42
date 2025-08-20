@@ -15,6 +15,7 @@ RUN set -ex;\
   #  git cppunit-devel utf8cpp-devel  zlib-ng-compat-devel  wavpack-devel  libvorbis-devel \
   #  libmp4v2-devel libogg-devel flac-devel libaiff-devel pkgconf  pkgconf-pkg-config \
   #  speex-devel libmpcdec-devel opus-devel ; \
+  dnf -y upgrade ; \
   dnf -y install @development-tools pkgconf pkgconf-pkg-config patch \
     which tree procs nano top git file iproute strace \
     gawk uv ripgrep ugrep ag yq jq \
@@ -23,6 +24,7 @@ RUN set -ex;\
   mkdir -p /home/vscode ; \
   cd /home/vscode ; \
   chown $userid:$userid /home/vscode .gitconfig .bashrc .volta ; \
+  # volta install is difficult
   # chown -R $userid:$userid .volta ; \
   chmod a+x /build/*.sh ; \
   echo "vscode:vscode" | chpasswd ; \

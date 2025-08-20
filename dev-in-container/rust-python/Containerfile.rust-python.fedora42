@@ -10,6 +10,7 @@ RUN set -ex;\
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
   dnf -y install \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y upgrade ; \
   dnf -y install python3-devel \
     patchelf libpq postgresql17 \
     xorg-x11-drv-nvidia-libs xorg-x11-drv-nvidia-cuda \
@@ -33,12 +34,12 @@ RUN set -ex; \
   python3 -m venv .venv || true ; \
   source .venv/bin/activate ; \
   # echo "source ~/.venv/bin/activate" >>/home/vscode/.bashrc ; \
-  ~/.volta/bin/pnpm set -g store-dir /pnpm ; \
-  ~/.volta/bin/pnpm setup ; \
+  # must be run later
+  # ~/.volta/bin/pnpm set -g store-dir /pnpm ; \
+  # ~/.volta/bin/pnpm setup ; \
   source /home/vscode/.bashrc ; \
   # all this must be done later - as mounting is delicate on built (tp)
   # pnpm install -g @anthropic-ai/claude-code ; \
-  # pip install --upgrade pip ; \
   # pip install pre-commit maturin psycopg "psycopg[pool]" pgvector \
   #  "sentence-transformers" ; \
   # caches are not mounted on build (tp) \
@@ -46,7 +47,7 @@ RUN set -ex; \
   sed -i '/\. "\$HOME\/\.cargo\/env"/d' ~/.bashrc ; \
   source /home/vscode/.bashrc ;
 
-  # must run later
+  # must be run later
   # ~/.local/bin/pre-commit install ; \
 
 WORKDIR /workspaces/rust

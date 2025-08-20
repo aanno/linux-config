@@ -1,6 +1,15 @@
 #!/bin/bash -x
 
-# . ~/.venv/bin/activate
+source /home/vscode/.bashrc
+. ~/.venv/bin/activate
+
+~/.volta/bin/pnpm set -g store-dir /pnpm
+~/.volta/bin/pnpm setup
+
+source /home/vscode/.bashrc
+pnpm install -g @anthropic-ai/claude-code
+pip install pre-commit maturin psycopg "psycopg[pool]" pgvector \
+  "sentence-transformers" 
 
 pnpm install -g @anthropic-ai/claude-code
 
