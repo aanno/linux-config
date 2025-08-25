@@ -1,0 +1,28 @@
+[user]
+	email = aanno@users.noreply.github.com
+	name = aanno
+[branch]
+	autosetuprebase = always
+[filter "nbstripout"]
+	clean = \"/home/tpasch/miniconda3/bin/python\" -m nbstripout
+	smudge = cat
+[diff "ipynb"]
+	textconv = \"/home/tpasch/miniconda3/bin/python\" -m nbstripout -t
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main
+[merge]
+	tool = kdiff3
+[gui]
+	usettk = 0
+	# fontui=-family "Liberation Sans" -size 24 -weight normal -slant roman -underline 0 -overstrike 0
+	# fontdiff=-family "Liberation Mono" -size 22 -weight normal -slant roman -underline 0 -overstrike 0
+
+[difftool "kdiff3"]
+	trustExitCode = false
+[mergetool "kdiff3"]
+	trustExitCode = false
+	path = /usr/bin/kdiff3
+[diff]
+	guitool = kdiff3
