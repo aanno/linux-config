@@ -11,7 +11,7 @@ USERID=1000
 
 cp $HOME/.gitconfig .
 
-#podman rmi localhost/ghc || true
+#podman rmi localhost/c-cpp || true
 
 mkdir -p \
   $CWD/var/lib/apt $CWD/var/cache/apt \

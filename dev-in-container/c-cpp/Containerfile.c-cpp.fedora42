@@ -66,7 +66,7 @@ RUN set -ex;\
   id
 
 USER vscode
-WORKDIR /workspaces/ghc
+WORKDIR /workspaces/cpp
 
 RUN \
   cd ; \
