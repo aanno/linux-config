@@ -1,17 +1,16 @@
 --verbose
--s dir
+-s tar
 -t rpm
 --name spotifyd
 --license GPL-3.0
---version 0.3.5
+--version 0.4.1
 --architecture x86_64
 --description "An open source Spotify client running as a UNIX daemon."
 --url "https://github.com/Spotifyd/spotifyd"
 --rpm-autoprov
 --rpm-autoreq
 --rpm-autoreqprov
---maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
---depends libasound2
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16.0"
 --depends libssl
 --depends portaudio19
 --depends libdbus-1

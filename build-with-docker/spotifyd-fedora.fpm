@@ -1,0 +1,34 @@
+--verbose
+-s tar
+-t rpm
+--name spotifyd
+--license GPL-3.0
+--version 0.4.1
+--architecture x86_64
+--description "An open source Spotify client running as a UNIX daemon."
+--url "https://github.com/Spotifyd/spotifyd"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16.0"
+--depends dbus-libs
+--depends portaudio
+--depends pipewire-libs
+--depends pulseaudio-libs
+--depends alsa-lib
+--depends pipewire-jack-audio-connection-kit-libs
+--depends libsndfile
+--depends flac-libs
+--depends libvorbis
+--depends opus
+--depends libogg
+--depends mpg123-libs
+--depends lame-libs
+--depends libgcc
+--depends glibc
+--depends systemd-libs
+--depends libcap
+--depends libxcb
+--depends libXau
+--depends libasyncns
+--depends gsm

@@ -24,10 +24,10 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.owntone.fedora42;
+  -f Containerfile.spotifyd.fedora42;
 
 # all except ..
-tar cvfz owntone.tar.gz ./opt/
+# tar cvfz owntone.tar.gz ./opt/
 
 # ... upmpdcli
 
@@ -63,6 +63,9 @@ tar cvfz owntone.tar.gz ./opt/
 # only for spotifyd
 # TODO: find container name ('relaxed_torvalds' here)
 # podman cp relaxed_torvalds:/opt/owntone/release/spotifyd .
+mkdir -p usr/bin/
+cp ./opt/owntone/spotifyd usr/bin/
+tar cvfz spotifyd.tar.gz ./usr
 
 # galera-4
 # cp opt/owntone/make-it-longer/galera-4-26.4.18/galera-4-26.4.18.tgz .
