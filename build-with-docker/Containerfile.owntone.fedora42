@@ -23,7 +23,7 @@ RUN set -ex;\
   libcurl-devel protobuf-c-devel; \
   # git clone https://github.com/owntone/owntone-server.git; \
   # git clone -b bug/1897-configurate-fs-events https://github.com/aanno/owntone-server.git; \
-  git clone -b libmount1 https://github.com/owntone/owntone-server.git; \
+  git clone https://github.com/owntone/owntone-server.git; \
   cd owntone-server; \
   # ./scripts/antlr35_install.sh; \
   autoreconf -i; \

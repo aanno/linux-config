@@ -3,14 +3,14 @@
 -t rpm
 --name owntone-server
 --license GPL-2.0
---version 28.12
+--version 29.0
 --architecture x86_64
 --description "OwnTone is a Linux/FreeBSD DAAP (iTunes), MPD (Music Player Daemon) and RSP (Roku) media server."
 --url "https://github.com/owntone/owntone-server"
 --rpm-autoprov
 --rpm-autoreq
 --rpm-autoreqprov
---maintainer "private package for aanno@users.noreply.github.com made with fpm v1.15.1"
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16.0"
 --depends libgcrypt
 --depends zlib
 --depends libwebsockets
