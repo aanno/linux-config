@@ -30,11 +30,9 @@ podman build \
   -v $CWD/.rustup:/home/vscode/.rustup:z \
   -v $PNPM_CACHE_DIR:/pnpm:z \
   -v $PIP_CACHE_DIR:/pip:z \
-  -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
   -v $HF_HOME:/hf:z \
   -v $REALCWD:/build:z ;
 
-  # -v $HOME/.volta:/home/vscode/.volta:z \
-
-
+# -v $HOME/.volta:/home/vscode/.volta:z \
+# -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
 

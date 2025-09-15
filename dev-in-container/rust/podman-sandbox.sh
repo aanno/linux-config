@@ -24,11 +24,12 @@ podman run --rm -it \
   -v $CWD/.rustup:/home/vscode/.rustup:z \
   -v $PNPM_CACHE_DIR:/pnpm:z \
   -v $PIP_CACHE_DIR:/pip:z \
-  -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
   -v $HF_HOME:/hf:z \
   -v $REALCWD:/build:z \
   localhost/rust \
   /bin/bash;
 
-  # -v $HOME/.volta:/home/vscode/.volta:z \
-  # registry.fedoraproject.org/fedora:42 \
+# -v $HOME/.volta:/home/vscode/.volta:z \
+# registry.fedoraproject.org/fedora:42 \
+# -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
+

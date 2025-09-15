@@ -23,9 +23,9 @@ RUN set -ex;\
   ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime; \
   mkdir -p /home/vscode ; \
   cd /home/vscode ; \
-  chown $userid:$userid /home/vscode .gitconfig .bashrc .volta ; \
+  chown $userid:$userid /home/vscode .gitconfig .bashrc .volta || true; \
   # volta install is difficult
-  # chown -R $userid:$userid .volta ; \
+  # chown -R $userid:$userid .volta || true; \
   chmod a+x /build/*.sh ; \
   echo "vscode:vscode" | chpasswd ; \
   echo "root:root" | chpasswd ; \

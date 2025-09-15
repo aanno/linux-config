@@ -21,6 +21,8 @@ podman run --rm -it \
   -v $CWD/var/cache/dnf:/var/cache/dnf:z \
   -v $PNPM_CACHE_DIR:/pnpm:z \
   -v $PIP_CACHE_DIR:/pip:z \
-  -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
   localhost/c-cpp \
   /bin/bash;
+
+#  -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
+
