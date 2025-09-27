@@ -1,4 +1,4 @@
-NEW_TAG=580.82.07
+NEW_TAG=580.82.09
 OLD_TAG=575.64.03
 
 ln -sf /usr/lib64/libcudadebugger.so.${NEW_TAG} /usr/lib64/libcudadebugger.so.${OLD_TAG}

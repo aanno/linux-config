@@ -4,6 +4,8 @@ USER root
 
 COPY run-once.sh /home/vscode/
 
+# ENV USERID=1000
+
 RUN set -ex;\
   cd; \
   dnf -y install \
@@ -15,7 +17,8 @@ RUN set -ex;\
     patchelf libpq postgresql17 \
     xorg-x11-drv-nvidia-libs xorg-x11-drv-nvidia-cuda \
     --setopt=install_weak_deps=False ; \
-  chown $userid:$userid /home/vscode/.venv /home/vscode/run-once.sh;
+  chown -R vscode:vscode /home/vscode/.rustup; \
+  chown vscode:vscode /home/vscode /home/vscode/.venv /home/vscode/.rustup /home/vscode/run-once.sh;
 
 #   python-setuptools-wheel python3-setuptools_scm+toml python3-setuptools_scm+rich \
 #   python3-setuptools-rust  python3-types-setuptools \
@@ -37,17 +40,17 @@ RUN set -ex; \
   # must be run later
   # ~/.volta/bin/pnpm set -g store-dir /pnpm ; \
   # ~/.volta/bin/pnpm setup ; \
-  source /home/vscode/.bashrc ; \
+  source /home/vscode/.bashrc ;
   # all this must be done later - as mounting is delicate on built (tp)
   # pnpm install -g @anthropic-ai/claude-code ; \
   # pip install pre-commit maturin psycopg "psycopg[pool]" pgvector \
   #  "sentence-transformers" ; \
   # caches are not mounted on build (tp) \
   # rm -r /pnpm/* /pip/* || true ; \
-  sed -i '/\. "\$HOME\/\.cargo\/env"/d' ~/.bashrc ; \
-  source /home/vscode/.bashrc ;
 
   # must be run later
+  # sed -i '/\. "\$HOME\/\.cargo\/env"/d' ~/.bashrc ; \
+  # source /home/vscode/.bashrc ;
   # ~/.local/bin/pre-commit install ; \
 
 WORKDIR /workspaces/rust
