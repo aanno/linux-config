@@ -23,7 +23,9 @@ mkdir -p \
 
 # https://github.com/containers/podman/issues/24934
 # --userns=keep-id:uid=1000,gid=1000 \
-podman build \
+podman \
+  build \
+  --userns=host \
   -t rust-python -f Containerfile.rust-python.fedora42 \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \

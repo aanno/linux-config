@@ -20,7 +20,11 @@ mkdir -p \
 
 # https://github.com/containers/podman/issues/24934
 # --userns=keep-id:uid=1000,gid=1000 \
-podman build \
+# --userns="host"
+# --userns-gid-map 1000:1000:1 --userns-uid-map 1000:1000:1
+podman \
+  build \
+  --userns=host \
   -t rust -f Containerfile.rust.fedora42 \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
@@ -31,7 +35,7 @@ podman build \
   -v $PNPM_CACHE_DIR:/pnpm:z \
   -v $PIP_CACHE_DIR:/pip:z \
   -v $HF_HOME:/hf:z \
-  -v $REALCWD:/build:z ;
+  -v $REALCWD:/build:z;
 
 # -v $HOME/.volta:/home/vscode/.volta:z \
 # -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \

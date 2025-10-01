@@ -54,3 +54,11 @@ RUN set -ex; \
   # ~/.local/bin/pre-commit install ; \
 
 WORKDIR /workspaces/rust
+
+# There seems to be an fundamental issue with this
+# on build, it is very difficult to get the ownerships correct
+# WITHOUT --userns=host
+USER root
+RUN chown $userid:$userid /home/vscode; \
+    chown -R $userid:$userid /home/vscode/.rustup
+USER vscode
