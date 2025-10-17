@@ -6,8 +6,8 @@ POOLS=`stratis pool`
 if [ ! "`echo $POOLS | grep pool1`" ]; then
   sudo stratis pool start --unlock-method clevis --name pool1
   if [ $? ]; then
-    mount /stratis/home;
-    if [ $? ]; then
+    # mount /stratis/home;
+    if mount /stratis/home; then
       sudo stratis key unset pool1key
       until sudo stratis key set --capture-key pool1key; do
         echo "try again";
