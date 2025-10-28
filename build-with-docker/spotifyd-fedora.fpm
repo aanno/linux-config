@@ -32,3 +32,5 @@
 --depends libXau
 --depends libasyncns
 --depends gsm
+
+spotifyd.tar.gz
