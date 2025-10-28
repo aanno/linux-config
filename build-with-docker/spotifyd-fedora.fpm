@@ -10,7 +10,7 @@
 --rpm-autoprov
 --rpm-autoreq
 --rpm-autoreqprov
---maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16.0"
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.17.0"
 --depends dbus-libs
 --depends portaudio
 --depends pipewire-libs
