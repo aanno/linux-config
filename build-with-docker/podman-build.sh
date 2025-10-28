@@ -24,10 +24,10 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.owntone.fedora43;
+  -f Containerfile.taglib2.fedora43;
 
 # all except ..
-tar cvfz owntone.tar.gz ./opt/
+# tar cvfz owntone.tar.gz ./opt/
 
 # ... upmpdcli
 
@@ -35,7 +35,12 @@ tar cvfz owntone.tar.gz ./opt/
 
 # ... taglib-2
 
-# cp opt/owntone/make-it-longer/taglib/taglib-2.tar.xz .
+cp opt/owntone/make-it-longer/taglib/taglib-2.tar.xz .
+rm -rf usr
+tar xvfJ taglib-2.tar.xz
+tar cvfz taglib-2.tar.gz ./usr
+cp taglib2-fedora.fpm .fpm
+sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 ## tar tvfJ opt/owntone/make-it-longer/taglib/taglib-2.tar.xz
 
 # ... gmrender

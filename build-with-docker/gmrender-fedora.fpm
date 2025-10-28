@@ -10,7 +10,7 @@
 --rpm-autoprov
 --rpm-autoreq
 --rpm-autoreqprov
---maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16"
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.17.0"
 --depends gstreamer1-plugins-base
 --depends gstreamer1-plugins-good
 --depends gstreamer1-plugins-bad-freeworld
