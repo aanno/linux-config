@@ -24,19 +24,19 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.upmpdcli.fedora43;
+  -f Containerfile.owntone.fedora43;
 
 # all except ..
-# tar cvfz owntone.tar.gz ./opt/
+tar cvfz owntone.tar.gz ./opt/
 
 # ... upmpdcli
 
-cp opt/owntone/make-it-longer/upmpdcli/upmpdcli-1.9.6.tar.xz .
-rm -rf usr upmpdcli.tar.gz
-tar xvfJ upmpdcli-1.9.6.tar.xz
-tar cvfz upmpdcli.tar.gz ./usr
-cp upmpdcli-fedora.fpm .fpm
-sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+# cp opt/owntone/make-it-longer/upmpdcli/upmpdcli-1.9.6.tar.xz .
+# rm -rf usr upmpdcli.tar.gz
+# tar xvfJ upmpdcli-1.9.6.tar.xz
+# tar cvfz upmpdcli.tar.gz ./usr
+# cp upmpdcli-fedora.fpm .fpm
+# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
 # ... taglib-2
 
@@ -87,8 +87,8 @@ sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 # fpm galera-4-26.4.18.tgz
 
 # only owntone on fedora
-# rm -f *.rpm *.deb
-# cp -f owntone-fedora.fpm .fpm
-# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
-## dnf install ./owntone-server-2*.rpm
+rm -f *.rpm *.deb
+cp -f owntone-fedora.fpm .fpm
+sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+# dnf install ./owntone-server-2*.rpm
 

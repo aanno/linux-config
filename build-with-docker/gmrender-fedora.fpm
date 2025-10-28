@@ -13,8 +13,8 @@
 --maintainer "private package for aanno@users.noreply.github.com made with fpm v1.17.0"
 --depends gstreamer1-plugins-base
 --depends gstreamer1-plugins-good
---depends gstreamer1-plugins-bad-freeworld
---depends gstreamer1-plugins-ugly
+--depends gstreamer1-plugins-bad-free
+--depends gstreamer1-plugins-ugly-free
 --depends gstreamer1-plugin-libav
 --depends libupnp
 --depends pipewire-pulseaudio

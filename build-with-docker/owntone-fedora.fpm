@@ -27,6 +27,6 @@
 --depends libcurl
 --depends protobuf-c
 --depends avahi
---depends ffmpeg-libs
+--depends ffmpeg-free
 
 owntone.tar.gz
