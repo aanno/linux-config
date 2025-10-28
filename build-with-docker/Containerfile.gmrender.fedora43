@@ -1,4 +1,4 @@
-from docker.io/library/fedora:41
+from docker.io/library/fedora:43
 
 # https://github.com/hzeller/gmrender-resurrect/blob/master/INSTALL.md
 

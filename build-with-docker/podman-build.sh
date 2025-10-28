@@ -24,7 +24,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.snapcast.fedora42;
+  -f Containerfile.gmrender.fedora43;
 
 # all except ..
 # tar cvfz owntone.tar.gz ./opt/
@@ -39,24 +39,25 @@ podman build --pull -t owntone \
 ## tar tvfJ opt/owntone/make-it-longer/taglib/taglib-2.tar.xz
 
 # ... gmrender
-# cd opt
-# tar cvfz ../gmrender.tar.gz ./usr
-# cd ..
-# cp gmrender-fedora.fpm .fpm
-# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+cp gmrender-fedora.fpm .fpm
+cd opt
+tar cvfz ../gmrender.tar.gz ./usr
+cd ..
+cp gmrender-fedora.fpm .fpm
+sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
 # ... snapcast
-rm snapweb.zip* || true
-wget https://github.com/badaix/snapweb/releases/download/v0.9.1/snapweb.zip
-pushd opt
-  pushd usr/share/snapserver/snapweb/
-    unzip -o ../../../../../snapweb.zip 
-  popd
-  tar cvfz ../snapcast.tar.gz ./usr ./etc
-  cd ..
-  cp snapcast-fedora.fpm .fpm
-  sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
-popd
+# rm snapweb.zip* || true
+# wget https://github.com/badaix/snapweb/releases/download/v0.9.1/snapweb.zip
+# pushd opt
+#   pushd usr/share/snapserver/snapweb/
+#     unzip -o ../../../../../snapweb.zip 
+#   popd
+#   tar cvfz ../snapcast.tar.gz ./usr ./etc
+#   cd ..
+#   cp snapcast-fedora.fpm .fpm
+#   sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+# popd
 
 # rm -rf ./opt
 # podman rmi localhost/owntone
