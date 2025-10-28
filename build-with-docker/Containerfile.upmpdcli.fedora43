@@ -1,4 +1,4 @@
-from docker.io/library/fedora:42
+from docker.io/library/fedora:43
 
 #  CPackRPM: source dir path '/opt/owntone/mariadb-server' is shorter than
 #  debuginfo sources dir path '/usr/src/debug/MariaDB-/src_0'! Source dir path
