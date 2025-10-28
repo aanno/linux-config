@@ -1,4 +1,4 @@
-from docker.io/library/fedora:42
+from docker.io/library/fedora:43
 
 RUN set -ex;\
   mkdir /opt/owntone || true; \
@@ -26,7 +26,7 @@ RUN set -ex;\
   git clone https://github.com/owntone/owntone-server.git; \
   cd owntone-server; \
   # ./scripts/antlr35_install.sh; \
-  autoreconf -i; \
+  autoreconf -i -f; \
   ./configure --prefix=/opt/owntone --sysconfdir=/etc --localstatedir=/var \
     --enable-chromecast --enable-spotify --with-libwebsockets  --with-pulseaudio; \
   make; \

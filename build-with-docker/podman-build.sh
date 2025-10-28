@@ -24,10 +24,10 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.gmrender.fedora43;
+  -f Containerfile.owntone.fedora43;
 
 # all except ..
-# tar cvfz owntone.tar.gz ./opt/
+tar cvfz owntone.tar.gz ./opt/
 
 # ... upmpdcli
 
@@ -39,12 +39,12 @@ podman build --pull -t owntone \
 ## tar tvfJ opt/owntone/make-it-longer/taglib/taglib-2.tar.xz
 
 # ... gmrender
-cp gmrender-fedora.fpm .fpm
-cd opt
-tar cvfz ../gmrender.tar.gz ./usr
-cd ..
-cp gmrender-fedora.fpm .fpm
-sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+# cp -f gmrender-fedora.fpm .fpm
+# cd opt
+# tar cvfz ../gmrender.tar.gz ./usr
+# cd ..
+# cp gmrender-fedora.fpm .fpm
+# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
 # ... snapcast
 # rm snapweb.zip* || true
@@ -75,8 +75,8 @@ sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 # fpm galera-4-26.4.18.tgz
 
 # only owntone on fedora
-# rm -f *.rpm *.deb
-# cp -f owntone-fedora.fpm .fpm
-# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+rm -f *.rpm *.deb
+cp -f owntone-fedora.fpm .fpm
+sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 # dnf install ./owntone-server-2*.rpm
 
