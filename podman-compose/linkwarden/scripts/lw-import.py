@@ -90,13 +90,16 @@ def main():
     links_url = f"{args.api_url}/links"
     for link in filtered_links:
         body = {'url': link['url'], 'name': link['name'], 'type': 'url'}
-        print(f"body: {body}")
+        # print(f"body: {body}")
         response = requests.post(links_url, headers=headers, data=json.dumps(body))
         # print(response.__dict__)
-        print(f"API Response: {response.status_code} {response.reason}")
-        print(response.text)
-        if (response.status_code >= 200 and response.status_code < 300):
+        # print(f"API Response: {response.status_code} {response.reason}")
+        # print(response.text)
+        if response.status_code >= 200 and response.status_code < 300:
             print(f"Uploaded {link}")
+        elif response.status_code == 409:
+            # print("Not needed")
+            pass
         else:
             print(f"Can't upload: {link['url']}")
 
