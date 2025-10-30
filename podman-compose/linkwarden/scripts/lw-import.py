@@ -88,7 +88,30 @@ def main():
     # response = requests.post(bulk_api_url, headers=headers, data=json.dumps(body))
     
     links_url = f"{args.api_url}/links"
+    search_url = f"{args.api_url}/search"
     for link in filtered_links:
+        # look if link is already there
+        params = { 'searchQueryString': f"url:{link['url']}" }
+        response = requests.get(search_url, headers=headers, params=params)
+        # print(response.__dict__)
+        response = requests.get(search_url, headers=headers, params=params)
+        response_data = response.json()
+        print(response_data)
+        # Check if there are any results
+        data = response_data.get('data', {})
+        if isinstance(data, dict):
+            links = data.get('links', [])
+        else:
+             # data is not a dict, e.g. it's a list or something else, so no links available
+             links = []
+        if links:
+           print(f"Skipping {link['url']} as there are {len(links)} results to url search")
+           # don't store link once more
+           continue
+        else:
+           print("No results found.")
+    
+        # add link
         body = {'url': link['url'], 'name': link['name'], 'type': 'url'}
         # print(f"body: {body}")
         response = requests.post(links_url, headers=headers, data=json.dumps(body))
