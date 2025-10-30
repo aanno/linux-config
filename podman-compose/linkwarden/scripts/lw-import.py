@@ -83,18 +83,22 @@ def main():
     }
 
     # Chunk requests if needed; here we do all at once
-    body = [{'url': link['url'], 'name': link['name']} for link in filtered_links]
-
-    bulk_api_url = f"{args.api_url}/links/bulk-update"
-    response = requests.post(bulk_api_url, headers=headers, data=json.dumps(body))
-
-    print(response.__dict__)
-    print(f"API Response: {response.status_code} {response.reason}")
-    print(response.text)
-    if (response.status_code >= 200 and response.status_code < 300):
-        print(f"Uploaded {len(filtered_links)} links")
-    else:
-        print(f"Can't upload")
+    # body = [{'url': link['url'], 'name': link['name']} for link in filtered_links]
+    # bulk_api_url = f"{args.api_url}/links/bulk-update"
+    # response = requests.post(bulk_api_url, headers=headers, data=json.dumps(body))
+    
+    links_url = f"{args.api_url}/links"
+    for link in filtered_links:
+        body = {'url': link['url'], 'name': link['name'], 'type': 'url'}
+        print(f"body: {body}")
+        response = requests.post(links_url, headers=headers, data=json.dumps(body))
+        # print(response.__dict__)
+        print(f"API Response: {response.status_code} {response.reason}")
+        print(response.text)
+        if (response.status_code >= 200 and response.status_code < 300):
+            print(f"Uploaded {link}")
+        else:
+            print(f"Can't upload: {link['url']}")
 
 if __name__ == "__main__":
     main()
