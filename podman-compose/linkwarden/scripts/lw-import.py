@@ -57,7 +57,7 @@ def main():
     # Filters - customize as needed
     filters = {
         'regex': [r'search=', r'q='],  # example to exclude search results URLs with query params
-        'search_engines': ['google.', 'bing.', 'duckduckgo.'],  # contain simple domain indicators
+        'search_engines': ['google.', 'bing.', 'duckduckgo.', 'startpage.'],  # contain simple domain indicators
         'domains': ['*.whatever.co']  # wildcard domains to exclude
     }
 
@@ -94,22 +94,27 @@ def main():
         params = { 'searchQueryString': f"url:{link['url']}" }
         response = requests.get(search_url, headers=headers, params=params)
         # print(response.__dict__)
-        response = requests.get(search_url, headers=headers, params=params)
         response_data = response.json()
-        print(response_data)
+        # print(response_data)
         # Check if there are any results
         data = response_data.get('data', {})
         if isinstance(data, dict):
             links = data.get('links', [])
         else:
-             # data is not a dict, e.g. it's a list or something else, so no links available
-             links = []
+            # data is not a dict, e.g. it's a list or something else, so no links available
+            links = []
         if links:
-           print(f"Skipping {link['url']} as there are {len(links)} results to url search")
-           # don't store link once more
-           continue
+            ids = [d['id'] for d in links]
+            if len(ids) > 1:
+                delete = { 'linkIds': ids[1:]}
+                print(f"links to delete: {delete}")
+                response = requests.delete(links_url, headers=headers, data=json.dumps(delete))
+                print(f"delete API Response: {response.status_code} {response.reason}")
+            print(f"Skipping {link['url']} as there are {len(links)} results to url search")
+            # don't store link once more
+            continue
         else:
-           print("No results found.")
+            print("No results found.")
     
         # add link
         body = {'url': link['url'], 'name': link['name'], 'type': 'url'}
