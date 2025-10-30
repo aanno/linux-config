@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: docker.io/library/postgres:18-alpine
+    env_file: .env
+    restart: always
+    volumes:
+      - lw_pgdata:/var/lib/postgresql/data
+  linkwarden:
+    env_file: .env
+    environment:
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres
+    restart: always
+    # build: . # uncomment to build from source
+    image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
+    ports:
+      - 127.0.0.1:3000:3000
+    volumes:
+      - lw_data:/data/data:z
+    depends_on:
+      - postgres
+      - meilisearch
+  meilisearch:
+    # https://www.meilisearch.com/docs/learn/update_and_migration/updating
+    image: docker.io/getmeili/meilisearch:v1.24.0
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - lw_meilidata:/meili_data
+
+
+# echo lw_data lw_pgdata lw_meilidata | xargs -n 1 podman volume create
+volumes:
+  lw_data:
+    external: true
+  lw_pgdata:
+    external: true
+  lw_meilidata:
+    external: true
