@@ -7,7 +7,7 @@ if [ ! "`echo $POOLS | grep pool1`" ]; then
   sudo stratis pool start --unlock-method clevis --name pool1
   if [ $? ]; then
     # mount /stratis/home;
-    if mount /stratis/home; then
+    if [[ -z `mount | grep /stratis/home` ]]; then
       sudo stratis key unset pool1key
       until sudo stratis key set --capture-key pool1key; do
         echo "try again";
@@ -21,7 +21,7 @@ fi
 # unneeded:
 # -o user_xattr,inline_xattr,acl
 # if sudo mount -o defaults,lazytime /dev/stratis/pool1/stratis-home /stratis/home; then
-if mount /stratis/home; then
+if [[ -n `mount | grep /stratis/home` ]]; then
   # bind mount from fstab
   mount $HOME/bin
   echo "Please do:"
