@@ -3,7 +3,7 @@
 -t rpm
 --name spotifyd
 --license GPL-3.0
---version 0.4.1
+--version 0.4.2
 --architecture x86_64
 --description "An open source Spotify client running as a UNIX daemon."
 --url "https://github.com/Spotifyd/spotifyd"

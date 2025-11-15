@@ -13,7 +13,9 @@ RUN set -ex;\
   pipewire-devel pipewire-pulseaudio  dbus-devel \
   pipewire-jack-audio-connection-kit-devel portaudio-devel \
   git cargo rust alsa-lib-devel openssl-devel pkgconf-pkg-config; \
-  git clone https://github.com/Spotifyd/spotifyd.git; \
+  # git clone https://github.com/Spotifyd/spotifyd.git; \
+  # use PR for librespot 0.8 to make this work again \
+  git clone -b librespot-0.8 https://github.com/kesor/spotifyd.git; \
   cd spotifyd; \
   cargo build $FEATURES --release; \
   cargo install $FEATURES --path . --locked; \
