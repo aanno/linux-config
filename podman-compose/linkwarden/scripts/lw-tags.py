@@ -26,9 +26,9 @@ def main():
     
     # Query parameters
     params = {
-        "sort": 1,      # Replace 1 with preferred sort type if needed
+        "sort": "name",      # Replace 1 with preferred sort type if needed
         "limit": 20,    # Limit the number of tags returned
-        "cursor": "30"    # Leave blank for first page, set to cursor from previous response for pagination
+        "cursor": 30    # Leave blank for first page, set to cursor from previous response for pagination
     }
 
     links_url = f"{args.api_url}/links"
@@ -41,9 +41,9 @@ def main():
     # Check response and print results
     if response.status_code == 200:
         json_response = response.json()
-        # print(json.dumps(json_response, indent = 4))
+        print(json.dumps(json_response, indent = 4))
         tags = [item["name"] for item in json_response["response"]]
-        tags.sort()
+        # tags.sort()
         print("\n".join(tags))
     else:
         print(f"Error: {response.status_code} - {response.text}")
