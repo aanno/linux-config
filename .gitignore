@@ -10,6 +10,9 @@
 /podman-compose/music-assistant/music-assistant/
 /podman-compose/scm-manager/scm-manager/
 /.devcontainer
+/build-with-docker/usr/
+*.zip
+*.sha512
 *.orig
 ._*
 /build-with-docker/spotifyd
