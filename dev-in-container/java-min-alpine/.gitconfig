@@ -1,0 +1,7 @@
+[user]
+	name = aanno
+	email = aanno@users.noreply.github.com
+[init]
+	defaultBranch = main
+[branch]
+	autoSetupRebase = always
