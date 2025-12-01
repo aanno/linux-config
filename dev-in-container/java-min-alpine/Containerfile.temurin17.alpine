@@ -7,3 +7,8 @@ ADD apache-maven-${MAVEN_VERSION} /opt/maven
 
 USER vscode
 WORKDIR /workspaces/java
+
+COPY .bashrc /home/vscode/.bashrc
+
+# https://unix.stackexchange.com/questions/640179/busybox-equivalent-for-bashrc
+ENV ENV="/home/vscode/.bashrc"

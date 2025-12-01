@@ -47,6 +47,14 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# maven
+export MAVEN_HOME=/opt/maven
+case ":$PATH:" in
+  *":$MAVEN_HOME/bin:"*) ;;
+  *) export PATH="$MAVEN_HOME/bin:$PATH" ;;
+esac
+# maven end
+
 export COVERAGE_PROCESS_START=/workspaces/rust/.coveragerc
 
 # huggingface
