@@ -24,7 +24,6 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-
 export CARGO_HOME=/home/vscode/.cargo; \
 export RUSTUP_HOME=/home/vscode/.rustup; \
 # export PATH="$CARGO_HOME/bin:$RUSTUP_HOME/bin:$PATH"
@@ -69,4 +68,4 @@ export COVERAGE_PROCESS_START=/workspaces/rust/.coveragerc
 export HF_HOME=/hf
 
 # workspace
-export WORKSPACE=/workspaces/rust
+export WORKSPACE=/workspaces/java
