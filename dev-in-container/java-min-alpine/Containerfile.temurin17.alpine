@@ -1,6 +1,6 @@
 from docker.io/library/eclipse-temurin:17-alpine
 
-ENV userid=1000 MAVEN_VERSION=3.9.11
+ENV userid=1000 MAVEN_VERSION=3.9.11 GRADLE_VERSION=9.2.1
 
 # group: wheel (10)
 RUN adduser -h /home/vscode -s /bin/sh -G users -D -u $userid vscode && \
@@ -12,6 +12,7 @@ RUN adduser -h /home/vscode -s /bin/sh -G users -D -u $userid vscode && \
     mkdir -p /workspaces/java
 
 ADD apache-maven-${MAVEN_VERSION} /opt/maven
+ADD gradle-${GRADLE_VERSION} /opt/gradle
 
 USER vscode
 WORKDIR /workspaces/java

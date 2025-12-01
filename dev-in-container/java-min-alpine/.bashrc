@@ -55,6 +55,14 @@ case ":$PATH:" in
 esac
 # maven end
 
+# gradle
+export GRADLE_HOME=/opt/gradle
+case ":$PATH:" in
+  *":$GRADLE_HOME/bin:"*) ;;
+  *) export PATH="$GRADLE_HOME/bin:$PATH" ;;
+esac
+# maven end
+
 export COVERAGE_PROCESS_START=/workspaces/rust/.coveragerc
 
 # huggingface

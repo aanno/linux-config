@@ -18,8 +18,9 @@ mkdir -p \
   $CWD/var/lib/dnf $CWD/var/cache/dnf \
   $CWD/.cargo $CWD/.rustup;
 
-rm -r apache-maven-* || true
+rm -r apache-maven-* gradle-* || true
 unzip mvn.zip
+unzip gradle.zip
 
 # https://github.com/containers/podman/issues/24934
 # --userns=keep-id:uid=1000,gid=1000 \
