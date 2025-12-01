@@ -1,7 +1,15 @@
 from docker.io/library/eclipse-temurin:17-alpine
 
 ENV userid=1000 MAVEN_VERSION=3.9.11
-RUN adduser -h /home/vscode -s /bin/sh -G wheel -G users -D -u $userid vscode
+
+# group: wheel (10)
+RUN adduser -h /home/vscode -s /bin/sh -G users -D -u $userid vscode && \
+    addgroup vscode wheel && \
+    echo "vscode:vscode" | chpasswd && \
+    # apk add --no-cache bash git openssh-client curl unzip && \
+    apk add --no-cache sudo && \
+    echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/20-wheel  && \
+    mkdir -p /workspaces/java
 
 ADD apache-maven-${MAVEN_VERSION} /opt/maven
 
