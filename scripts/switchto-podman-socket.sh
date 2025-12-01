@@ -6,6 +6,12 @@ systemctl --user restart podman.socket
 curl -H "Content-Type: application/json" \
 	--unix-socket /run/user/$UID/podman/podman.sock \
     http://localhost/_ping
+# name is needed for idea (tp)
+rm /run/user/$UID/docker.sock
+ln /run/user/$UID/podman/podman.sock /run/user/$UID/docker.sock
+curl -H "Content-Type: application/json" \
+	--unix-socket /run/user/$UID/docker.sock \
+    http://localhost/_ping
 export DOCKER_SOCKET=/run/user/$UID/podman/podman.sock
 export DOCKER_HOST=unix://$DOCKER_SOCKET
 echo "export DOCKER_SOCKET=$DOCKER_SOCKET"
