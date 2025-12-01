@@ -9,6 +9,7 @@
 /dev-in-container/rust/volta.sh
 /podman-compose/music-assistant/music-assistant/
 /podman-compose/scm-manager/scm-manager/
+apache-*/
 /.devcontainer
 /build-with-docker/usr/
 *.zip

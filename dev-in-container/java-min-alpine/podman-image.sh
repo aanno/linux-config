@@ -18,6 +18,9 @@ mkdir -p \
   $CWD/var/lib/dnf $CWD/var/cache/dnf \
   $CWD/.cargo $CWD/.rustup;
 
+rm -r apache-maven-* || true
+unzip mvn.zip
+
 # https://github.com/containers/podman/issues/24934
 # --userns=keep-id:uid=1000,gid=1000 \
 # --userns="host"
@@ -32,11 +35,15 @@ podman \
   -v $CWD/var/cache/dnf:/var/cache/dnf:z \
   -v $CWD/.cargo:/home/vscode/.cargo:z \
   -v $CWD/.rustup:/home/vscode/.rustup:z \
-  -v $PNPM_CACHE_DIR:/pnpm:z \
   -v $PIP_CACHE_DIR:/pip:z \
   -v $HF_HOME:/hf:z \
+  -v $PNPM_CACHE_DIR:/home/vscode/.local/share/pnpm/store/v10:z \
+  -v $MVN_LOCAL_REPO:/home/vscode/.m2/repository:z \
+  -v $GRADLE_USER_HOME:/home/vscode/.gradle:z \
+  -v $NPM_CACHE_DIR:/home/vscode/.npm:z \
   -v $REALCWD:/build:z;
 
+# -v $PNPM_CACHE_DIR:/pnpm:z \
 # -v $HOME/.volta:/home/vscode/.volta:z \
 # -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
 
