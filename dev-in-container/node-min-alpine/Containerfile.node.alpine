@@ -1,0 +1,32 @@
+from docker.io/library/node:24-alpine
+
+# problem: user id 1000 is already taken by 'node' user
+ENV userid=1000
+
+# group: wheel (10)
+RUN deluser node && \
+    addgroup -g $userid vscode && \
+    adduser -h /home/vscode -s /bin/sh -G vscode -D -u $userid vscode && \
+    addgroup vscode wheel && \
+    addgroup vscode users && \
+    echo "vscode:vscode" | chpasswd && \
+    # apk add --no-cache bash git openssh-client curl unzip uv python3 nodejs npm pnpm yarn && \
+    # apk add --no-cache git uv python3 && \
+    apk add --no-cache pnpm yarn sudo && \
+    echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/20-wheel  && \
+    mkdir -p /workspaces/node
+
+USER vscode
+WORKDIR /workspaces/node
+
+RUN mkdir -p /home/vscode/.local/share/pnpm/store/v10 \
+      /home/vscode/.config /home/vscode/.cache /home/vscode/.gradle /home/vscode/.npm \
+      /home/vscode/.m2/repository
+
+COPY --chown=vscode:vscode .bashrc .gitconfig /home/vscode/
+
+# https://unix.stackexchange.com/questions/640179/busybox-equivalent-for-bashrc
+ENV ENV="/home/vscode/.bashrc"
+
+# setup:
+# sudo chown -R vscode:vscode .local .m2
