@@ -1,0 +1,7 @@
+[network_im_signal]
+name=Signal Messaging Devel Project (Fedora_43)
+type=rpm-md
+baseurl=https://download.opensuse.org/repositories/network:/im:/signal/Fedora_43/
+gpgcheck=1
+gpgkey=https://download.opensuse.org/repositories/network:/im:/signal/Fedora_43/repodata/repomd.xml.key
+enabled=1
