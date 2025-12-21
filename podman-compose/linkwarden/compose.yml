@@ -12,7 +12,7 @@ services:
     restart: always
     # build: . # uncomment to build from source
     # image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
-    image: localhost/linkwarden:get-tags-pagination
+    image: localhost/linkwarden:latest
     ports:
       - 127.0.0.1:3000:3000
     volumes:
