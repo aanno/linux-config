@@ -3,14 +3,14 @@
 -t rpm
 --name snapcast
 --license GPL-3.0
---version 0.33.0
+--version 0.34.0
 --architecture x86_64
 --description "Snapcast is a multiroom client-server audio player, where all clients are time synchronized with the server to play perfectly synced audio."
 --url "https://github.com/badaix/snapcast"
 --rpm-autoprov
 --rpm-autoreq
 --rpm-autoreqprov
---maintainer "private package for aanno@users.noreply.github.com made with fpm v1.16"
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.17.0"
 --depends avahi-libs
 --depends alsa-lib
 --depends pulseaudio-libs

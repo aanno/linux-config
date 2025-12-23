@@ -24,7 +24,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.spotifyd.fedora43;
+  -f Containerfile.snapcast.fedora43;
 
 # all except ..
 # tar cvfz owntone.tar.gz ./opt/
@@ -57,30 +57,30 @@ podman build --pull -t owntone \
 # sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
 # ... snapcast
-# rm snapweb.zip* || true
-# wget https://github.com/badaix/snapweb/releases/download/v0.9.1/snapweb.zip
-# pushd opt
-#   pushd usr/share/snapserver/snapweb/
-#     unzip -o ../../../../../snapweb.zip 
-#   popd
-#   tar cvfz ../snapcast.tar.gz ./usr ./etc
-#   cd ..
-#   cp snapcast-fedora.fpm .fpm
-#   sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
-# popd
+rm snapweb.zip* || true
+wget https://github.com/badaix/snapweb/releases/download/v0.9.3/snapweb.zip
+pushd opt
+  pushd usr/share/snapserver/snapweb/
+    unzip -o ../../../../../snapweb.zip 
+  popd
+  tar cvfz ../snapcast.tar.gz ./usr ./etc
+  cd ..
+  cp snapcast-fedora.fpm .fpm
+  sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+popd
 
 # rm -rf ./opt
 # podman rmi localhost/owntone
 
 # only for spotifyd
 ## TODO: find container name ('relaxed_torvalds' here)
-## podman cp relaxed_torvalds:/opt/owntone/release/spotifyd .
-rm -rf usr || true
-mkdir -p usr/bin/
-cp ./opt/owntone/spotifyd usr/bin/
-tar cvfz spotifyd.tar.gz ./usr
-cp -f spotifyd-fedora.fpm .fpm
-sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+## podman cp relaxed_torvalds:/opt/owntone/release/spotifyd
+# rm -rf usr || true
+# mkdir -p usr/bin/
+# cp ./opt/owntone/spotifyd usr/bin/
+# tar cvfz spotifyd.tar.gz ./usr
+# cp -f spotifyd-fedora.fpm .fpm
+# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
 # galera-4
 # cp opt/owntone/make-it-longer/galera-4-26.4.18/galera-4-26.4.18.tgz .

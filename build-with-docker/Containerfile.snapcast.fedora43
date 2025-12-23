@@ -1,4 +1,4 @@
-from docker.io/library/fedora:42
+from docker.io/library/fedora:43
 
 # https://github.com/badaix/snapcast/blob/develop/doc/build.md
 
@@ -25,7 +25,8 @@ RUN set -ex;\
   flac-devel soxr-devel libstdc++-static expat-devel boost-devel; \
   git clone https://github.com/badaix/snapcast.git; \
   # git clone --depth 10 -b feature/1371-server-pipewire-support https://github.com/aanno/snapcast.git ; \
-  # git clone --depth 10 https://github.com/aanno/snapcast.git ; \
+  # using my fork
+  # git clone --depth 10 -b feature/controlled-async-loop-2 https://github.com/aanno/snapcast.git ; \
   cd snapcast; \
   mkdir build; \
   cd build; \
