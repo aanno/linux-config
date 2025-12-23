@@ -27,6 +27,7 @@ RUN set -ex;\
   # git clone --depth 10 -b feature/1371-server-pipewire-support https://github.com/aanno/snapcast.git ; \
   # using my fork
   # git clone --depth 10 -b feature/controlled-async-loop-2 https://github.com/aanno/snapcast.git ; \
+  # git clone --depth 10 -b feature/librist-2 https://github.com/aanno/snapcast.git ; \
   cd snapcast; \
   mkdir build; \
   cd build; \
