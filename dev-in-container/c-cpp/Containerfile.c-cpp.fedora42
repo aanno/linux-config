@@ -1,4 +1,4 @@
-from docker.io/library/fedora:42
+from docker.io/library/fedora:43
 
 # ENV userid=1001
 ENV userid=1000
@@ -28,7 +28,8 @@ RUN set -ex;\
   gstreamer1-plugins-bad-freeworld gstreamer1-plugins-ugly gstreamer1-plugin-libav \
   libupnp-devel pipewire-pulseaudio pipewire-gstreamer pipewire-devel \
   # mariadb
-  snappy-devel csnappy-devel libpmem-devel lzo-devel bzip2-devel rpm-build rpm \
+  snappy-devel csnappy-devel lzo-devel bzip2-devel rpm-build rpm nvml-devel \
+  # libpmem-devel
   # nymphcast (partly)
   poco-devel freetype-devel ffmpeg-devel libatomic \
   # owntone
@@ -53,7 +54,7 @@ RUN set -ex;\
   speex-devel libmpcdec-devel opus-devel \
   libsamplerate-devel zlib-devel alsa-lib-devel pipewire-pulseaudio pipewire-devel \
   flac-devel \
-  --setopt=install_weak_deps=False ; \
+  --setopt=install_weak_deps=False --skip-unavailable ; \
   # replace full libcurl with minimal
   dnf install -y --allowerasing libcurl-minimal; \
   mkdir -p /home/vscode ; \
