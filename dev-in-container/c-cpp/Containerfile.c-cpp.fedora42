@@ -59,7 +59,7 @@ RUN set -ex;\
   dnf install -y --allowerasing libcurl-minimal; \
   mkdir -p /home/vscode ; \
   cd /home/vscode ; \
-  chown $userid:$userid /home/vscode .gitconfig .bashrc .volta ; \
+  chown $userid:$userid /home/vscode .gitconfig .bashrc .volta || true; \
   # chown -R vscode:users /build; \
   chmod a+x /build/*.sh ; \
   echo "vscode:vscode" | chpasswd ; \
