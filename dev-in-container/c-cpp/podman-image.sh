@@ -20,7 +20,7 @@ mkdir -p \
 # https://github.com/containers/podman/issues/24934
 # --userns=keep-id:uid=1000,gid=1000 \
 podman build \
-  -t c-cpp -f Containerfile.c-cpp.fedora42 \
+  -t c-cpp -f Containerfile.c-cpp.fedora43 \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
   -v $CWD/var/lib/dnf:/var/lib/dnf:z \

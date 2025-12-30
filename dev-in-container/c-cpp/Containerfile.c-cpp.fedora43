@@ -20,7 +20,7 @@ RUN set -ex;\
     gawk uv ripgrep ugrep ag yq jq \
     gcc gcc-c++ make xz \
     automake autoconf gcc gcc-c++ boost-devel check-devel glibc-devel openssl-devel \
-    dbus-devel gettext libtool cmake\
+    dbus-devel gettext libtool cmake conan vcpkg \
     --setopt=install_weak_deps=False ; \
   dnf -y install \
   # gmrender \
