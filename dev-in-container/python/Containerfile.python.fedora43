@@ -35,10 +35,8 @@ RUN set -ex; \
   echo "export PIP_CACHE_DIR=/pip" >>/home/vscode/.bashrc ; \
   source /home/vscode/.bashrc ; \
   python3 -m venv .venv || true ; \
-  id;
-  # does not work
-  # source .venv/bin/activate || true ; \
-  # source /home/vscode/.bashrc || true ;
+  source .venv/bin/activate || true ; \
+  source /home/vscode/.bashrc || true ;
 
 WORKDIR /workspaces/python
 
