@@ -1,4 +1,4 @@
-from docker.io/library/fedora:42
+from docker.io/library/fedora:43
 
 # ENV userid=1001
 ENV userid=1000

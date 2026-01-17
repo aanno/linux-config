@@ -26,7 +26,7 @@ mkdir -p \
 # https://github.com/containers/podman/issues/24934
 # --userns=keep-id:uid=1000,gid=1000 \
 podman build \
-  -t ghc -f Containerfile.ghcup.fedora42 \
+  -t ghc -f Containerfile.ghcup.fedora43 \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
   -v $CWD/var/lib/dnf:/var/lib/dnf:z \
