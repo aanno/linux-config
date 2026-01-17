@@ -1,5 +1,5 @@
-NEW_TAG=580.95.05
-OLD_TAG=575.64.03
+NEW_TAG=580.119.02
+OLD_TAG=580.95.05
 
 ln -sf /usr/lib64/libcudadebugger.so.${NEW_TAG} /usr/lib64/libcudadebugger.so.${OLD_TAG}
 ln -sf /usr/lib64/libcuda.so.${NEW_TAG} /usr/lib64/libcuda.so.${OLD_TAG}
@@ -36,6 +36,9 @@ ln -sf /usr/lib64/libnvoptix.so.${NEW_TAG} /usr/lib64/libnvoptix.so.${OLD_TAG}
 ln -sf /usr/lib64/vdpau/libvdpau_nvidia.so.${NEW_TAG} /usr/lib64/vdpau/libvdpau_nvidia.so.${OLD_TAG}
 
 ln -sf /lib/firmware/nvidia/${NEW_TAG} /lib/firmware/nvidia/${OLD_TAG}
+
+ln -sf /usr/lib64/libnvidia-egl-gbm.so.1.1.3 /usr/lib64/libnvidia-egl-gbm.so.1.1.2
+ln -sf /usr/lib64/libnvidia-egl-wayland.so.1.1.21 /usr/lib64/libnvidia-egl-wayland.so.1.1.20
 
 ls -l /usr/lib64/*.${OLD_TAG}*
 ls -l /usr/lib64/vdpau/*.${OLD_TAG}*
