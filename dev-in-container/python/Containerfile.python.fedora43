@@ -1,0 +1,66 @@
+FROM docker.io/library/fedora:43
+
+# ENV userid=1001
+ENV userid=1000
+RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -p vscode -u $userid vscode
+
+COPY .bashrc .gitconfig run-once.sh /home/vscode/
+
+RUN set -ex;\
+  echo "vscode:vscode" | chpasswd ; \
+  echo "root:root" | chpasswd ; \
+  cd; \
+  dnf -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y upgrade ; \
+  dnf -y install python3-devel \
+    xorg-x11-drv-nvidia-libs xorg-x11-drv-nvidia-cuda \
+    @development-tools pkgconf pkgconf-pkg-config patch \
+    which tree procs nano top git file iproute strace \
+    gawk uv ripgrep ugrep ag yq jq \
+    --setopt=install_weak_deps=False ; \
+  # chown -R vscode:vscode /home/vscode/.rustup; \
+  chown -R vscode:vscode /home/vscode ; \
+  chown vscode:vscode /home/vscode /home/vscode/.bashrc /home/vscode/run-once.sh;
+
+USER vscode
+
+RUN set -ex; \
+  cd ; \
+  source /home/vscode/.bashrc ; \
+  pwd ; \
+  export PIP_CACHE_DIR=/pip ; \
+  echo "export PIP_CACHE_DIR=/pip" >>/home/vscode/.bashrc ; \
+  source /home/vscode/.bashrc ; \
+  python3 -m venv .venv || true ; \
+  id;
+  # does not work
+  # source .venv/bin/activate || true ; \
+  # source /home/vscode/.bashrc || true ;
+
+WORKDIR /workspaces/python
+
+RUN \
+  cd ; \
+  pwd ; \
+  bash /build/volta.sh; \
+  # https://pdm-project.org/en/latest/ \
+  # python3 /build/install-pdm.py ; \
+  source ~/.bashrc ; \
+  volta install node ; \
+  volta install pnpm ; \
+  sed -i '/\. "\$HOME\/\.cargo\/env"/d' ~/.bashrc ; \
+  source ~/.bashrc ; \
+  ls ; \
+  id
+
+# There seems to be an fundamental issue with this
+# on build, it is very difficult to get the ownerships correct
+# WITHOUT --userns=host
+# USER root
+# RUN chown $userid:$userid /home/vscode; \
+#     chown -R $userid:$userid /home/vscode/.rustup
+
+USER vscode

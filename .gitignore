@@ -7,6 +7,8 @@
 /dev-in-container/rust/.gitconfig
 /dev-in-container/rust/install-pdm.py
 /dev-in-container/rust/volta.sh
+/dev-in-container/python/.gitconfig
+/dev-in-container/python/volta.sh
 /podman-compose/music-assistant/music-assistant/
 /podman-compose/scm-manager/scm-manager/
 apache-*/
