@@ -22,5 +22,6 @@ echo -e "FROM $IMAGE:fixed\nCMD [\"/bin/bash\"]" >Dockerfile
 podman build -t $IMAGE:fixed2 .
 rm Dockerfile
 
+podman rm -f fix-python
 podman rmi $IMAGE $IMAGE:fixed
 podman tag $IMAGE:fixed2 $IMAGE:latest
