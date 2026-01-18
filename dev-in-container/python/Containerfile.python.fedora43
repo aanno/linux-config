@@ -6,7 +6,7 @@ RUN useradd -m -d /home/vscode -s /bin/bash -G wheel,users -p vscode -u $userid 
 
 COPY .bashrc .gitconfig run-once.sh /home/vscode/
 
-RUN set -ex;\
+RUN set -ex ;\
   echo "vscode:vscode" | chpasswd ; \
   echo "root:root" | chpasswd ; \
   cd; \
@@ -20,10 +20,14 @@ RUN set -ex;\
     @development-tools pkgconf pkgconf-pkg-config patch \
     which tree procs nano top git file iproute strace \
     gawk uv ripgrep ugrep ag yq jq \
-    --setopt=install_weak_deps=False ; \
+    --setopt=install_weak_deps=False ;
+
+RUN set -ex ; \
+  mkdir /home/vscode || true; \
   # chown -R vscode:vscode /home/vscode/.rustup; \
-  chown -R vscode:vscode /home/vscode ; \
-  chown vscode:vscode /home/vscode /home/vscode/.bashrc /home/vscode/run-once.sh;
+  chown vscode:vscode /home/vscode ; \
+  chown -R vscode:vscode /home/vscode ;
+  # chown vscode:vscode /home/vscode /home/vscode/.bashrc /home/vscode/run-once.sh;
 
 USER vscode
 
@@ -35,6 +39,7 @@ RUN set -ex; \
   echo "export PIP_CACHE_DIR=/pip" >>/home/vscode/.bashrc ; \
   source /home/vscode/.bashrc ; \
   python3 -m venv .venv || true ; \
+  # uv venv; \
   source .venv/bin/activate || true ; \
   source /home/vscode/.bashrc || true ;
 
@@ -44,12 +49,9 @@ RUN \
   cd ; \
   pwd ; \
   bash /build/volta.sh; \
-  # https://pdm-project.org/en/latest/ \
-  # python3 /build/install-pdm.py ; \
   source ~/.bashrc ; \
   volta install node ; \
   volta install pnpm ; \
-  sed -i '/\. "\$HOME\/\.cargo\/env"/d' ~/.bashrc ; \
   source ~/.bashrc ; \
   ls ; \
   id
