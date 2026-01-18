@@ -43,3 +43,4 @@ podman \
 # -v $HOME/.volta:/home/vscode/.volta:z \
 # -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
 
+../scripts/fix-home-perms.sh localhost/python
