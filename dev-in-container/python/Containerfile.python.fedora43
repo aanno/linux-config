@@ -24,6 +24,7 @@ RUN set -ex ;\
 
 RUN set -ex ; \
   mkdir /home/vscode || true; \
+  chcon -R -t container_file_t /home/vscode ; \
   # chown -R vscode:vscode /home/vscode/.rustup; \
   chown vscode:vscode /home/vscode ; \
   chown -R vscode:vscode /home/vscode ;
