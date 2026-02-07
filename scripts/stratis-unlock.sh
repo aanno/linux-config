@@ -7,9 +7,9 @@ if [ ! "`echo $POOLS | grep pool1`" ]; then
   sudo stratis pool start --unlock-method clevis --name pool1
   if [ $? ]; then
     # mount /stratis/home;
-    if [[ -z `mount | grep /stratis/home` ]]; then
+    if [[ `mount | grep -c '/stratis/home '` == 0 ]]; then
       sudo stratis key unset pool1key
-      until sudo stratis key set --capture-key pool1key; do
+      until `sudo stratis key set --capture-key pool1key`; do
         echo "try again";
       done
       # sudo stratis pool start --unlock-method keyring --uuid 2304641c-8acc-4bbd-910a-b70d3138d00f
