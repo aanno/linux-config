@@ -5,6 +5,7 @@ services:
     restart: always
     volumes:
       - lw_pgdata:/var/lib/postgresql/data
+      - ./backup:/backup:z
   linkwarden:
     env_file: .env
     environment:
@@ -12,11 +13,13 @@ services:
     restart: always
     # build: . # uncomment to build from source
     # image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
-    image: localhost/linkwarden:latest
+    # image: localhost/linkwarden:latest
+    image: localhost/linkwarden:ai-merge-tags
     ports:
       - 127.0.0.1:3000:3000
     volumes:
       - lw_data:/data/data:z
+      - ./backup:/backup:z
     depends_on:
       - postgres
       - meilisearch
