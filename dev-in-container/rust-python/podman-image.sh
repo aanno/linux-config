@@ -2,11 +2,15 @@
 
 set -xe
 
-VENV=/stratis/home/tpasch/venv/rust-python
+# VENV=/stratis/home/tpasch/venv/rust-python
+# directory must exist before but .venv is created
+VENV=~/rust-python
+# for uv (not working)
+# VENV=~/rust-python/.venv
 
 # https://stackoverflow.com/questions/30646943/how-to-avahi-browse-from-a-docker-container
 # CWD=`pwd`/../../build-with-docker
-CWD=/home/tpasch/dev/scm/aanno/github/linux-config/build-with-docker
+CWD=$AANNO_GITHUB_HOME/linux-config/build-with-docker
 REALCWD=`pwd`
 # USERID=1001
 USERID=1000
@@ -36,10 +40,10 @@ podman \
   -v $PNPM_CACHE_DIR:/pnpm:z \
   -v $PIP_CACHE_DIR:/pip:z \
   -v $HF_HOME:/hf:z \
-  -v $VENV/lib:/home/vscode/.venv/lib:z \
   -v $VENV/include:/home/vscode/.venv/include:z \
   -v $REALCWD:/build:z ;
 
+# -v $VENV/lib:/home/vscode/.venv/lib:z \
 # -v $HOME/.volta:/home/vscode/.volta:z \
 # -v $VOLTA_HOME/tools:/home/vscode/.volta/tools:z \
 
