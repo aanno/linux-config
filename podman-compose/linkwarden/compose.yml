@@ -14,7 +14,8 @@ services:
     # build: . # uncomment to build from source
     # image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
     # image: localhost/linkwarden:latest
-    image: localhost/linkwarden:ai-merge-tags
+    image: localhost/linkwarden:ai-merge-tags-3
+    # image: localhost/linkwarden:get-tags-pagination-3
     ports:
       - 127.0.0.1:3000:3000
     volumes:
