@@ -24,7 +24,9 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.snapcast.fedora43;
+  -f Containerfile.snapcast.fedora44;
+
+export MY_HOME=$HOME
 
 # all except ..
 # tar cvfz owntone.tar.gz ./opt/
@@ -66,7 +68,8 @@ pushd opt
   tar cvfz ../snapcast.tar.gz ./usr ./etc
   cd ..
   cp snapcast-fedora.fpm .fpm
-  sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+  # sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+  $MY_HOME/.local/bin/fpm
 popd
 
 # rm -rf ./opt
