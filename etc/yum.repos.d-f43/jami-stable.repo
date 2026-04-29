@@ -1,0 +1,6 @@
+[jami]
+name=fedora $releasever - $basearch - jami
+baseurl=https://dl.jami.net/stable/fedora_$releasever
+gpgcheck=1
+gpgkey=https://dl.jami.net/jami.pub.key
+enabled=1

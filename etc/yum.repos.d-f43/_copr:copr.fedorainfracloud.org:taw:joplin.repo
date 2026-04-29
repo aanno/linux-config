@@ -1,0 +1,10 @@
+[copr:copr.fedorainfracloud.org:taw:joplin]
+name=Copr repo for joplin owned by taw
+baseurl=https://download.copr.fedorainfracloud.org/results/taw/joplin/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/taw/joplin/pubkey.gpg
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1
