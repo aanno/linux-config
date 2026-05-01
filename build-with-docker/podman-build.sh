@@ -24,7 +24,7 @@ podman build --pull -t owntone \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  -f Containerfile.spotifyd.fedora44;
+  -f Containerfile.gmrender.fedora44;
 
 export MY_HOME=$HOME
 
@@ -51,11 +51,12 @@ tar cvfz owntone.tar.gz ./opt/
 ## tar tvfJ opt/owntone/make-it-longer/taglib/taglib-2.tar.xz
 
 # ... gmrender
-# cp -f gmrender-fedora.fpm .fpm
-# cd opt
-# tar cvfz ../gmrender.tar.gz ./usr
-# cd ..
-# cp gmrender-fedora.fpm .fpm
+cp -f gmrender-fedora.fpm .fpm
+cd opt
+tar cvfz ../gmrender.tar.gz ./usr
+cd ..
+cp gmrender-fedora.fpm .fpm
+$MY_HOME/.local/bin/fpm
 # sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 
 # ... snapcast
@@ -78,13 +79,13 @@ tar cvfz owntone.tar.gz ./opt/
 # only for spotifyd
 ## TODO: find container name ('relaxed_torvalds' here)
 ## podman cp relaxed_torvalds:/opt/owntone/release/spotifyd
-rm -rf usr || true
-mkdir -p usr/bin/
-cp ./opt/owntone/spotifyd usr/bin/
-tar cvfz spotifyd.tar.gz ./usr
-cp -f spotifyd-fedora.fpm .fpm
-# sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
-$MY_HOME/.local/bin/fpm
+# rm -rf usr || true
+# mkdir -p usr/bin/
+# cp ./opt/owntone/spotifyd usr/bin/
+# tar cvfz spotifyd.tar.gz ./usr
+# cp -f spotifyd-fedora.fpm .fpm
+# # sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
+# $MY_HOME/.local/bin/fpm
 
 # galera-4
 # cp opt/owntone/make-it-longer/galera-4-26.4.18/galera-4-26.4.18.tgz .
@@ -92,9 +93,8 @@ $MY_HOME/.local/bin/fpm
 # fpm galera-4-26.4.18.tgz
 
 # only owntone on fedora
-# rm -f *.rpm *.deb
+# rm -f *.rpm *.deb || true
 # cp -f owntone-fedora.fpm .fpm
 ## sudo /root/.local/share/gem/ruby/3.3.0/bin/fpm
 # $MY_HOME/.local/bin/fpm
 ## dnf install ./owntone-server-2*.rpm
-

@@ -3,7 +3,7 @@
 -t rpm
 --name gmrender-resurrect
 --license GPL-2.0
---version 0.3
+--version 0.3.1
 --architecture x86_64
 --description "Resource efficient UPnP/DLNA renderer, optimal for Raspberry Pi, CuBox or a general MediaServer"
 --url "https://github.com/hzeller/gmrender-resurrect"
