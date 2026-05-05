@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   openvpn-client:
     container_name: openvpn-client
@@ -7,7 +5,9 @@ services:
     # image: docker.io/go-gost/gost:latest
     build: .
     ports:
-      - 1194:1194
+      - 1080:1080
+      - 1080:1080/udp
+      - 3128:3128
     dns:
       # germany - Frankfurt - no vpn
       - 54.93.169.181
@@ -19,14 +19,15 @@ services:
     devices:
       - /dev/net/tun
       - /dev/null
-    # security_opt:
-      # - "label=disable"
-      # - "label=type:ovpn_container.process"
+    userns_mode: keep-id
+    # network_mode: "host"
+    security_opt:
+      - "label=disable"
+      - "label=type:ovpn_container.process"
     # command: -C /config/config.txt
     # not with podman rootless
     # otherwise very difficult to get IP (or use localhost)
-    entrypoint: /usr/sbin/openvpn --config /config/getflix-dnsonly.ovpn --auth-user-pass /config/passfile
-    network_mode: "host"
+    entrypoint: /usr/sbin/openvpn --config /config/getflix-vpnonly.ovpn --auth-user-pass /config/passfile
     restart: unless-stopped
     volumes:
       - ./config:/config:z,ro
