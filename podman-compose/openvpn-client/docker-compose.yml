@@ -27,7 +27,7 @@ services:
     # command: -C /config/config.txt
     # not with podman rootless
     # otherwise very difficult to get IP (or use localhost)
-    entrypoint: /usr/sbin/openvpn --config /config/getflix-vpnonly.ovpn --auth-user-pass /config/passfile
+    entrypoint: ["/usr/bin/supervisord", "-c", "/config/supervisord.conf", "-n"]
     restart: unless-stopped
     volumes:
       - ./config:/config:z,ro

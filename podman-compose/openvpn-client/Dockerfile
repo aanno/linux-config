@@ -12,10 +12,11 @@ RUN addgroup \
     --disabled-password \
     --gecos "" \
     --ingroup "$GROUPNAME" \
-    --no-create-home \
     --uid "$UID" \
     $USER \
 && apk add --no-cache openvpn iproute2 bind-tools supervisor gost
+# home is needed
+# --no-create-home
 
 # iproute2: for ip command
 # bind-tools: for host command
@@ -25,4 +26,5 @@ RUN addgroup \
 
 EXPOSE 1194
 USER openvpn
-ENTRYPOINT [ "/usr/sbin/openvpn", "--config", "/config/openvpn.ovpn" ]
+WORKDIR /home/openvpn
+ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/config/supervisord.conf", "-n" ]
