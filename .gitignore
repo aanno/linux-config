@@ -11,6 +11,7 @@
 /dev-in-container/python/volta.sh
 /podman-compose/music-assistant/music-assistant/
 /podman-compose/scm-manager/scm-manager/
+/build-rpms-on-podman/src/
 apache-*/
 gradle-*/
 /.devcontainer
