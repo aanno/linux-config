@@ -1,15 +1,13 @@
 from docker.io/library/fedora:44
 
 RUN set -ex;\
-  mkdir /opt/owntone || true; \
-  cd; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
-  # https://github.com/saivert/pwvucontrol \
   dnf -y install wireplumber-devel pipewire-devel libadwaita-devel rustc cargo meson gtk4-devel \
     git blueprint-compiler desktop-file-utils clang rubygems; \
   gem install fpm; \
   mkdir -p /src || true; \
   cd /src; \
+  # https://github.com/saivert/pwvucontrol \
   git clone -b wp-0.5-glib-0.21 --depth 10 https://github.com/saivert/pwvucontrol.git || true; \
   cd pwvucontrol; \
   meson setup builddir --prefix=/usr; \
