@@ -12,6 +12,7 @@
 /podman-compose/music-assistant/music-assistant/
 /podman-compose/scm-manager/scm-manager/
 /build-rpms-on-podman/src/
+/build-rpms-on-podman/.fpm
 apache-*/
 gradle-*/
 /.devcontainer
