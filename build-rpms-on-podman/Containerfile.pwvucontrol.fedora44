@@ -25,4 +25,6 @@ RUN set -ex;\
   meson setup builddir --prefix=/usr; \
   meson compile -C builddir; \
   mkdir -p builddir/usr/share/locale; \
-  meson install -C builddir --destdir=usr
+  meson install -C builddir --destdir=.; \
+  tar cvfz pwvucontrol.tar.gz -C builddir usr; \
+  mv pwvucontrol.tar.gz /src;

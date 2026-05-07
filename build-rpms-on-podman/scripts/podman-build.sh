@@ -13,7 +13,7 @@ CWD="$GIT_ROOT/build-with-docker"
 MYCWD="$GIT_ROOT/build-rpms-on-podman"
 
 rm -rf ./src/$APP/builddir/usr || true
-rm *.gz *.tgz || true
+rm *.gz *.tgz src/*.gz src/*.tgz || true
 podman rmi $IMAGE || true
 
 mkdir -p $CWD/opt/owntone \

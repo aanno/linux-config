@@ -1,0 +1,19 @@
+--verbose
+-s tar
+-t rpm
+--name spotifyd
+--license GPL-3.0
+--version 0.5.1
+--architecture x86_64
+--description "volume control applet for Pipewire in the lines of pavucontrol"
+--url "https://github.com/saivert/pwvucontrol"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.17.0"
+--depends pipewire
+--depends libadwaita
+--depends wireplumber
+--depends gtk4
+
+pwvucontrol.tar.gz
