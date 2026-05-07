@@ -15,5 +15,8 @@
 --depends libadwaita
 --depends wireplumber
 --depends gtk4
+--depends gdk-pixbuf2
+--depends pango
+--depends glib2
 
 pwvucontrol.tar.gz

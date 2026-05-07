@@ -8,7 +8,6 @@ set -euo pipefail
 
 GIT_ROOT=$(git rev-parse --show-toplevel)
 
-# https://stackoverflow.com/questions/30646943/how-to-avahi-browse-from-a-docker-container
 CWD="$GIT_ROOT/build-with-docker"
 MYCWD="$GIT_ROOT/build-rpms-on-podman"
 

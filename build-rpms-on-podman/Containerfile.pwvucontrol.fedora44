@@ -1,15 +1,5 @@
 from docker.io/library/fedora:44
 
-# Current problem:
-# pwvucontrol needs wireplumber-0.4, but fedora 44 only has wireplumber-0.5
-# 
-# The system library `wireplumber-0.4` required by crate `wireplumber-sys` was not found.
-# The file `wireplumber-0.4.pc` needs to be installed and the PKG_CONFIG_PATH environment variable must contain its parent directory.
-# The PKG_CONFIG_PATH environment variable is not set.
-#
-# https://gitlab.freedesktop.org/pipewire/pipewire-rs
-# https://docs.rs/crate/wireplumber-sys/latest
-
 RUN set -ex;\
   mkdir /opt/owntone || true; \
   cd; \
