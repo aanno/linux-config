@@ -1,0 +1,38 @@
+# https://gost.run/en/getting-started/configuration-overview/
+# https://gost.run/en/reference/configuration/file/
+services:
+- name: proxy-socks5
+  addr: ":1080"
+  handler:
+    type: socks5
+  listener:
+    type: tcp
+  resolver: resolve-0
+- name: proxy-http
+  addr: ":3128"
+  handler:
+    type: http
+  listener:
+    type: tcp
+  resolver: resolve-0
+
+resolvers:
+- name: resolve-0
+  nameservers:
+  - addr: 54.93.169.181
+    ttl: 180s
+    only: ipv4
+  - addr: 212.71.249.225
+    ttl: 180s
+    only: ipv4
+
+log:
+  output: stderr
+  level: info
+  format: json
+  rotation:
+    maxSize: 100
+    maxAge: 10
+    maxBackups: 3
+    localTime: false
+    compress: false
