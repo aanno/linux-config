@@ -1,5 +1,5 @@
-NEW_TAG=580.119.02
-OLD_TAG=580.95.05
+export NEW_TAG=595.71.05
+export OLD_TAG=580.95.05
 
 ln -sf /usr/lib64/libcudadebugger.so.${NEW_TAG} /usr/lib64/libcudadebugger.so.${OLD_TAG}
 ln -sf /usr/lib64/libcuda.so.${NEW_TAG} /usr/lib64/libcuda.so.${OLD_TAG}

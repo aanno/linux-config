@@ -26,3 +26,7 @@
 	path = /usr/bin/kdiff3
 [diff]
 	guitool = kdiff3
+[url "https://invent.kde.org/"]
+	insteadOf = kde:
+[url "ssh://git@invent.kde.org/"]
+	pushInsteadOf = kde:

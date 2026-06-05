@@ -30,7 +30,7 @@ mkdir -p \
 podman \
   build \
   --userns=host \
-  -t rust-python -f Containerfile.rust-python.fedora43 \
+  -t rust-python -f Containerfile.rust-python.fedora44 \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
   -v $CWD/var/lib/dnf:/var/lib/dnf:z \

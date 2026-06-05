@@ -26,7 +26,7 @@ mkdir -p \
 podman \
   build \
   --userns=host \
-  -t python -f Containerfile.python.fedora43 \
+  -t python -f Containerfile.python.fedora44 \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
   -v $CWD/var/lib/dnf:/var/lib/dnf:z \
