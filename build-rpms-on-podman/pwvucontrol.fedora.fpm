@@ -3,7 +3,7 @@
 -t rpm
 --name pwvucontrol
 --license GPL-3.0
---version 0.5.1
+--version 0.5.2
 --architecture x86_64
 --description "volume control applet for Pipewire in the lines of pavucontrol"
 --url "https://github.com/saivert/pwvucontrol"
