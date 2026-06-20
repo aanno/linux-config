@@ -7,14 +7,14 @@ services:
     type: socks5
   listener:
     type: tcp
-  resolver: resolve-0
+  # resolver: resolve-0
 - name: proxy-http
   addr: ":3128"
   handler:
     type: http
   listener:
     type: tcp
-  resolver: resolve-0
+  # resolver: resolve-0
 
 resolvers:
 - name: resolve-0
