@@ -97,12 +97,15 @@ restore() {
             height) HEIGHT="$value" ;;
             pixelformat) PIXELFORMAT="$value" ;;
             fps) FPS="$value" ;;
-            brightness) BRIGHTNESS="$value" ;;
-            contrast) CONTRAST="$value" ;;
-            power_line_frequency) POWER_LINE_FREQ="$value" ;;
-            sharpness) SHARPNESS="$value" ;;
-            backlight_compensation) BACKLIGHT="$value" ;;
-            zoom_absolute) ZOOM="$value" ;;
+            # brightness) BRIGHTNESS="$value" ;;
+            # contrast) CONTRAST="$value" ;;
+            # power_line_frequency) POWER_LINE_FREQ="$value" ;;
+            # sharpness) SHARPNESS="$value" ;;
+            # backlight_compensation) BACKLIGHT="$value" ;;
+            # zoom_absolute) ZOOM="$value" ;;
+            *)	
+                echo "Set $key=$value"
+                v4l2-ctl -d "$DEVICE" -c "$key=$value" ;;
         esac
     done < "$CONFIG_CTRL"
     
@@ -112,25 +115,6 @@ restore() {
     
     # Note: fps is set via stream parameters, not directly via v4l2-ctl
     # Some cameras need gst-v4l2 or application-level setting
-    
-    # Restore controls
-    echo "Setting brightness=$BRIGHTNESS"
-    v4l2-ctl -d "$DEVICE" -c brightness=$BRIGHTNESS
-    
-    echo "Setting contrast=$CONTRAST"
-    v4l2-ctl -d "$DEVICE" -c contrast=$CONTRAST
-    
-    echo "Setting power_line_frequency=$POWER_LINE_FREQ"
-    v4l2-ctl -d "$DEVICE" -c power_line_frequency=$POWER_LINE_FREQ
-    
-    echo "Setting sharpness=$SHARPNESS"
-    v4l2-ctl -d "$DEVICE" -c sharpness=$SHARPNESS
-    
-    echo "Setting backlight_compensation=$BACKLIGHT"
-    v4l2-ctl -d "$DEVICE" -c backlight_compensation=$BACKLIGHT
-    
-    echo "Setting zoom_absolute=$ZOOM"
-    v4l2-ctl -d "$DEVICE" -c zoom_absolute=$ZOOM
     
     echo "Settings restored from: $CONFIG_CTRL"
 }
