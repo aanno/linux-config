@@ -42,6 +42,15 @@ CONTROLS=(
     "sharpness"
     "backlight_compensation"
     "zoom_absolute"
+    "saturation"
+    "zoom_absolute"
+    "white_balance_automatic"
+    "white_balance_temperature"
+    "auto_exposure"
+    "exposure_time_absolute"
+    "exposure_dynamic_framerate"
+    "focus_absolute"
+    "focus_automatic_continuous"
 )
 
 save() {
