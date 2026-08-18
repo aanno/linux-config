@@ -30,4 +30,4 @@ podman build --pull -t $IMAGE \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
   -v $MYCWD/src:/src:z \
-  -f Containerfile.pwvucontrol.fedora44;
+  -f Containerfile.podman.fedora44;
