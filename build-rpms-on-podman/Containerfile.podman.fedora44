@@ -1,0 +1,22 @@
+from docker.io/library/fedora:44
+
+RUN set -ex;\
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install go make gpgme-devel libseccomp-devel man tree; \
+  # building rpm \
+  dnf -y install rpm-build rpmdevtools; \
+  # dependencies of podman \
+  dnf -y install gettext-envsubst btrfs-progs-devel glibc-static \
+    go-rpm-macros shadow-utils-subid-devel sqlite-devel systemd-devel; \
+  mkdir -p /src || true; \
+  cd /src; \
+  git clone -b v6.1 --depth 10 https://github.com/podman-container-tools/podman.gitt || true; \
+  cd podman; \
+  make; \
+  make rpm; \
+  # now all rpms are in /src/podman/rpm \
+  mv /src/podman/rpm /src; \
+  make install; \
+  tar cvfz podman.tar.gz -C . /usr/local; \
+  mv podman.tar.gz /src; \
+  make clean;
