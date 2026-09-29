@@ -1,1 +1,1 @@
-D:/home/tpasch/idea-IU-233.13135.103/bin/idea.sh
+/stratis/home/tpasch/dev/.local/share/JetBrains/Toolbox/apps/intellij-idea/bin/idea.sh
