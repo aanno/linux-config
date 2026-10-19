@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 export APP=pwvucontrol
-export DIST=f44
+export DIST=fedora45
 export IMAGE=localhost/${APP}:${DIST}
 
 set -euo pipefail
@@ -30,4 +30,4 @@ podman build --pull -t $IMAGE \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
   -v $MYCWD/src:/src:z \
-  -f Containerfile.podman.fedora44;
+  -f Containerfile.${APP}.${DIST};

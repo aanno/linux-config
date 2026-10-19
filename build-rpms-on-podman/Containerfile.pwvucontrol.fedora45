@@ -1,4 +1,4 @@
-from docker.io/library/fedora:44
+from docker.io/library/fedora:45
 
 RUN set -ex;\
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
@@ -11,7 +11,7 @@ RUN set -ex;\
   # -b wp-0.5-glib-0.21
   git clone --depth 10 https://github.com/saivert/pwvucontrol.git || true; \
   cd pwvucontrol; \
-  meson setup builddir --prefix=/usr; \
+  meson setup --reconfigure builddir --prefix=/usr; \
   meson compile -C builddir; \
   mkdir -p builddir/usr/share/locale; \
   meson install -C builddir --destdir=.; \
