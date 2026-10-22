@@ -1,4 +1,4 @@
-from docker.io/library/fedora:44
+from docker.io/library/fedora:45
 
 RUN set -ex;\
   mkdir /opt/owntone || true; \
@@ -10,6 +10,9 @@ RUN set -ex;\
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
   dnf -y install \
   # git automake autoconf gettext-devel gperf gawk libtool \
+  pkgconf-pkg-config  avahi-compat-libdns_sd-devel inotify-tools-devel libheif-ffmpeg \
+  libmount-devel  gstreamer1-devel  gstreamer1-plugins-base-devel gstreamer1-plugins-bad-free-devel \
+  # libavutil-free-devel libavcodec-free-devel libavfilter-free-devel  libavformat-free-devel \
   sqlite-devel libconfuse-devel libunistring-devel mxml-devel libevent-devel \
   avahi-devel libgcrypt-devel zlib-devel alsa-lib-devel ffmpeg-devel \
   libplist-devel libsodium-devel json-c-devel libwebsockets-devel libcurl-devel \
@@ -20,18 +23,23 @@ RUN set -ex;\
   sqlite-devel libconfuse-devel libunistring-devel libxml2-devel mxml-devel libevent-devel \
   libgcrypt-devel zlib-ng-devel alsa-lib-devel ffmpeg-devel \
   libplist-devel libsodium-devel json-c-devel libwebsockets-devel \
-  libcurl-devel protobuf-c-devel; \
-  # git clone https://github.com/owntone/owntone-server.git; \
-  # git clone -b bug/1897-configurate-fs-events https://github.com/aanno/owntone-server.git; \
-  git clone https://github.com/owntone/owntone-server.git; \
+  libcurl-devel protobuf-c-devel rubygems; \
+  gem install fpm; \
+  mkdir -p /src || true; \
+  cd /src; \
+  rm -rf owntone-server || true;
+
+RUN cd /src; \
+  # git clone --depth 10 https://github.com/owntone/owntone-server.git; \
+  # git clone --depth 10 -b bug/1897-configurate-fs-events https://github.com/aanno/owntone-server.git; \
+  git clone --depth 10 https://github.com/owntone/owntone-server.git; \
   cd owntone-server; \
   # ./scripts/antlr35_install.sh; \
   autoreconf -i -f; \
   ./configure --prefix=/opt/owntone --sysconfdir=/etc --localstatedir=/var \
-    --enable-chromecast --enable-spotify --with-libwebsockets  --with-pulseaudio; \
+    --enable-chromecast --enable-spotify --with-libwebsockets  --with-pulseaudio \
+    --enable-year2038; \
   make; \
-  make install;
-  
-# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
-# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
-
+  make install; \
+  cd /; \
+  tar cvfz /src/owntone.tar.gz /opt;
