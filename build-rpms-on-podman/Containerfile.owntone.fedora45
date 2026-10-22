@@ -29,7 +29,8 @@ RUN set -ex;\
   cd /src; \
   rm -rf owntone-server || true;
 
-RUN cd /src; \
+RUN set -ex; \
+  cd /src; \
   # git clone --depth 10 https://github.com/owntone/owntone-server.git; \
   # git clone --depth 10 -b bug/1897-configurate-fs-events https://github.com/aanno/owntone-server.git; \
   git clone --depth 10 https://github.com/owntone/owntone-server.git; \

@@ -4,7 +4,7 @@ from docker.io/library/fedora:45
 # Fixed by: https://github.com/hzeller/gmrender-resurrect/pull/297
 # https://github.com/hzeller/gmrender-resurrect/blob/master/INSTALL.md
 
-RUN set -ex;\
+RUN set -ex; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
   dnf -y install \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
@@ -20,7 +20,8 @@ RUN set -ex;\
   cd /src; \
   rm -rf gmrender-resurrect || true;
 
-RUN cd /src; \
+RUN set -ex; \
+  cd /src; \
   git clone --depth 10 -b aanno/issue-296 https://github.com/aanno/gmrender-resurrect.git; \
   # git --depth 10 clone https://github.com/hzeller/gmrender-resurrect.git; \
   cd gmrender-resurrect; \

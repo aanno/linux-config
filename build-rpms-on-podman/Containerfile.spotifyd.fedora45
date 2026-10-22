@@ -1,26 +1,40 @@
-from docker.io/library/fedora:44
+from docker.io/library/fedora:45
 
+# Problem: Compiling librespot-core v0.8.0
+# error[E0277]: the trait bound `vergen::feature::build::Build: vergen_lib::entries::Add` is not satisfied
+#
 # error: failed to run custom build command for `jack-sys v0.5.1`
 # related to portaudio_backend?
 
 RUN set -ex;\
-  mkdir /opt/owntone || true; \
-  cd; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
   export FEATURES="--no-default-features --all-features --features pulseaudio_backend,portaudio_backend,alsa_backend,dbus_mpris"; \
   export CARGO_HOME=/root/.cargo; \
   dnf -y install \
   pipewire-devel pipewire-pulseaudio  dbus-devel \
   pipewire-jack-audio-connection-kit-devel portaudio-devel \
-  git cargo rust alsa-lib-devel openssl-devel pkgconf-pkg-config; \
-  git clone https://github.com/Spotifyd/spotifyd.git; \
+  git cargo rust alsa-lib-devel openssl-devel pkgconf-pkg-config rubygems; \
+  gem install fpm; \
+  mkdir -p /src || true; \
+  cd /src; \
+  rm -rf spotifyd || true;
+
+RUN set -ex; \
+  cd /src; \
+  git clone --depth 10 https://github.com/Spotifyd/spotifyd.git; \
   # use PR for librespot 0.8 to make this work again \
-  # git clone -b librespot-0.8 https://github.com/kesor/spotifyd.git; \
+  # git clone --depth 10 -b librespot-0.8 https://github.com/kesor/spotifyd.git; \
   cd spotifyd; \
+  # ??? a different version of OpenSSL was found. The build is now aborting \
+  cargo update; \
   cargo build $FEATURES --release; \
   cargo install $FEATURES --path . --locked; \
-  echo not using cp -r target/release/spotifyd ~/.cargo /opt/owntone/; \
-  cp -r target/release/spotifyd /opt/owntone/;
+  rm -rf /src/usr; \
+  mkdir -p /src/usr/bin; \
+  echo not using cp -r target/release/spotifyd ~/.cargo /src/; \
+  cp -r target/release/spotifyd /src/usr/bin/; \
+  cd /src; \
+  tar cvfz spotifyd.tar.gz usr;
 
 # pipewire-plugin-jack ?
 # CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]

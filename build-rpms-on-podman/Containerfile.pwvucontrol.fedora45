@@ -1,11 +1,15 @@
 from docker.io/library/fedora:45
 
-RUN set -ex;\
+RUN set -ex; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
   dnf -y install wireplumber-devel pipewire-devel libadwaita-devel rustc cargo meson gtk4-devel \
     git blueprint-compiler desktop-file-utils clang rubygems; \
   gem install fpm; \
   mkdir -p /src || true; \
+  cd /src; \
+  rm -rf pwvucontrol;
+
+RUN set -ex; \
   cd /src; \
   # https://github.com/saivert/pwvucontrol \
   # -b wp-0.5-glib-0.21
