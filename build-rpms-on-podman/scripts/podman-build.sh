@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-export APP=pwvucontrol
+export APP=gmrender
 export DIST=fedora45
 export IMAGE=localhost/${APP}:${DIST}
 
