@@ -1,6 +1,7 @@
 from docker.io/library/fedora:45
 
 # Problem: Does not compile, see https://github.com/hzeller/gmrender-resurrect/issues/296
+# Fixed by: https://github.com/hzeller/gmrender-resurrect/pull/297
 # https://github.com/hzeller/gmrender-resurrect/blob/master/INSTALL.md
 
 RUN set -ex;\
@@ -17,19 +18,21 @@ RUN set -ex;\
   gem install fpm; \
   mkdir -p /src || true; \
   cd /src; \
-  git clone https://github.com/hzeller/gmrender-resurrect.git; \
+  rm -rf gmrender-resurrect || true;
+
+RUN cd /src; \
+  git clone --depth 10 -b aanno/issue-296 https://github.com/aanno/gmrender-resurrect.git; \
+  # git --depth 10 clone https://github.com/hzeller/gmrender-resurrect.git; \
   cd gmrender-resurrect; \
   ./autogen.sh; \
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var; \
   make; \
   make install; \
+  rm -rf /opt/usr || true; \
   mkdir -p /opt/usr/bin; \
   cp /usr/bin/gmed* /opt/usr/bin/; \
   mkdir -p /opt/usr/share; \
   cp -r /usr/share/gmediarender /opt/usr/share; \
-  tar cvfz pwvucontrol.tar.gz -C /opt usr; \
-  mv /opt/pwvucontrol.tar.gz /src;
-  
-# CMD [ "/usr/sbin/owntone",  "-d",  "5",  "-f" ]
-# ENTRYPOINT [ "/usr/sbin/owntone", "-d", "5", "-f" ]
-
+  cd /opt; \
+  tar cvfz gmrender.tar.gz usr; \
+  mv /opt/gmrender.tar.gz /src;
