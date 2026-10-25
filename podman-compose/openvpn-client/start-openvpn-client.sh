@@ -1,4 +1,4 @@
 #!/bin/bash -x
-podman-compose down
-podman-compose up -d
-podman-compose logs -f
+podman compose down
+podman compose up -d
+podman compose logs -f
