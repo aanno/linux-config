@@ -26,14 +26,17 @@ RUN set -ex;\
   libcurl-devel protobuf-c-devel rubygems; \
   gem install fpm; \
   mkdir -p /src || true; \
-  cd /src; \
-  rm -rf owntone-server || true;
+  cd /src;
 
 RUN set -ex; \
   cd /src; \
-  # git clone --depth 10 https://github.com/owntone/owntone-server.git; \
-  # git clone --depth 10 -b bug/1897-configurate-fs-events https://github.com/aanno/owntone-server.git; \
-  git clone --depth 10 https://github.com/owntone/owntone-server.git; \
+  if [ -d owntone-server/.git ]; then \
+    cd owntone-server; git reset --hard; git pull; cd ..; \
+  else \
+    rm -rf owntone-server || true; \
+    # git clone --depth 10 https://github.com/owntone/owntone-server.git; \
+    git clone --depth 10 https://github.com/owntone/owntone-server.git; \
+  fi; \
   cd owntone-server; \
   # ./scripts/antlr35_install.sh; \
   autoreconf -i -f; \

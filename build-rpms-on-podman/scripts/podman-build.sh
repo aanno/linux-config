@@ -12,7 +12,8 @@ CWD="$GIT_ROOT/build-with-docker"
 MYCWD="$GIT_ROOT/build-rpms-on-podman"
 
 rm -rf ./src/$APP/builddir/usr || true
-rm *.gz *.tgz src/*.gz src/*.tgz || true
+# *.gz *.tgz
+rm src/*.gz src/*.tgz || true
 mkdir -p $MYCWD/src || true
 podman rmi $IMAGE || true
 

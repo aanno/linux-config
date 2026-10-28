@@ -13,6 +13,9 @@
 /podman-compose/scm-manager/scm-manager/
 /build-rpms-on-podman/src/
 /build-rpms-on-podman/.fpm
+/build-rpms-on-podman/*.gz
+/build-rpms-on-podman/*.tar.gz
+/build-rpms-on-podman/scripts/podman-build-*.sh
 apache-*/
 gradle-*/
 /.devcontainer

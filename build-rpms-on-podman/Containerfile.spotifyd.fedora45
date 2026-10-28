@@ -26,8 +26,6 @@ RUN set -ex; \
     rm -rf spotifyd || true; \
     git clone --depth 10 https://github.com/Spotifyd/spotifyd.git; \
   fi; \
-  # use PR for librespot 0.8 to make this work again \
-  # git clone --depth 10 -b librespot-0.8 https://github.com/kesor/spotifyd.git; \
   cd spotifyd; \
   # ??? a different version of OpenSSL was found. The build is now aborting \
   cargo update openssl-sys openssl; \
