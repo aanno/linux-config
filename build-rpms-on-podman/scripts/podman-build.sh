@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-export APP=owntone
+export APP=gonic
 export DIST=fedora45
 export IMAGE=localhost/${APP}:${DIST}
 

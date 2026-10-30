@@ -1,20 +1,26 @@
 #!/bin/bash -x
 
-set -xe
+export APP=gonic
+export DIST=fedora45
+export IMAGE=localhost/${APP}:${DIST}
 
-# https://stackoverflow.com/questions/30646943/how-to-avahi-browse-from-a-docker-container
-CWD=`pwd`
+set -euo pipefail
 
-rm *.gz *.tgz || true
-podman rmi localhost/owntone || true
+GIT_ROOT=$(git rev-parse --show-toplevel)
+
+CWD="$GIT_ROOT/build-with-docker"
+MYCWD="$GIT_ROOT/build-rpms-on-podman"
+
+rm -rf ./src/$APP/builddir/usr || true
+# *.gz *.tgz
+rm src/*.gz src/*.tgz || true
+mkdir -p $MYCWD/src || true
 
 mkdir -p $CWD/opt/owntone \
   $CWD/var/lib/apt $CWD/var/cache/apt \
   $CWD/var/lib/dnf $CWD/var/cache/dnf \
   $CWD/.cargo $CWD/.rustup;
-# only nymphcast
-mkdir -p opt/owntone/include/nymph opt/owntone/lib
-rm -rf $CWD/opt/owntone/* || true;
+
 podman run --rm -it \
   -v $CWD/var/lib/apt:/var/lib/apt:z \
   -v $CWD/var/cache/apt:/var/cache/apt:z \
@@ -23,4 +29,5 @@ podman run --rm -it \
   -v $CWD/opt:/opt:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  snapcast bash
+  -v $MYCWD/src:/src:z \
+  ${IMAGE} bash;

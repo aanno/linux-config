@@ -1,0 +1,34 @@
+from docker.io/library/fedora:45
+
+RUN set -ex; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install wireplumber-devel pipewire-devel git taglib-devel sqlite-devel \
+  ffmpeg-devel mpv-devel vlc-devel golang \
+  desktop-file-utils tree which rubygems; \
+  gem install fpm; \
+  mkdir -p /src || true; \
+  cd /src;
+
+RUN set -ex; \
+  cd /src; \
+  if [ -d gonic/.git ]; then \
+    cd gonic; git reset --hard; git pull; cd ..; \
+  else \
+    rm -rf gonic || true; \
+    git clone --depth 10 https://github.com/sentriz/gonic.git; \
+  fi; \
+  cd gonic; \
+  go get -u; \
+  go get -u ./...; \
+  go mod tidy; \
+  go clean -r -x -cache; \
+  go build --buildmode=pie --linkshared cmd/gonic/gonic.go; \
+  mkdir -p usr/bin; \
+  cp gonic usr/bin; \
+  tar cvfz gonic.tar.gz usr; \
+  mv gonic.tar.gz /src;
+
