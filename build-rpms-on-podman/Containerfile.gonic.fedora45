@@ -27,6 +27,7 @@ RUN set -ex; \
   go mod tidy; \
   go clean -r -x -cache; \
   go build --buildmode=pie --linkshared cmd/gonic/gonic.go; \
+  rm -rf usr || true; \
   mkdir -p usr/bin; \
   cp gonic usr/bin; \
   tar cvfz gonic.tar.gz usr; \
