@@ -1,0 +1,18 @@
+--verbose
+-s tar
+-t rpm
+--name gonic
+--license GPL-3.0
+--version 0.23.0
+--architecture x86_64
+--description "music streaming server / free-software subsonic server API implementation"
+--url "https://github.com/sentriz/gonic"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.18.0"
+--depends pipewire-libs
+--depends ffmpeg
+--depends mpv
+
+gonic.tar.gz
