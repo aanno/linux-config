@@ -1,0 +1,18 @@
+--verbose
+-s tar
+-t rpm
+--name navidrome
+--license GPL-3.0
+--version 0.64.2
+--architecture x86_64
+--description "Navidrome is an open source web-based music collection server and streamer, subsonic server API implementation"
+--url "https://github.com/navidrome/navidrome"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.18.0"
+--depends pipewire-libs
+--depends ffmpeg
+--depends mpv
+
+navidrome.tar.gz
