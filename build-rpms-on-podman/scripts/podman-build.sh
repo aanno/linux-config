@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-export APP=spotifyd
+export APP=owntone
 export DIST=fedora45
 export IMAGE=localhost/${APP}:${DIST}
 
