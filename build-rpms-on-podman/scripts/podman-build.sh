@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-export APP=gonic
+export APP=navidrome
 export DIST=fedora45
 export IMAGE=localhost/${APP}:${DIST}
 

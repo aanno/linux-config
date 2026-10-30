@@ -1,0 +1,58 @@
+diff --git a/Makefile b/Makefile
+index 811c0005..be990376 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,7 +2,7 @@ GO_VERSION=$(shell grep "^go " go.mod | cut -f 2 -d ' ')
+ NODE_VERSION=$(shell cat .nvmrc)
+ 
+ comma:=,
+-GO_BUILD_TAGS=netgo,sqlite_fts5$(if $(EXTRA_BUILD_TAGS),$(comma)$(EXTRA_BUILD_TAGS))
++GO_BUILD_TAGS=sqlite_fts5$(if $(EXTRA_BUILD_TAGS),$(comma)$(EXTRA_BUILD_TAGS))
+ 
+ # Set global environment variables, required for most targets
+ export ND_ENABLEINSIGHTSCOLLECTOR=false
+@@ -188,14 +188,14 @@ setup-git: ##@Development Setup Git hooks (pre-commit and pre-push)
+ .PHONY: setup-git
+ 
+ build: check_go_env buildjs ##@Build Build the project
+-	go build -ldflags="-X github.com/navidrome/navidrome/consts.gitSha=$(GIT_SHA) -X github.com/navidrome/navidrome/consts.gitTag=$(GIT_TAG)" -tags=$(GO_BUILD_TAGS)
++	go build --buildmode=pie --linkshared -ldflags="-X github.com/navidrome/navidrome/consts.gitSha=$(GIT_SHA) -X github.com/navidrome/navidrome/consts.gitTag=$(GIT_TAG)" -tags=$(GO_BUILD_TAGS)
+ .PHONY: build
+ 
+ buildall: deprecated build
+ .PHONY: buildall
+ 
+ debug-build: check_go_env buildjs ##@Build Build the project (with remote debug on)
+-	go build -gcflags="all=-N -l" -ldflags="-X github.com/navidrome/navidrome/consts.gitSha=$(GIT_SHA) -X github.com/navidrome/navidrome/consts.gitTag=$(GIT_TAG)" -tags=$(GO_BUILD_TAGS)
++	go build --buildmode=pie --linkshared -gcflags="all=-N -l" -ldflags="-X github.com/navidrome/navidrome/consts.gitSha=$(GIT_SHA) -X github.com/navidrome/navidrome/consts.gitTag=$(GIT_TAG)" -tags=$(GO_BUILD_TAGS)
+ .PHONY: debug-build
+ 
+ buildjs: check_node_env ui/build/index.html ##@Build Build only frontend
+diff --git a/main.go b/main.go
+index b5fb508b..f8c74cdb 100644
+--- a/main.go
++++ b/main.go
+@@ -13,7 +13,7 @@ func main() {
+ 	// If you get compilation errors like "undefined: buildtags.NETGO", this means you forgot to specify
+ 	// the required build tags when compiling the project.
+ 	// To avoid these kind of errors, you should use `make build` to compile the project.
+-	_ = buildtags.NETGO
++	// _ = buildtags.NETGO
+ 	_ = buildtags.SQLITE_FTS5
+ 
+ 	cmd.Execute()
+diff --git a/ui/package.json b/ui/package.json
+index b0201210..c3555061 100644
+--- a/ui/package.json
++++ b/ui/package.json
+@@ -85,5 +85,10 @@
+     "vite": {
+       "rollup": "npm:@rollup/wasm-node"
+     }
++  },
++  "allowScripts": {
++    "core-js@2.6.12": true,
++    "core-js-pure@3.51.0": true,
++    "esbuild@0.28.2": true
+   }
+ }

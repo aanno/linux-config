@@ -1,0 +1,39 @@
+from docker.io/library/fedora:45
+
+RUN set -ex; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install wireplumber-devel pipewire-devel git taglib-devel sqlite-devel \
+  ffmpeg-devel mpv-devel vlc-devel golang nodejs26-bin make git \
+  desktop-file-utils tree which rubygems; \
+  gem install fpm; \
+  mkdir -p /src || true; \
+  cd /src;
+
+COPY navidrome.diff /src
+
+RUN set -ex; \
+  cd /src; \
+  if [ -d navidrome/.git ]; then \
+    cd navidrome; git reset --hard; git pull; cd ..; \
+  else \
+    rm -rf navidrome || true; \
+    git clone --depth 10 https://github.com/navidrome/navidrome.git; \
+  fi; \
+  cd navidrome; \
+  git apply ../navidrome.diff; \
+  go get -u; \
+  go get -u ./...; \
+  go mod tidy; \
+  go clean -r -x -cache; \
+  make setup; \
+  make build; \
+  # go build --buildmode=pie --linkshared cmd/gonic/gonic.go; \
+  mkdir -p usr/bin; \
+  cp navidrome usr/bin; \
+  tar cvfz navidrome.tar.gz usr; \
+  mv navidrome.tar.gz /src;
+
