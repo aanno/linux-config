@@ -16,20 +16,21 @@ RUN set -ex; \
 COPY navidrome.diff /
 
 RUN set -ex; \
+  export BRANCH=v0.64.2; \
   cd /src; \
   if [ -d navidrome/.git ]; then \
-    cd navidrome; git reset --hard; git pull; cd ..; \
+    cd navidrome; git reset --hard; git fetch; git checkout $BRANCH; cd ..; \
   else \
     rm -rf navidrome || true; \
-    git clone --depth 10 https://github.com/navidrome/navidrome.git; \
+    git clone -b $BRANCH --depth 10 https://github.com/navidrome/navidrome.git; \
   fi; \
   cd navidrome; \
   git apply /navidrome.diff; \
   cd ui; npm audit fix || true; cd ..; \
-  go get -u; \
-  go get -u ./...; \
-  go mod tidy; \
-  go clean -r -x -cache; \
+  # go get -u; \
+  # go get -u ./...; \
+  # go mod tidy; \
+  # go clean -r -x -cache; \
   make setup; \
   make build; \
   # go build --buildmode=pie --linkshared cmd/gonic/gonic.go; \
