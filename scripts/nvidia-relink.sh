@@ -1,4 +1,4 @@
-export NEW_TAG=595.71.05
+export NEW_TAG=615.78.08
 export OLD_TAG=580.95.05
 
 ln -sf /usr/lib64/libcudadebugger.so.${NEW_TAG} /usr/lib64/libcudadebugger.so.${OLD_TAG}
@@ -37,8 +37,12 @@ ln -sf /usr/lib64/vdpau/libvdpau_nvidia.so.${NEW_TAG} /usr/lib64/vdpau/libvdpau_
 
 ln -sf /lib/firmware/nvidia/${NEW_TAG} /lib/firmware/nvidia/${OLD_TAG}
 
-ln -sf /usr/lib64/libnvidia-egl-gbm.so.1.1.3 /usr/lib64/libnvidia-egl-gbm.so.1.1.2
-ln -sf /usr/lib64/libnvidia-egl-wayland.so.1.1.21 /usr/lib64/libnvidia-egl-wayland.so.1.1.20
+#ln -sf /usr/lib64/libnvidia-egl-gbm.so.1.1.4 /usr/lib64/libnvidia-egl-gbm.so.1.1.2
+# ???
+ln -sf /usr/lib64/libnvidia-egl-wayland2.so.1.0.2 /usr/lib64/libnvidia-egl-wayland.so.1.1.20
+
+# dummy
+touch /usr/lib64/libnvidia-egl-gbm.so.1.1.2
 
 ls -l /usr/lib64/*.${OLD_TAG}*
 ls -l /usr/lib64/vdpau/*.${OLD_TAG}*
