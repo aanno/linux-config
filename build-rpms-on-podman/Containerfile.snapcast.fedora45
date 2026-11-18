@@ -3,9 +3,10 @@ from docker.io/library/fedora:45
 # https://github.com/badaix/snapcast/blob/develop/doc/build.md
 
 RUN set -ex;\
-  mkdir -p /opt/owntone /opt/usr/share/snapserver/snapweb /opt/usr/share/man/man1 \
+  rm -rf /opt/usr; \
+  mkdir -p /opt/usr/share/snapserver/snapweb /opt/usr/share/man/man1 \
     /opt/usr/share/pixmaps /opt//usr/share/snapserver/plug-ins \
-    /opt/usr/bin /opt/etc/snapserver || true; \
+    /opt/usr/bin /opt/etc/snapserver/certs || true; \
   cd; \
   echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
   dnf -y install \
@@ -58,14 +59,14 @@ RUN set -ex; \
   cp -r /usr/etc/snapserver/certs /opt/etc/snapserver/; \
   cp /usr/bin/snapclient /opt/usr/bin/; \
   cp /usr/share/man/man1/snapclient.* /opt/usr/share/man/man1/; \
-  cp /usr/share/pixmaps/snapcast.svg /opt/usr/share/pixmaps/ \
+  cp /usr/share/pixmaps/snapcast.svg /opt/usr/share/pixmaps/; \
   rm -r /opt/usr/share/snapserver || true; \
   cp -r /usr/share/snapserver /opt/usr/share/; \
   cd /opt; \
-  tar cvfz /src/snapserver.tar.gz \
+  tar cvfz /src/snapcast.tar.gz \
     usr/bin/snap* \
     usr/share/snapserver \
     usr/share/man/man1/snap* \
-    /usr/share/pixmaps/snapcast.svg \
+    usr/share/pixmaps/snapcast.svg \
     etc/snapserver.conf \
     etc/snapserver/certs;
