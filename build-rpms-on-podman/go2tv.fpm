@@ -1,0 +1,25 @@
+--verbose
+-s tar
+-t rpm
+--name go2tv
+--license MIT
+--version 2.9.0
+--architecture x86_64
+--description "Cast media files to Smart TVs and Chromecast devices. Web UI (Server Mode) included. DLNA media server included."
+--url "https://github.com/alexballas/go2tv"
+--rpm-autoprov
+--rpm-autoreq
+--rpm-autoreqprov
+--maintainer "private package for aanno@users.noreply.github.com made with fpm v1.18.0"
+--depends pipewire-libs
+--depends ffmpeg
+--depends wayland
+--depends xorg-x11-server
+--depends libxkbcommon
+--depends libXcursor
+--depends libXrandr
+--depends libXinerama
+--depends libXi
+--depends libXxf86vm
+
+go2tv.tar.gz

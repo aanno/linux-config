@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-export APP=snapcast
+export APP=go2tv
 export DIST=fedora45
 export IMAGE=localhost/${APP}:${DIST}
 
@@ -31,4 +31,5 @@ podman build --pull -t $IMAGE \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
   -v $MYCWD/src:/src:z \
+  -v $GOPATH:/root/go:z \
   -f Containerfile.${APP}.${DIST};

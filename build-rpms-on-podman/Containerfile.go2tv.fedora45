@@ -1,0 +1,39 @@
+from docker.io/library/fedora:45
+
+RUN set -ex; \
+  echo "fastestmirror=1" >>/etc/dnf/dnf.conf; \
+  dnf -y install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm; \
+  dnf -y install wireplumber-devel pipewire-devel git sqlite-devel \
+  ffmpeg-devel golang \
+  gcc gcc-c++ pkg-config wayland-devel \
+  xorg-x11-server-devel libxkbcommon-devel mesa-libEGL-devel libXcursor-devel libXrandr-devel \
+  libXinerama-devel libXi-devel libXxf86vm-devel \
+  tree which rubygems; \
+  gem install fpm; \
+  mkdir -p /src || true; \
+  cd /src;
+
+RUN set -ex; \
+  cd /src; \
+  if [ -d go2tv/.git ]; then \
+    cd go2tv; git reset --hard; git pull; cd ..; \
+  else \
+    rm -rf go2tv || true; \
+    git clone --depth 10 https://github.com/alexballas/go2tv.git; \
+  fi; \
+  cd go2tv; \
+  go get -u; \
+  go get -u ./...; \
+  go mod tidy; \
+  # go clean -r -x -cache; \
+  make build; \
+  # go build --buildmode=pie --linkshared cmd/gonic/gonic.go; \
+  rm -rf usr || true; \
+  mkdir -p usr/bin; \
+  cp build/go2tv usr/bin; \
+  tar cvfz go2tv.tar.gz usr; \
+  mv go2tv.tar.gz /src;
+

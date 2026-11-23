@@ -22,5 +22,6 @@ podman run --rm -it \
   -v $CWD/opt/owntone:/opt/owntone:z \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
-  registry.fedoraproject.org/fedora:39 \
+  -v $GOPATH:/root/go:z \
+  registry.fedoraproject.org/fedora:45 \
   /bin/bash;

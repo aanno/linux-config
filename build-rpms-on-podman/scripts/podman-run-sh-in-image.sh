@@ -30,4 +30,5 @@ podman run --rm -it \
   -v $CWD/.cargo:/root/.cargo:z \
   -v $CWD/.rustup:/root/.rustup:z \
   -v $MYCWD/src:/src:z \
+  -v $GOPATH:/root/go:z \
   ${IMAGE} bash;
