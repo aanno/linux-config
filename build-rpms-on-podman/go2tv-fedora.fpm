@@ -13,8 +13,6 @@
 --maintainer "private package for aanno@users.noreply.github.com made with fpm v1.18.0"
 --depends pipewire-libs
 --depends ffmpeg
---depends wayland
---depends xorg-x11-server
 --depends libxkbcommon
 --depends libXcursor
 --depends libXrandr
